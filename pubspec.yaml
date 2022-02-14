@@ -2,10 +2,16 @@ name: ioka
 description: Flutter SDK for ioka
 version: 0.0.1
 homepage: https://ioka.kz
+repository: https://github.com/iokadev/ioka-flutter
+issue_tracker: https://github.com/iokadev/ioka-flutter/issues
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
   flutter: ">=1.17.0"
+
+platforms:
+  android:
+  ios:
 
 dependencies:
   flutter:
