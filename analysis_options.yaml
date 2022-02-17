@@ -3,3 +3,31 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude:
     - 'example/**'
+
+# https://dart.dev/tools/linter-rules
+linter:
+  rules:
+    # Code rules
+    cancel_subscriptions: true
+    close_sinks: true
+    control_flow_in_finally: true
+    hash_and_equals: true
+    test_types_in_equals: true
+
+    # Style rules
+    always_declare_return_types: true
+    annotate_overrides: true
+    avoid_field_initializers_in_const_classes: true
+    avoid_positional_boolean_parameters: true
+    avoid_unnecessary_containers: true
+    directives_ordering: true
+    lines_longer_than_80_chars: true
+    parameter_assignments: true
+    prefer_final_locals: true
+    prefer_single_quotes: true
+    sort_child_properties_last: true
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    unnecessary_await_in_return: true
+    use_full_hex_values_for_flutter_colors: true
+    use_named_constants: true
