@@ -43,6 +43,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  credit_card_type_detector:
+    dependency: transitive
+    description:
+      name: credit_card_type_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  credit_card_validator:
+    dependency: transitive
+    description:
+      name: credit_card_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -62,6 +76,27 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_keyboard_visibility:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.2.0"
+  flutter_keyboard_visibility_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  flutter_keyboard_visibility_web:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -69,8 +104,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_svg:
+    dependency: transitive
+    description:
+      name: flutter_svg
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -81,6 +128,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.3"
   lints:
     dependency: transitive
     description:
@@ -130,6 +184,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.4.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -233,6 +308,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.7.1"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.1"
 sdks:
   dart: ">=2.16.1 <3.0.0"
   flutter: ">=2.5.0"

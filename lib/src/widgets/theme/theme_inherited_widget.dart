@@ -14,3 +14,10 @@ class IokaThemeInheritedWidget extends InheritedWidget {
   bool updateShouldNotify(covariant IokaThemeInheritedWidget oldWidget) =>
       oldWidget.theme != theme;
 }
+
+extension IokaThemeGetter on BuildContext {
+  IokaTheme get theme => IokaTheme.of(this);
+  IokaThemeColors get colors => theme.colors;
+  IokaThemeTypography get typography => theme.typography;
+  IokaThemeExtras get themeExtras => theme.extras;
+}
