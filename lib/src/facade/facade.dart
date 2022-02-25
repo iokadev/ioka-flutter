@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:ioka/src/api/api.dart';
 import 'package:ioka/src/facade/config.dart';
 import 'package:ioka/src/models/checkout_model.dart';
 import 'package:ioka/src/utils/navigation.dart';
@@ -11,13 +12,12 @@ import 'package:provider/provider.dart';
 
 class Ioka {
   Ioka._({
-    required String apiKey,
+    required this.api,
     IokaConfiguration? configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
-  })  : _apiKey = apiKey,
-        _configuration = configuration,
+  })  : _configuration = configuration,
         _theme = theme,
         _darkTheme = darkTheme,
         _platform = platform;
@@ -32,7 +32,7 @@ class Ioka {
     assert(_instance == null);
 
     _instance = Ioka._(
-      apiKey: apiKey,
+      api: IokaApi(apiKey: apiKey),
       configuration: configuration,
       theme: theme,
       darkTheme: darkTheme,
@@ -47,8 +47,8 @@ class Ioka {
     return _instance!;
   }
 
-  final String _apiKey;
   final IokaConfiguration? _configuration;
+  final IokaApi api;
   final IokaTheme? _theme;
   final IokaTheme? _darkTheme;
   final Platform? _platform;
@@ -95,10 +95,4 @@ class Ioka {
       locale: locale,
     );
   }
-
-  Future<void> startCheckoutWithSavedCardFlow() async {}
-
-  Future<void> getCustomerCards() async {}
-  Future<void> addCustomerCard() async {}
-  Future<void> removeCustomerCard() async {}
 }
