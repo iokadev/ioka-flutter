@@ -31,7 +31,7 @@ class _CartPageState extends State<CartPage> {
                     image: AssetImage('assets/images/ceramics.jpeg'),
                     onAmountChanged: (v) => _amountNotifier.value = v,
                     onRemove: () {},
-                    price: 148490.0 * amount,
+                    price: 100.0 * amount,
                   ),
                 ),
               ],
@@ -47,7 +47,8 @@ class _CartPageState extends State<CartPage> {
               onPressed: () {
                 Ioka.instance.startCheckoutFlow(
                   context: context,
-                  orderAccessToken: 'a',
+                  orderAccessToken: '',
+                  amount: (100000 * _amountNotifier.value).round(),
                 );
               },
               child: const Text('Перейти к оформлению'),

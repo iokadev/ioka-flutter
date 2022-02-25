@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:ioka/src/utils/currency_format.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
 
 class CupertinoPaymentSuccessView extends StatelessWidget {
@@ -48,7 +49,7 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                       ),
                       const SizedBox(height: 4.0),
                       Text(
-                        '$orderAmount ₸',
+                        formatTengeAmount(orderAmount),
                         style: context.typography.heading2,
                       ),
                     ],

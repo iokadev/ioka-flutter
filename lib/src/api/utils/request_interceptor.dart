@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 
-import '../generated/ioka_api.swagger.dart';
-
+// ignore: must_be_immutable
 class IokaAuthenticationRequestInterceptor extends RequestInterceptor {
   IokaAuthenticationRequestInterceptor({
     required String apiKey,

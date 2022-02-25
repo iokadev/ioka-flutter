@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:ioka/ioka.dart';
 
 void main() {
-  Ioka.setup(apiKey: 'a');
+  Ioka.setup(
+    apiKey: '',
+    configuration: IokaConfiguration(mode: IokaApiMode.staging),
+  );
+
   runApp(const MyApp());
 }
 

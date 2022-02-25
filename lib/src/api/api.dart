@@ -1,25 +1,29 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
-import 'package:ioka/src/api/utils/request_converter.dart';
+import 'package:ioka/src/api/utils/request_interceptor.dart';
 
 import './generated/client_index.dart' as g;
+import 'utils/access_token_helpers.dart';
+import 'utils/error.dart';
 
 class IokaApi {
   IokaApi({
     required String apiKey,
+    required String baseUrl,
   }) : _interceptor = IokaAuthenticationRequestInterceptor(apiKey: apiKey) {
-    _init();
+    _init(baseUrl);
   }
 
-  void _init() {
+  void _init(String baseUrl) {
     generatedApi = g.IokaApi.create(
       client: ChopperClient(
         converter: $JsonSerializableConverter(),
         interceptors: [_interceptor],
         services: [$IokaApi()],
-        baseUrl: 'https://stage-api.ioka.kz',
+        baseUrl: baseUrl,
       ),
     );
   }
@@ -27,7 +31,7 @@ class IokaApi {
   final IokaAuthenticationRequestInterceptor _interceptor;
   late final g.IokaApi generatedApi;
 
-  Future<T> _makeResponse<T>(
+  Future<T> _makeRequest<T>(
     Future<Response<T>> Function() callback, {
     String? customerAccessToken,
     String? orderAccessToken,
@@ -44,7 +48,11 @@ class IokaApi {
     if (response.isSuccessful) {
       return response.body as T;
     } else {
-      throw response.error as Object;
+      throw IokaError.fromJson(
+        const Utf8Decoder().convert(
+          response.bodyBytes,
+        ),
+      );
     }
   }
 
@@ -52,7 +60,7 @@ class IokaApi {
     required String customerAccessToken,
     required String customerId,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsGet(
         customerId: customerId,
       ),
@@ -61,20 +69,20 @@ class IokaApi {
   }
 
   Future<ExtendedPayment> createNewCardPayment({
-    required String orderId,
     required String orderAccessToken,
     required String pan,
     required String expiryDate,
     required String cvc,
+    bool save = false,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsCardPost(
-        orderId: orderId,
+        orderId: orderIdFromAccessToken(orderAccessToken),
         body: CardPayer(
           pan: pan,
           exp: expiryDate,
           cvc: cvc,
-          save: false,
+          save: save,
         ),
       ),
       orderAccessToken: orderAccessToken,
@@ -82,14 +90,13 @@ class IokaApi {
   }
 
   Future<ExtendedPayment> createSavedCardPayment({
-    required String orderId,
     required String orderAccessToken,
     required String cardId,
     String? cvc,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsCardPost(
-        orderId: orderId,
+        orderId: orderIdFromAccessToken(orderAccessToken),
         body: CardPayer(
           cardId: cardId,
           cvc: cvc,
@@ -100,13 +107,12 @@ class IokaApi {
   }
 
   Future<ExtendedPayment> getPaymentById({
-    required String orderId,
     required String paymentId,
     required String orderAccessToken,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsPaymentIdGet(
-        orderId: orderId,
+        orderId: orderIdFromAccessToken(orderAccessToken),
         paymentId: paymentId,
       ),
       orderAccessToken: orderAccessToken,
@@ -114,15 +120,14 @@ class IokaApi {
   }
 
   Future<ExtendedCard> createBinding({
-    required String customerId,
     required String pan,
     required String expiryDate,
     required String cvc,
     required String customerAccessToken,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdBindingsPost(
-        customerId: customerId,
+        customerId: customerIdFromAccessToken(customerAccessToken),
         body: BindingCard(
           pan: pan,
           cvc: cvc,
@@ -134,13 +139,12 @@ class IokaApi {
   }
 
   Future<ExtendedCard> getCardById({
-    required String customerId,
     required String cardId,
     required String customerAccessToken,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsCardIdGet(
-        customerId: customerId,
+        customerId: customerIdFromAccessToken(customerAccessToken),
         cardId: cardId,
       ),
       customerAccessToken: customerAccessToken,
@@ -148,13 +152,12 @@ class IokaApi {
   }
 
   Future<dynamic> deleteCardById({
-    required String customerId,
     required String cardId,
     required String customerAccessToken,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsCardIdDelete(
-        customerId: customerId,
+        customerId: customerIdFromAccessToken(customerAccessToken),
         cardId: cardId,
       ),
       customerAccessToken: customerAccessToken,
@@ -164,7 +167,7 @@ class IokaApi {
   Future<BrandOut> getBrand({
     required String partialBin,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2BrandsGet(
         partialBin: partialBin,
       ),
@@ -174,7 +177,7 @@ class IokaApi {
   Future<BinInfo> getEmitterByBinCode({
     required String binCode,
   }) {
-    return _makeResponse(
+    return _makeRequest(
       () => generatedApi.v2BinsBinCodeGet(
         binCode: binCode,
       ),

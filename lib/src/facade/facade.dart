@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class Ioka {
   Ioka._({
     required this.api,
-    IokaConfiguration? configuration,
+    required IokaConfiguration configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
@@ -24,7 +24,7 @@ class Ioka {
 
   static void setup({
     required String apiKey,
-    IokaConfiguration? configuration,
+    required IokaConfiguration configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
@@ -32,7 +32,7 @@ class Ioka {
     assert(_instance == null);
 
     _instance = Ioka._(
-      api: IokaApi(apiKey: apiKey),
+      api: IokaApi(apiKey: apiKey, baseUrl: configuration.baseUrl),
       configuration: configuration,
       theme: theme,
       darkTheme: darkTheme,
@@ -47,7 +47,7 @@ class Ioka {
     return _instance!;
   }
 
-  final IokaConfiguration? _configuration;
+  final IokaConfiguration _configuration;
   final IokaApi api;
   final IokaTheme? _theme;
   final IokaTheme? _darkTheme;
@@ -75,7 +75,7 @@ class Ioka {
   Future<void> startCheckoutFlow({
     required BuildContext context,
     required String orderAccessToken,
-    String? customerAccessToken,
+    required int amount,
     IokaTheme? theme,
     Brightness? brightness,
     Platform? platform,
@@ -87,7 +87,10 @@ class Ioka {
     Navigator.of(context).pushWithViewWrapper(
       context,
       (context, platform) => ChangeNotifierProvider(
-        create: (_) => CheckoutModel(),
+        create: (_) => CheckoutModel(
+          orderAccessToken: orderAccessToken,
+          amount: amount,
+        ),
         builder: (context, _) => const CupertinoCheckoutView(),
       ),
       platform: resolvedPlatform,

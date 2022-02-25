@@ -5,7 +5,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 class CupertinoPaymentConfirmationView extends StatefulWidget {
   const CupertinoPaymentConfirmationView({
     Key? key,
+    required this.url,
   }) : super(key: key);
+  
+  final String url;
 
   @override
   State<CupertinoPaymentConfirmationView> createState() =>
@@ -32,7 +35,7 @@ class _CupertinoPaymentConfirmationViewState
       child: Stack(
         children: [
           WebView(
-            initialUrl: 'https://google.com',
+            initialUrl: widget.url,
             navigationDelegate: (request) {
               final url = request.url;
 

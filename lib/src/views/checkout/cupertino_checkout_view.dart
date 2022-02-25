@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ioka/src/models/checkout_model.dart';
+import 'package:ioka/src/utils/currency_format.dart';
 import 'package:ioka/src/utils/lerp_implicit_animation_widget.dart';
 import 'package:ioka/src/utils/multi_value_listenable_builder.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
@@ -19,8 +20,8 @@ class CupertinoCheckoutView extends StatelessWidget {
     final model = context.watch<CheckoutModel>();
 
     return CupertinoPageScaffold(
-      navigationBar: const IokaCupertinoNavigationBar(
-        middle: Text('К оплате 12 560 ₸'),
+      navigationBar: IokaCupertinoNavigationBar(
+        middle: Text('К оплате ${formatTengeAmount(model.amount)}'),
       ),
       child: SafeArea(
         child: Form(
@@ -58,7 +59,7 @@ class _CupertinoCheckoutViewInputs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CheckoutModel>();
-    final isEnabled = !model.isSubmitting;
+    final isEnabled = model.isInteractable;
 
     return Column(
       children: [
@@ -118,7 +119,9 @@ class _CupertinoCheckoutViewInputs extends StatelessWidget {
                 value: model.saveCardNotifier.value,
                 activeColor:
                     isEnabled ? context.colors.primary : context.colors.grey,
-                onChanged: (value) => model.saveCardNotifier.value = value,
+                onChanged: isEnabled
+                    ? (value) => model.saveCardNotifier.value = value
+                    : null,
               ),
             ),
           ),
@@ -151,13 +154,13 @@ class _CupertinoCheckoutViewActions extends StatelessWidget {
               value:
                   model.isValid ? context.colors.primary : context.colors.grey,
               builder: (context, color) => CupertinoProgressButton(
-                child: Text(
-                  'Оплатить 12 560 ₸',
-                ),
                 borderRadius: context.themeExtras.borderRadius,
                 onPressed: model.isValid ? () => model.submit(context) : null,
                 color: color,
                 disabledColor: color,
+                child: Text(
+                  'Оплатить ${formatTengeAmount(model.amount)}',
+                ),
               ),
             ),
           ),

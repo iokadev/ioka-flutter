@@ -36,7 +36,7 @@ class CupertinoPanFormField extends StatelessWidget {
             onValidated!();
           }
 
-          onChanged(v);
+          onChanged(v.replaceAll(' ', ''));
         },
         formState: state,
         enabled: isEnabled,
