@@ -96,11 +96,18 @@ class IokaNavigation {
   }
 }
 
+typedef _RouteBuilder<T> = Route<T> Function(
+  BuildContext,
+  WidgetBuilder,
+  Platform,
+);
+
 extension IokaNavigationHelpers on NavigatorState {
   PageRoute<T> _buildPlatformAwarePageRoute<T>(
-    WidgetBuilder builder, {
-    required Platform platform,
-  }) {
+    BuildContext context,
+    WidgetBuilder builder,
+    Platform platform,
+  ) {
     if (platform == Platform.material) {
       return MaterialPageRoute<T>(builder: builder);
     } else {
@@ -108,17 +115,34 @@ extension IokaNavigationHelpers on NavigatorState {
     }
   }
 
+  ModalRoute<T> _buildPlatformAwareDialogRoute<T>(
+    BuildContext context,
+    WidgetBuilder builder,
+    Platform platform,
+  ) {
+    if (platform == Platform.material) {
+      return DialogRoute<T>(context: context, builder: builder);
+    } else {
+      return CupertinoDialogRoute<T>(context: context, builder: builder);
+    }
+  }
+
   Future<T?> pushPlatformAware<T>(
     BuildContext context,
     PlatformAwareWidgetBuilder builder, {
     Platform? platform,
+    _RouteBuilder<T>? routeBuilder,
   }) {
     final _platform = platform ?? IokaThemeUtils.getPlatform(context);
 
+    final _RouteBuilder<T> _routeBuilder =
+        routeBuilder ?? _buildPlatformAwarePageRoute;
+
     return push<T>(
-      _buildPlatformAwarePageRoute(
+      _routeBuilder(
+        context,
         (context) => builder(context, _platform),
-        platform: _platform,
+        _platform,
       ),
     );
   }
@@ -129,6 +153,7 @@ extension IokaNavigationHelpers on NavigatorState {
     required IokaTheme? theme,
     required Platform? platform,
     required Locale? locale,
+    _RouteBuilder<T>? routeBuilder,
   }) {
     return pushPlatformAware(
       context,
@@ -139,13 +164,18 @@ extension IokaNavigationHelpers on NavigatorState {
         child: builder(context, platform),
       ),
       platform: platform,
+      routeBuilder: routeBuilder,
     );
   }
 
   Future<T?> pushWithExistingViewWrapper<T>(
     BuildContext context,
-    PlatformAwareWidgetBuilder builder,
-  ) {
+    PlatformAwareWidgetBuilder builder, {
+    IokaTheme? theme,
+    Platform? platform,
+    Locale? locale,
+    _RouteBuilder<T>? routeBuilder,
+  }) {
     final existingWrapper =
         context.findAncestorWidgetOfExactType<IokaViewWrapper>()!;
 
@@ -157,6 +187,93 @@ extension IokaNavigationHelpers on NavigatorState {
         locale: existingWrapper.locale,
         child: builder(context, platform),
       ),
+      platform: platform ?? existingWrapper.platform,
+      routeBuilder: routeBuilder,
     );
   }
+
+  Future<T?> pushWithAutomaticViewWrapper<T>(
+    BuildContext context,
+    PlatformAwareWidgetBuilder builder, {
+    IokaTheme? theme,
+    Platform? platform,
+    Locale? locale,
+    _RouteBuilder<T>? routeBuilder,
+  }) async {
+    final existingWrapper =
+        context.findAncestorWidgetOfExactType<IokaViewWrapper>();
+
+    if (existingWrapper != null) {
+      return pushWithExistingViewWrapper(
+        context,
+        builder,
+        theme: theme,
+        platform: platform,
+        locale: locale,
+        routeBuilder: routeBuilder,
+      );
+    }
+
+    return pushWithViewWrapper(
+      context,
+      builder,
+      theme: theme,
+      platform: platform,
+      locale: locale,
+      routeBuilder: routeBuilder,
+    );
+  }
+
+  Future<T?> pushDialogWithViewWrapper<T>(
+    BuildContext context,
+    PlatformAwareWidgetBuilder builder, {
+    required IokaTheme? theme,
+    required Platform? platform,
+    required Locale? locale,
+  }) {
+    return pushWithViewWrapper(
+      context,
+      builder,
+      theme: theme,
+      platform: platform,
+      locale: locale,
+      routeBuilder: _buildPlatformAwareDialogRoute,
+    );
+  }
+
+
+  Future<T?> pushDialogWithExistingViewWrapper<T>(
+    BuildContext context,
+    PlatformAwareWidgetBuilder builder, {
+    IokaTheme? theme,
+    Platform? platform,
+    Locale? locale,
+  }) {
+    return pushWithExistingViewWrapper(
+      context,
+      builder,
+      theme: theme,
+      platform: platform,
+      locale: locale,
+      routeBuilder: _buildPlatformAwareDialogRoute,
+    );
+  }
+
+  Future<T?> pushDialogWithAutomaticViewWrapper<T>(
+    BuildContext context,
+    PlatformAwareWidgetBuilder builder, {
+    IokaTheme? theme,
+    Platform? platform,
+    Locale? locale,
+  }) {
+    return pushWithAutomaticViewWrapper(
+      context,
+      builder,
+      theme: theme,
+      platform: platform,
+      locale: locale,
+      routeBuilder: _buildPlatformAwareDialogRoute,
+    );
+  }
+
 }

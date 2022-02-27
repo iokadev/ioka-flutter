@@ -32,7 +32,7 @@ class CupertinoPaymentFailureView extends StatelessWidget {
                       ),
                       const SizedBox(height: 36.0),
                       Text(
-                        'Платеж не прошел',
+                        context.l10n.paymentFailureViewLabel,
                         style: context.typography.heading,
                       ),
                       if (reason != null) ...[
@@ -57,7 +57,7 @@ class CupertinoPaymentFailureView extends StatelessWidget {
                   color: context.colors.primary,
                   borderRadius: context.themeExtras.borderRadius,
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: Text('Попробовать заново'),
+                  child: Text(context.l10n.paymentFailureViewRetryAction),
                 ),
               ),
             ],

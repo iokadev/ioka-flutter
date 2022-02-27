@@ -45,7 +45,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     } else if (_paymentOption == 'newCard') {
       leading = IokaIcon(
         IokaIcons.creditCard,
-        color: theme.disabledColor,
+        color: theme.textTheme.bodyText2?.color,
       );
       child = Text('Банковской картой');
     } else if (_paymentOption is SavedCard) {
@@ -102,10 +102,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Image.asset(
-                    'assets/images/ceramics.jpeg',
-                    width: 120.0,
-                    height: 120.0,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: Image.asset(
+                      'assets/images/ceramics.jpeg',
+                      width: 120.0,
+                      height: 120.0,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -182,6 +185,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               orderAccessToken: tokens.orderAccessToken,
                               customerAccessToken: tokens.customerAccessToken,
                             );
+                          } else if (_paymentOption is SavedCard) {
+                            await Ioka.instance.startCheckoutWithSavedCardFlow(
+                              context: context,
+                              orderAccessToken: tokens.orderAccessToken,
+                              customerAccessToken: tokens.customerAccessToken,
+                              savedCard: _paymentOption,
+                            );
                           }
                         }
                       : null,
@@ -189,7 +199,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   disabledColor: theme.disabledColor,
                   borderRadius: BorderRadius.circular(12.0),
                   child: Text(
-                    'Перейти к оплате',
+                    'Оформить',
                     style: theme.textTheme.button?.copyWith(
                       color: Colors.white,
                     ),

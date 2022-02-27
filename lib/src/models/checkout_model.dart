@@ -1,23 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
-import 'package:ioka/src/models/payment_confirmation_model.dart';
-import 'package:ioka/src/utils/navigation.dart';
-import 'package:ioka/src/views/payment_confirmation/cupertino_payment_confirmation_view.dart';
-import 'package:ioka/src/views/payment_failure/cupertino_payment_failure_view.dart';
-import 'package:ioka/src/views/payment_success/cupertino_payment_success_view.dart';
-import 'package:ioka/src/widgets/form/card_input_form.dart';
-import 'package:provider/provider.dart';
 
-class CheckoutModel extends ChangeNotifier {
+abstract class CheckoutModel extends ChangeNotifier {
   CheckoutModel({
     required this.orderAccessToken,
     required this.order,
-    this.customerAccessToken,
   });
 
   final String orderAccessToken;
-  final String? customerAccessToken;
   final OrderOut order;
 
   int get amount => order.amount!;
@@ -25,33 +16,20 @@ class CheckoutModel extends ChangeNotifier {
   var _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
-  final cardInputDataNotifier = ValueNotifier<CardInputData?>(null);
-  CardInputData? get cardInputData => cardInputDataNotifier.value;
-
   final isInteractableNotifier = ValueNotifier<bool>(true);
   bool get isInteractable => isInteractableNotifier.value;
 
-  bool get canSaveCard => customerAccessToken != null;
-
-  void onChanged(CardInputData data) {
-    cardInputDataNotifier.value = data;
-  }
+  bool get isValid;
+  Future<ExtendedPayment> createPayment();
 
   Future<void> submit(BuildContext context) async {
-    assert(cardInputData != null && cardInputData!.isValid);
+    assert(isValid);
 
     isInteractableNotifier.value = false;
     notifyListeners();
 
     try {
-      var payment = await Ioka.instance.api.createNewCardPayment(
-        orderAccessToken: orderAccessToken,
-        customerAccessToken: customerAccessToken,
-        pan: cardInputData!.cardNumber,
-        expiryDate: cardInputData!.expiryDate,
-        cvc: cardInputData!.cvc,
-        save: canSaveCard && cardInputData!.isSaved,
-      );
+      var payment = await createPayment();
 
       if (payment.status == PaymentStatus.pending && payment.action != null) {
         final newPayment = await IokaNavigation.showPaymentConfirmationView(
@@ -71,19 +49,15 @@ class CheckoutModel extends ChangeNotifier {
 
       if (payment.status == PaymentStatus.captured ||
           payment.status == PaymentStatus.approved) {
-        await IokaNavigation.showPaymentSuccessView(
-          context,
-          orderAmount: order.amount,
-          orderNumber: order.externalId,
-        );
+        await onSuccess(context);
       } else {
-        await _onFailure(
+        await onFailure(
           context,
           reason: payment.error?.message,
         );
       }
     } catch (e) {
-      await _onFailure(
+      await onFailure(
         context,
         reason: (e as dynamic).message,
       );
@@ -93,7 +67,15 @@ class CheckoutModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _onFailure(BuildContext context, {String? reason}) async {
+  Future<void> onSuccess(BuildContext context) {
+    return IokaNavigation.showPaymentSuccessView(
+      context,
+      orderAmount: order.amount,
+      orderNumber: order.externalId,
+    );
+  }
+
+  Future<void> onFailure(BuildContext context, {String? reason}) async {
     final retry = await IokaNavigation.showPaymentFailureView(
       context,
       reason: reason,
@@ -108,7 +90,6 @@ class CheckoutModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    cardInputDataNotifier.dispose();
     isInteractableNotifier.dispose();
     super.dispose();
   }

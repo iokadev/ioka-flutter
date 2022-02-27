@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ioka/src/utils/currency_format.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
 
 class CupertinoPaymentSuccessView extends StatelessWidget {
@@ -35,7 +34,7 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                       ),
                       const SizedBox(height: 36.0),
                       Text(
-                        'Заказ оплачен',
+                        context.l10n.paymentSuccessViewLabel,
                         style: context.typography.heading.copyWith(
                           color: context.colors.success,
                         ),
@@ -43,7 +42,9 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                       if (orderNumber != null) ...[
                         const SizedBox(height: 40.0),
                         Text(
-                          'Заказ №$orderNumber',
+                          context.l10n.paymentSuccessViewOrderNumberLabel(
+                            orderNumber!,
+                          ),
                           style: context.typography.subtitle.copyWith(
                             color: context.colors.grey,
                           ),
@@ -52,7 +53,7 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                       if (orderAmount != null) ...[
                         const SizedBox(height: 4.0),
                         Text(
-                          formatTengeAmount(orderAmount!),
+                          context.l10n.formatMoneyAmount(orderAmount!),
                           style: context.typography.heading2,
                         ),
                       ],
@@ -65,10 +66,10 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                 width: double.infinity,
                 height: 56.0,
                 child: CupertinoButton(
-                  child: Text('Понятно'),
                   color: context.colors.primary,
                   borderRadius: context.themeExtras.borderRadius,
                   onPressed: () => Navigator.of(context).pop(),
+                  child: Text(context.l10n.paymentSuccessViewDismissAction),
                 ),
               ),
             ],

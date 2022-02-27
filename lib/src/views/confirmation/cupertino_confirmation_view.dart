@@ -14,8 +14,8 @@ class CupertinoConfirmationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const IokaCupertinoNavigationBar(
-        middle: Text('Подтверждение оплаты'),
+      navigationBar: IokaCupertinoNavigationBar(
+        middle: Text(context.l10n.paymentConfirmationViewTitle),
       ),
       child: Stack(
         children: [

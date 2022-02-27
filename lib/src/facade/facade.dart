@@ -90,17 +90,51 @@ class Ioka {
     Navigator.of(context).pushWithViewWrapper(
       context,
       (context, platform) => ChangeNotifierProvider(
-        create: (_) => CheckoutModel(
+        create: (_) => CheckoutWithNewCardModel(
           orderAccessToken: orderAccessToken,
           customerAccessToken: customerAccessToken,
           order: order,
         ),
-        builder: (context, _) => const CupertinoCheckoutView(),
+        builder: (context, _) => const CupertinoCheckoutWithNewCardView(),
       ),
       platform: resolvedPlatform,
       theme: resolvedTheme,
       locale: locale,
     );
+  }
+
+  Future<void> startCheckoutWithSavedCardFlow({
+    required BuildContext context,
+    required String orderAccessToken,
+    required String customerAccessToken,
+    required SavedCard savedCard,
+    IokaTheme? theme,
+    Brightness? brightness,
+    Platform? platform,
+    Locale? locale,
+  }) async {
+    final order = await api.getOrderById(
+      orderAccessToken: orderAccessToken,
+    );
+
+    final model = CheckoutWithSavedCardModel(
+      order: order,
+      orderAccessToken: orderAccessToken,
+      savedCard: savedCard,
+    );
+
+    final resolvedTheme = _resolveTheme(context, theme, brightness);
+    final resolvedPlatform = platform ?? _platform;
+
+    if (savedCard.cvcRequired) {
+      final cvc = await showCvcConfirmationDialog(
+        context,
+        model: model,
+        theme: resolvedTheme,
+        platform: resolvedPlatform,
+        locale: locale,
+      );
+    }
   }
 
   Future<List<SavedCard>> getSavedCards({

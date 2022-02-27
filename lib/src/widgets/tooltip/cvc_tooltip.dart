@@ -19,7 +19,7 @@ class CvcTooltipWidget extends StatelessWidget {
         children: [
           const IokaIcon(IokaIcons.cvc),
           const SizedBox(width: 12.0),
-          Text('3 цифры на\nобороте карты'),
+          Text(context.l10n.cvcTooltipHint),
         ],
       ),
     );

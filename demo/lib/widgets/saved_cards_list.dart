@@ -32,12 +32,26 @@ class SavedCardsList extends StatelessWidget {
 
     final children = <Widget>[];
 
+    final itemCount = cards.length + (trailingBuilder != null ? 1 : 0);
+
     for (final card in cards) {
+      final index = cards.indexOf(card);
+      BorderRadius _radius;
+
+      if (itemCount == 1) {
+        _radius = _borderRadius;
+      } else if (index == 0 && itemCount > 1) {
+        _radius = _topBorderRadius;
+      } else if (index == itemCount - 1 && trailingBuilder == null) {
+        _radius = _bottomBorderRadius;
+      } else {
+        _radius = _centerBorderRadius;
+      }
+
       children.addAll([
         CardRowWidget(
           padding: rowPadding ?? const EdgeInsets.symmetric(horizontal: 16.0),
-          borderRadius:
-              children.isEmpty ? _topBorderRadius : _centerBorderRadius,
+          borderRadius: _radius,
           onTap: onTap != null ? () => onTap!(card) : null,
           leading: CardTypeWidget(
             cardType: card.cardType,
@@ -65,6 +79,8 @@ class SavedCardsList extends StatelessWidget {
           children.isEmpty ? _borderRadius : _bottomBorderRadius,
         ),
       );
+    } else if (children.last is Padding) {
+      children.removeLast();
     }
 
     return Column(children: children);

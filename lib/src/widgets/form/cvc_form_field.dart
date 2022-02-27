@@ -9,13 +9,17 @@ class CupertinoCvcFormField extends StatelessWidget {
     Key? key,
     required this.onChanged,
     required this.cardType,
+    this.prefix,
     this.onValidated,
     this.isEnabled = true,
+    this.autofocus = false,
   }) : super(key: key);
 
   final ValueChanged<String> onChanged;
   final CreditCardType? cardType;
   final VoidCallback? onValidated;
+  final Widget? prefix;
+  final bool autofocus;
   final bool isEnabled;
 
   ValidationResults getValidationResults(String value) => validateSecurityCode(
@@ -29,7 +33,7 @@ class CupertinoCvcFormField extends StatelessWidget {
 
     return FormField<String>(
       builder: (state) => IokaCupertinoTextField(
-        hint: 'CVV',
+        hint: context.l10n.cardCvcInputHint,
         inputFormatters: CvcInputFormatter.formatters(maxLength),
         keyboardType: TextInputType.number,
         onChanged: (v) {
@@ -39,6 +43,8 @@ class CupertinoCvcFormField extends StatelessWidget {
 
           onChanged(v);
         },
+        autofocus: autofocus,
+        prefix: prefix,
         formState: state,
         secure: true,
         obscureText: true,
@@ -61,7 +67,9 @@ class CupertinoCvcFormField extends StatelessWidget {
         if (value == null || value.isEmpty) return null;
         final results = getValidationResults(value);
 
-        return results.isPotentiallyValid ? null : 'Неверный CVV';
+        return results.isPotentiallyValid
+            ? null
+            : context.l10n.cardCvcInputError;
       },
     );
   }

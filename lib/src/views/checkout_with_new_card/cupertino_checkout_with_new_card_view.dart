@@ -2,19 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:functional_listener/functional_listener.dart';
 import 'package:ioka/ioka.dart';
-import 'package:ioka/src/utils/currency_format.dart';
 import 'package:provider/provider.dart';
 
-class CupertinoCheckoutView extends StatelessWidget {
-  const CupertinoCheckoutView({Key? key}) : super(key: key);
+class CupertinoCheckoutWithNewCardView extends StatelessWidget {
+  const CupertinoCheckoutWithNewCardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<CheckoutModel>();
+    final model = context.watch<CheckoutWithNewCardModel>();
 
     return CupertinoPageScaffold(
       navigationBar: IokaCupertinoNavigationBar(
-        middle: Text('К оплате ${formatTengeAmount(model.amount)}'),
+        middle: Text(context.l10n.checkoutWithNewCardViewTitle(model.amount)),
       ),
       child: SafeArea(
         child: Form(
@@ -60,7 +59,7 @@ class _CupertinoCheckoutViewActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<CheckoutModel>();
+    final model = context.watch<CheckoutWithNewCardModel>();
 
     return Column(
       children: [
@@ -73,7 +72,7 @@ class _CupertinoCheckoutViewActions extends StatelessWidget {
             builder: (context, bool isValid, __) => IokaCupertinoProgressButton(
               onPressed: isValid ? () => model.submit(context) : null,
               child: Text(
-                'Оплатить ${formatTengeAmount(model.amount)}',
+                context.l10n.checkoutWithNewCardViewPayAction(model.amount),
               ),
             ),
           ),

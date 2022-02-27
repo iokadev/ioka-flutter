@@ -16,7 +16,9 @@ class IokaCupertinoTextField extends StatefulWidget {
     this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
+    this.prefix,
     this.suffix,
+    this.autofocus = false,
   }) : super(key: key);
 
   final String hint;
@@ -26,10 +28,12 @@ class IokaCupertinoTextField extends StatefulWidget {
   final bool enabled;
   final bool secure;
   final bool obscureText;
+  final bool autofocus;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final FormFieldState<String>? formState;
+  final Widget? prefix;
   final Widget? suffix;
 
   @override
@@ -125,11 +129,13 @@ class _IokaCupertinoTextFieldState extends State<IokaCupertinoTextField> {
       ),
       inputFormatters: widget.inputFormatters,
       keyboardType: widget.keyboardType,
+      autofocus: widget.autofocus,
       autocorrect: !widget.secure,
       enableSuggestions: !widget.secure,
       enableIMEPersonalizedLearning: !widget.secure,
       obscureText: widget.obscureText,
       textInputAction: widget.textInputAction,
+      prefix: widget.prefix,
       suffix: widget.suffix,
       onChanged: _onChanged,
       onEditingComplete: _onEditingComplete,

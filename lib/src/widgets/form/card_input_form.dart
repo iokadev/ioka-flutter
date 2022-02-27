@@ -158,7 +158,7 @@ class _CardInputFormState extends State<CardInputForm> {
             height: 40.0,
             child: CupertinoFormRow(
               padding: EdgeInsets.zero,
-              prefix: Text('Сохранить карту'),
+              prefix: Text(context.l10n.cardInputFormSaveCardLabel),
               child: ValueListenableBuilder(
                 valueListenable: _saveCardNotifier,
                 builder: (context, _, __) => CupertinoSwitch(

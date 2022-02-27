@@ -82,4 +82,11 @@ class SaveCardModel extends ChangeNotifier {
     // Show message!
     print(reason);
   }
+
+  @override
+  void dispose() {
+    cardInputDataNotifier.dispose();
+    isInteractableNotifier.dispose();
+    super.dispose();
+  }
 }

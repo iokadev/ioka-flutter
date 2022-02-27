@@ -11,7 +11,9 @@ Future<void> showTooltip(
   Navigator.of(context).push(
     _TooltipRoute(
       outerContext: context,
-      backgroundColor: context.colors.fill2,
+      backgroundColor: context.theme.brightness == Brightness.light
+          ? context.colors.fill2
+          : context.colors.grey,
       foregroundColor: context.colors.fill1,
       radius: context.themeExtras.borderRadius,
       builder: builder,
@@ -19,7 +21,7 @@ Future<void> showTooltip(
   );
 }
 
-class _TooltipRoute extends PopupRoute {
+class _TooltipRoute extends TransitionRoute {
   _TooltipRoute({
     required this.outerContext,
     required this.builder,
@@ -34,43 +36,48 @@ class _TooltipRoute extends PopupRoute {
   final Color foregroundColor;
   final BorderRadius? radius;
 
-  @override
-  Color? get barrierColor => null;
+  Widget buildPage(BuildContext context) {
+    final tween = animation!.drive(CurveTween(curve: Curves.easeInOut));
 
-  @override
-  bool get barrierDismissible => true;
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    final tween = animation.drive(CurveTween(curve: Curves.easeInOut));
-    return AnimatedBuilder(
-      animation: tween,
-      builder: (context, child) => Transform.translate(
-        offset: Offset(0.0, 8.0 * (1.0 - tween.value)),
-        child: Opacity(
-          opacity: tween.value,
-          child: child,
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pop(),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: AnimatedBuilder(
+          animation: tween,
+          builder: (context, child) => Transform.translate(
+            offset: Offset(0.0, 8.0 * (1.0 - tween.value)),
+            child: Opacity(
+              opacity: tween.value,
+              child: child,
+            ),
+          ),
+          child: _TooltipWidget(
+            outerContext: outerContext,
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor,
+            radius: radius,
+            builder: builder,
+          ),
         ),
-      ),
-      child: _TooltipWidget(
-        outerContext: outerContext,
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        radius: radius,
-        builder: builder,
       ),
     );
   }
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 150);
+
+  @override
+  Iterable<OverlayEntry> createOverlayEntries() {
+    return [
+      OverlayEntry(builder: buildPage),
+    ];
+  }
+
+  @override
+  bool get opaque => false;
 }
 
 class _TooltipWidget extends StatelessWidget {
@@ -127,9 +134,8 @@ class _TooltipWidget extends StatelessWidget {
           left: isAnchoredToLeft ? center.dx - 24.0 : null,
           right:
               isAnchoredToLeft ? null : screenSize.width - (center.dx + 24.0),
-          top: isDisplayedOnTop
-              ? offset.dy - 8.0
-              : offset.dy + size.height + 14.0,
+          top: isDisplayedOnTop ? null : offset.dy + size.height + 14.0,
+          bottom: isDisplayedOnTop ? screenSize.height - offset.dy : null,
           child: Container(
             constraints: const BoxConstraints(
               minWidth: 48.0,

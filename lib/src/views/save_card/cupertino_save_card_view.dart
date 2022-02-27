@@ -11,8 +11,8 @@ class CupertinoSaveCardView extends StatelessWidget {
     final model = context.watch<SaveCardModel>();
 
     return CupertinoPageScaffold(
-      navigationBar: const IokaCupertinoNavigationBar(
-        middle: Text('Новая карта'),
+      navigationBar: IokaCupertinoNavigationBar(
+        middle: Text(context.l10n.saveCardViewTitle),
       ),
       child: SafeArea(
         child: Form(
@@ -34,14 +34,15 @@ class CupertinoSaveCardView extends StatelessWidget {
                 child: SizedBox(
                   height: 56.0,
                   child: ValueListenableBuilder(
-                      valueListenable: model.cardInputDataNotifier
-                          .map((v) => v != null && v.isValid),
-                      builder: (context, bool isValid, _) {
-                        return IokaCupertinoProgressButton(
-                          onPressed: isValid ? () => model.submit(context) : null,
-                          child: const Text('Сохранить'),
-                        );
-                      }),
+                    valueListenable: model.cardInputDataNotifier
+                        .map((v) => v != null && v.isValid),
+                    builder: (context, bool isValid, _) {
+                      return IokaCupertinoProgressButton(
+                        onPressed: isValid ? () => model.submit(context) : null,
+                        child: Text(context.l10n.saveCardViewSaveAction),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

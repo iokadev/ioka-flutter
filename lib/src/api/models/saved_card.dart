@@ -1,5 +1,6 @@
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:credit_card_validator/card_number.dart';
+
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/api.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
@@ -42,5 +43,34 @@ class SavedCard {
     return validateCardNumber(panMasked.split('*').first).ccType;
   }
 
-  String get formattedMaskedPan => formatMaskedPan(panMasked);
+  String get formattedMaskedPan => '•••• ${panMasked.split('*').last}';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SavedCard &&
+        other.id == id &&
+        other.customerId == customerId &&
+        other.status == status &&
+        other.createdAt == createdAt &&
+        other.panMasked == panMasked &&
+        other.expiryDate == expiryDate &&
+        other.paymentSystem == paymentSystem &&
+        other.emitter == emitter &&
+        other.cvcRequired == cvcRequired;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        customerId.hashCode ^
+        status.hashCode ^
+        createdAt.hashCode ^
+        panMasked.hashCode ^
+        expiryDate.hashCode ^
+        paymentSystem.hashCode ^
+        emitter.hashCode ^
+        cvcRequired.hashCode;
+  }
 }

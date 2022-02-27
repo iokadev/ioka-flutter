@@ -90,9 +90,11 @@ class _CupertinoProgressButtonState extends State<CupertinoProgressButton> {
       // Errors are handled in [onPressed].
     }
 
-    setState(() {
-      _isInProgress = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isInProgress = false;
+      });
+    }
   }
 
   @override

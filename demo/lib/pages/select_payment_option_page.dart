@@ -103,7 +103,7 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
                             }),
                             leading: IokaIcon(
                               IokaIcons.creditCard,
-                              color: theme.disabledColor,
+                              color: theme.textTheme.bodyText2?.color,
                             ),
                             padding: const EdgeInsets.only(left: 16.0),
                             trailing: Radio(

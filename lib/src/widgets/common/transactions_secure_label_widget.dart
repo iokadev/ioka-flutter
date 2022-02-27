@@ -19,7 +19,7 @@ class TransactionsSecureLabelWidget extends StatelessWidget {
                 color: context.colors.success,
               ),
             ),
-            TextSpan(text: ' Все транзакции защищены'),
+            TextSpan(text: ' ${context.l10n.transactionsSecureLabel}'),
           ],
         ),
         style: context.typography.body.copyWith(

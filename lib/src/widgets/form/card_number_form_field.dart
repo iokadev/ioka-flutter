@@ -27,7 +27,7 @@ class CupertinoCardNumberFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormField<String>(
       builder: (state) => IokaCupertinoTextField(
-        hint: 'Введите номер карты',
+        hint: context.l10n.cardNumberInputHint,
         inputFormatters: PanInputFormatter.formatters,
         keyboardType: TextInputType.number,
         onChanged: (v) {
@@ -54,7 +54,9 @@ class CupertinoCardNumberFormField extends StatelessWidget {
         if (value == null || value.isEmpty) return null;
         final results = getValidationResults(value);
 
-        return results.isPotentiallyValid ? null : 'Неверный номер карты';
+        return results.isPotentiallyValid
+            ? null
+            : context.l10n.cardNumberInputError;
       },
     );
   }

@@ -22,7 +22,7 @@ class CupertinoExpiryDateFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormField<String>(
       builder: (state) => IokaCupertinoTextField(
-        hint: 'ММ/ГГ',
+        hint: context.l10n.cardExpiryDateInputHint,
         inputFormatters: ExpiryDateInputFormatter.formatters,
         keyboardType: TextInputType.number,
         onChanged: (v) {
@@ -42,7 +42,9 @@ class CupertinoExpiryDateFormField extends StatelessWidget {
         if (value == null || value.isEmpty) return null;
         final result = getValidationResults(value);
 
-        return result.isPotentiallyValid ? null : 'Неверная дата';
+        return result.isPotentiallyValid
+            ? null
+            : context.l10n.cardExpiryDateInputError;
       },
     );
   }
