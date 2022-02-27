@@ -19,7 +19,7 @@ class IokaLocalizations {
 
   static IokaLocalization resolve(Locale locale) {
     final acceptableLocalizations = localizations.entries
-        .where(((element) => element.key.countryCode == locale.countryCode));
+        .where(((element) => element.key.languageCode == locale.languageCode));
 
     if (acceptableLocalizations.isEmpty) {
       return defaultLocalization;

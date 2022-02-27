@@ -38,8 +38,8 @@ class IokaLocalizationProvider extends StatelessWidget {
     if (locale != null) {
       localization = IokaLocalizations.resolve(locale!);
     } else {
-      final deviceLocale = Localizations.localeOf(context);
-      localization = IokaLocalizations.resolve(deviceLocale);
+      final locale = Localizations.localeOf(context);
+      localization = IokaLocalizations.resolve(locale);
     }
 
     return IokaLocalizationInheritedWidget(

@@ -6,7 +6,7 @@ Future<T?> showIokaDialog<T>(
   BuildContext context, {
   required WidgetBuilder builder,
   AlignmentGeometry? alignment,
-  Widget? title,
+  WidgetBuilder? title,
   IokaTheme? theme,
   Platform? platform,
   Locale? locale,
@@ -32,7 +32,7 @@ class _IokaDialogWidget extends StatelessWidget {
     this.title,
   }) : super(key: key);
 
-  final Widget? title;
+  final WidgetBuilder? title;
   final WidgetBuilder builder;
   final AlignmentGeometry? alignment;
 
@@ -56,7 +56,7 @@ class _IokaDialogWidget extends StatelessWidget {
                 Expanded(
                   child: DefaultTextStyle(
                     style: context.typography.title,
-                    child: title!,
+                    child: title!(context),
                   ),
                 ),
                 SizedBox(

@@ -1,3 +1,4 @@
+import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/widgets/amount_display.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,12 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: const Text('Корзина'),
+        title: Text(l10n.cartPageTitle),
         centerTitle: true,
       ),
       body: Column(
@@ -35,7 +37,7 @@ class _CartPageState extends State<CartPage> {
                     valueListenable: _amountNotifier,
                     builder: (context, int amount, child) => _ItemCard(
                       id: '248241',
-                      name: 'Набор керамики',
+                      name: l10n.sampleItemName,
                       amount: amount,
                       image: AssetImage('assets/images/ceramics.jpeg'),
                       onAmountChanged: (v) => _amountNotifier.value = v,
@@ -63,7 +65,7 @@ class _CartPageState extends State<CartPage> {
                     ),
                   );
                 },
-                child: const Text('Перейти к оформлению'),
+                child: Text(l10n.cartPageCheckoutAction),
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0.0),
                   foregroundColor: MaterialStateProperty.all(Colors.white),

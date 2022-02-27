@@ -1,4 +1,5 @@
 import 'package:demo/api/api.dart';
+import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:demo/widgets/saved_cards_list.dart';
@@ -53,11 +54,12 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text('Способ оплаты'),
+        title: Text(l10n.paymentOptionPageTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0) +
@@ -115,7 +117,7 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
                                 });
                               },
                             ),
-                            child: Text('Банковской картой'),
+                            child: Text(l10n.cardPaymentMethod),
                           ),
                         ),
                         const SizedBox(height: 24.0),
@@ -139,7 +141,7 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
                                 });
                               },
                             ),
-                            child: Text('Наличными курьеру'),
+                            child: Text(l10n.cashPaymentMethod),
                           ),
                         ),
                       ],
@@ -156,7 +158,7 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
                   elevation: MaterialStateProperty.all<double>(0.0),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                child: const Text('Сохранить'),
+                child: Text(l10n.paymentOptionPageSaveAction),
               ),
             ),
           ],

@@ -14,7 +14,7 @@ Future<String?> showCvcConfirmationDialog(
 }) {
   return showIokaDialog<String?>(
     context,
-    title: Text(context.l10n.cvcConfirmationDialogTitle),
+    title: (context) => Text(context.l10n.cvcConfirmationDialogTitle),
     alignment: Alignment.bottomCenter,
     builder: (context) => ChangeNotifierProvider.value(
       value: model,

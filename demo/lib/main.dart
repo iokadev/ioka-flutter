@@ -1,12 +1,14 @@
 import 'package:demo/api/api.dart';
-import 'package:demo/models/brightness_model.dart';
+import 'package:demo/models/settings_model.dart';
 import 'package:demo/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ioka/ioka.dart';
 import 'package:provider/provider.dart';
 
 import 'api/secrets.dart';
+import 'l10n/l10n.dart';
 
 void main() {
   Ioka.setup(
@@ -55,13 +57,20 @@ class MyApp extends StatelessWidget {
     );
 
     return ChangeNotifierProvider(
-      create: (_) => BrightnessModel(),
+      create: (_) => SettingsModel(),
       builder: (context, _) => MaterialApp(
         title: 'Ioka Demo',
         theme: _lightTheme,
         darkTheme: _darkTheme,
-        locale: const Locale('ru'),
-        themeMode: context.watch<BrightnessModel>().themeMode,
+        localizationsDelegates: const [
+          DemoLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: context.watch<SettingsModel>().locale,
+        supportedLocales: IokaLocalizations.localizations.keys.toList(),
+        themeMode: context.watch<SettingsModel>().themeMode,
         home: const MainPage(),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/cart_page.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     return ValueListenableBuilder(
       valueListenable: _selectedPageNotifier,
@@ -38,7 +40,7 @@ class _MainPageState extends State<MainPage> {
                     ? theme.colorScheme.primary
                     : theme.disabledColor,
               ),
-              label: 'Корзина',
+              label: l10n.cartPageTitle,
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
@@ -47,7 +49,7 @@ class _MainPageState extends State<MainPage> {
                     ? theme.colorScheme.primary
                     : theme.disabledColor,
               ),
-              label: 'Профиль',
+              label: l10n.profilePageTitle,
             ),
           ],
         ),

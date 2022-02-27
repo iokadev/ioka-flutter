@@ -1,4 +1,5 @@
 import 'package:demo/api/api.dart';
+import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:demo/pages/select_payment_option_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   Widget _buildPaymentOption(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     late Widget leading;
     late Widget child;
@@ -31,7 +33,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         color: theme.disabledColor,
       );
       child = Text(
-        'Выберите способ оплаты',
+        l10n.checkoutPageSelectPaymentMethodHint,
         style: theme.textTheme.subtitle1!.copyWith(
           color: theme.disabledColor,
         ),
@@ -41,13 +43,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
         IokaIcons.cash,
         color: theme.disabledColor,
       );
-      child = Text('Наличными курьеру');
+      child = Text(l10n.cashPaymentMethod);
     } else if (_paymentOption == 'newCard') {
       leading = IokaIcon(
         IokaIcons.creditCard,
         color: theme.textTheme.bodyText2?.color,
       );
-      child = Text('Банковской картой');
+      child = Text(l10n.cardPaymentMethod);
     } else if (_paymentOption is SavedCard) {
       final _card = _paymentOption as SavedCard;
       leading = CardTypeWidget(
@@ -83,10 +85,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text('Оформление заказа'),
+        title: Text(l10n.checkoutPageTitle),
       ),
       body: Column(
         children: [
@@ -96,7 +100,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: Column(
                 children: [
                   Text(
-                    'Набор керамики',
+                    l10n.sampleItemName,
                     style: theme.textTheme.bodyText2?.copyWith(
                       color: theme.disabledColor,
                     ),
@@ -132,7 +136,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             IokaIcons.angleRight,
                             color: theme.disabledColor,
                           ),
-                          child: const Text('улица Абая, 328'),
+                          child: Text(l10n.sampleLocation),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(left: 52.0),
@@ -150,7 +154,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             IokaIcons.angleRight,
                             color: theme.disabledColor,
                           ),
-                          child: const Text('14 февраля, 15:00'),
+                          child: Text(l10n.sampleTime),
                         ),
                       ],
                     ),
@@ -199,7 +203,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   disabledColor: theme.disabledColor,
                   borderRadius: BorderRadius.circular(12.0),
                   child: Text(
-                    'Оформить',
+                    l10n.checkoutPageCheckoutAction,
                     style: theme.textTheme.button?.copyWith(
                       color: Colors.white,
                     ),

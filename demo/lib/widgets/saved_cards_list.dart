@@ -1,3 +1,4 @@
+import 'package:demo/widgets/separated_column.dart';
 import 'package:flutter/material.dart';
 import 'package:ioka/ioka.dart';
 
@@ -23,35 +24,17 @@ class SavedCardsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _radius = Radius.circular(8.0);
+    return SeparatedColumn(
+      itemCount: cards.length + (trailingBuilder != null ? 1 : 0),
+      builder: (context, i, radius) {
+        if (i == cards.length) {
+          return trailingBuilder!(context, radius);
+        }
 
-    const _borderRadius = BorderRadius.all(_radius);
-    const _topBorderRadius = BorderRadius.vertical(top: _radius);
-    const _centerBorderRadius = BorderRadius.zero;
-    const _bottomBorderRadius = BorderRadius.vertical(bottom: _radius);
-
-    final children = <Widget>[];
-
-    final itemCount = cards.length + (trailingBuilder != null ? 1 : 0);
-
-    for (final card in cards) {
-      final index = cards.indexOf(card);
-      BorderRadius _radius;
-
-      if (itemCount == 1) {
-        _radius = _borderRadius;
-      } else if (index == 0 && itemCount > 1) {
-        _radius = _topBorderRadius;
-      } else if (index == itemCount - 1 && trailingBuilder == null) {
-        _radius = _bottomBorderRadius;
-      } else {
-        _radius = _centerBorderRadius;
-      }
-
-      children.addAll([
-        CardRowWidget(
+        final card = cards[i];
+        return CardRowWidget(
           padding: rowPadding ?? const EdgeInsets.symmetric(horizontal: 16.0),
-          borderRadius: _radius,
+          borderRadius: radius,
           onTap: onTap != null ? () => onTap!(card) : null,
           leading: CardTypeWidget(
             cardType: card.cardType,
@@ -62,27 +45,8 @@ class SavedCardsList extends StatelessWidget {
           child: Text(
             card.formattedMaskedPan,
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 52.0),
-          child: Divider(
-            height: 1.0,
-          ),
-        ),
-      ]);
-    }
-
-    if (trailingBuilder != null) {
-      children.add(
-        trailingBuilder!(
-          context,
-          children.isEmpty ? _borderRadius : _bottomBorderRadius,
-        ),
-      );
-    } else if (children.last is Padding) {
-      children.removeLast();
-    }
-
-    return Column(children: children);
+        );
+      },
+    );
   }
 }

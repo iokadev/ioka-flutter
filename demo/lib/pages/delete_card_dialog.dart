@@ -1,3 +1,4 @@
+import 'package:demo/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:ioka/ioka.dart';
 
@@ -14,7 +15,7 @@ Future<bool> showDeleteSavedCardDialog(
     ),
   );
 
-  if(result != null && result) {
+  if (result != null && result) {
     return true;
   }
 
@@ -34,6 +35,7 @@ class _DeleteSavedCardsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -51,7 +53,7 @@ class _DeleteSavedCardsDialog extends StatelessWidget {
             ),
             const SizedBox(height: 24.0),
             Text(
-              'Вы уверены, что хотите удалить карту ${savedCard.formattedMaskedPan}?',
+              l10n.deleteCardDialogLabel(savedCard.formattedMaskedPan),
               style: theme.textTheme.headline6,
               textAlign: TextAlign.center,
             ),
@@ -69,7 +71,7 @@ class _DeleteSavedCardsDialog extends StatelessWidget {
 
                   Navigator.of(context).pop(true);
                 },
-                child: Text('Удалить'),
+                child: Text(l10n.deleteCardDialogDeleteAction),
               ),
             ),
             const SizedBox(height: 4.0),
@@ -79,7 +81,7 @@ class _DeleteSavedCardsDialog extends StatelessWidget {
               child: TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text(
-                  'Отмена',
+                  l10n.deleteCardDialogCancelAction,
                   style: theme.textTheme.subtitle2,
                 ),
               ),

@@ -1,4 +1,6 @@
-import 'package:demo/models/brightness_model.dart';
+import 'package:demo/l10n/l10n.dart';
+import 'package:demo/models/settings_model.dart';
+import 'package:demo/pages/language_selection_page.dart';
 import 'package:demo/pages/saved_cards_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +18,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final brightnessModel = context.watch<BrightnessModel>();
+    final settingsModel = context.watch<SettingsModel>();
+    final l10n = DemoLocalizations.of(context);
 
     final iconColor = theme.disabledColor;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text('Профиль'),
+        title: Text(l10n.profilePageTitle),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
@@ -46,18 +49,38 @@ class _ProfilePageState extends State<ProfilePage> {
                   IokaIcons.angleRight,
                   color: iconColor,
                 ),
-                child: Text('Сохраненные карты'),
+                child: Text(l10n.savedCardsPageTitle),
               ),
             ),
             const SizedBox(height: 8.0),
             Card(
               margin: EdgeInsets.zero,
               child: CardRowWidget(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const LanguageSelectionPage(),
+                  ),
+                ),
                 leading: IokaIcon(
                   IokaIcons.globe,
                   color: iconColor,
                 ),
-                child: Text('Язык'),
+                trailing: Row(
+                  children: [
+                    Text(
+                      settingsModel.localeName,
+                      style: theme.textTheme.subtitle1!.copyWith(
+                        color: iconColor,
+                      ),
+                    ),
+                    const SizedBox(width: 12.0),
+                    IokaIcon(
+                      IokaIcons.angleRight,
+                      color: iconColor,
+                    ),
+                  ],
+                ),
+                child: Text(l10n.languageSelectionPageTitle),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -70,13 +93,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 trailing: CupertinoSwitch(
                   onChanged: (v) {
-                    brightnessModel.themeMode =
+                    settingsModel.themeMode =
                         v ? ThemeMode.dark : ThemeMode.light;
                   },
-                  value: brightnessModel.brightness == Brightness.dark,
+                  value: settingsModel.brightness == Brightness.dark,
                   activeColor: theme.colorScheme.primary,
                 ),
-                child: Text('Темная тема'),
+                child: Text(l10n.darkTheme),
               ),
             ),
           ],
@@ -94,7 +117,7 @@ class CardRowWidget extends StatelessWidget {
     this.borderRadius,
     this.leading,
     this.trailing,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16.0)
+    this.padding = const EdgeInsets.symmetric(horizontal: 16.0),
   }) : super(key: key);
 
   final Widget child;

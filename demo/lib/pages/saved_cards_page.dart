@@ -1,4 +1,5 @@
 import 'package:demo/api/api.dart';
+import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/delete_card_dialog.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:demo/widgets/saved_cards_list.dart';
@@ -43,11 +44,12 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = DemoLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text('Сохраненные карты'),
+        title: Text(l10n.savedCardsPageTitle),
       ),
       body: _cards == null
           ? const Center(
@@ -102,7 +104,7 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
                       IokaIcons.angleRight,
                       color: theme.disabledColor,
                     ),
-                    child: Text('Добавить новую карту'),
+                    child: Text(l10n.savedCardsPageAddCardAction),
                   ),
                 ),
               ),
