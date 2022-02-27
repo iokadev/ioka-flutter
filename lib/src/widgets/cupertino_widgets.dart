@@ -17,6 +17,7 @@ export './progress_button/cupertino_progress_button.dart';
 export './text_field/cupertino_text_field.dart';
 export './theme/theme.dart';
 export './theme/utils.dart';
+export './toast/toast.dart';
 export './tooltip/cvc_tooltip.dart';
 export './tooltip/tooltip.dart';
 export './utils/lerp_implicit_animation_widget.dart';

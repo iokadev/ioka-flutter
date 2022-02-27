@@ -79,8 +79,15 @@ class SaveCardModel extends ChangeNotifier {
   }
 
   Future<void> _onFailure(BuildContext context, {String? reason}) async {
-    // Show message!
-    print(reason);
+    IokaToast.showError(
+      context,
+      message: reason ?? '',
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        bottom: 88.0,
+      ),
+    );
   }
 
   @override

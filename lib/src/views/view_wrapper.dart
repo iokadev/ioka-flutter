@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:ioka/ioka.dart';
-import 'package:ioka/src/l10n/l10n_inherited_widget.dart';
-import 'package:ioka/src/widgets/theme/theme.dart';
 
 class IokaViewWrapper extends InheritedWidget {
   IokaViewWrapper({

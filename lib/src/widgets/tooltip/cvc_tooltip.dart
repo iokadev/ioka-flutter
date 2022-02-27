@@ -4,12 +4,17 @@ import 'package:ioka/ioka.dart';
 Future<void> showCvcTooltip(BuildContext context) {
   return showTooltip(
     context,
-    builder: (_) => const CvcTooltipWidget(),
+    builder: (_) => CvcTooltipWidget(hint: context.l10n.cvcTooltipHint),
   );
 }
 
 class CvcTooltipWidget extends StatelessWidget {
-  const CvcTooltipWidget({Key? key}) : super(key: key);
+  const CvcTooltipWidget({
+    Key? key,
+    required this.hint,
+  }) : super(key: key);
+
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class CvcTooltipWidget extends StatelessWidget {
         children: [
           const IokaIcon(IokaIcons.cvc),
           const SizedBox(width: 12.0),
-          Text(context.l10n.cvcTooltipHint),
+          Text(hint),
         ],
       ),
     );
