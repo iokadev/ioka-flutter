@@ -3,10 +3,9 @@ import 'package:credit_card_validator/card_number.dart';
 import 'package:credit_card_validator/validation_results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
-import 'package:ioka/src/widgets/text_field/formatters/pan_input_formatter.dart';
 
-class CupertinoPanFormField extends StatelessWidget {
-  const CupertinoPanFormField({
+class CupertinoCardNumberFormField extends StatelessWidget {
+  const CupertinoCardNumberFormField({
     Key? key,
     required this.onChanged,
     this.onValidated,
@@ -42,14 +41,10 @@ class CupertinoPanFormField extends StatelessWidget {
         enabled: isEnabled,
         suffix: Row(
           children: [
-            if (cardEmitter != null) ...[
-              CardEmitterWidget(cardEmitter: cardEmitter),
-              const SizedBox(width: 8.0),
-            ],
-            if (cardType != null) ...[
-              CardTypeWidget(cardType: cardType),
-              const SizedBox(width: 16.0),
-            ],
+            CardEmitterWidget(cardEmitter: cardEmitter),
+            const SizedBox(width: 8.0),
+            CardTypeWidget(cardType: cardType),
+            const SizedBox(width: 16.0),
           ],
         ),
       ),

@@ -9,6 +9,9 @@ import './generated/client_index.dart' as g;
 import 'utils/access_token_helpers.dart';
 import 'utils/error.dart';
 
+export './generated/ioka_api.enums.swagger.dart';
+export './models/saved_card.dart';
+
 class IokaApi {
   IokaApi({
     required String apiKey,
@@ -58,11 +61,10 @@ class IokaApi {
 
   Future<List<ExtendedCard>> getCards({
     required String customerAccessToken,
-    required String customerId,
   }) {
     return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsGet(
-        customerId: customerId,
+        customerId: customerIdFromAccessToken(customerAccessToken),
       ),
       customerAccessToken: customerAccessToken,
     );
@@ -73,6 +75,7 @@ class IokaApi {
     required String pan,
     required String expiryDate,
     required String cvc,
+    String? customerAccessToken,
     bool save = false,
   }) {
     return _makeRequest(
@@ -86,6 +89,7 @@ class IokaApi {
         ),
       ),
       orderAccessToken: orderAccessToken,
+      customerAccessToken: customerAccessToken,
     );
   }
 
@@ -101,6 +105,17 @@ class IokaApi {
           cardId: cardId,
           cvc: cvc,
         ),
+      ),
+      orderAccessToken: orderAccessToken,
+    );
+  }
+
+  Future<OrderOut> getOrderById({
+    required String orderAccessToken,
+  }) {
+    return _makeRequest(
+      () => generatedApi.v2OrdersOrderIdGet(
+        orderId: orderIdFromAccessToken(orderAccessToken),
       ),
       orderAccessToken: orderAccessToken,
     );
@@ -132,6 +147,7 @@ class IokaApi {
           pan: pan,
           cvc: cvc,
           exp: expiryDate,
+          holder: 'holder',
         ),
       ),
       customerAccessToken: customerAccessToken,

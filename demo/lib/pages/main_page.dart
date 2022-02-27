@@ -20,16 +20,6 @@ class _MainPageState extends State<MainPage> {
     return ValueListenableBuilder(
       valueListenable: _selectedPageNotifier,
       builder: (context, int selectedPage, child) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          titleTextStyle: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.w600,
-            color: theme.textTheme.bodyText1?.color,
-          ),
-          elevation: 0,
-          title: Text(selectedPage == 0 ? 'Корзина' : 'Профиль'),
-        ),
         body: IndexedStack(
           index: selectedPage,
           children: const [

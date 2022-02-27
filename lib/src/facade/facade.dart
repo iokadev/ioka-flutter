@@ -1,24 +1,17 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ioka/src/api/api.dart';
-import 'package:ioka/src/facade/config.dart';
-import 'package:ioka/src/models/checkout_model.dart';
-import 'package:ioka/src/utils/navigation.dart';
-import 'package:ioka/src/views/checkout/cupertino_checkout_view.dart';
-import 'package:ioka/src/views/view_wrapper.dart';
-import 'package:ioka/src/widgets/theme/theme.dart';
-import 'package:ioka/src/widgets/theme/theme_conversion.dart';
+import 'package:ioka/ioka.dart';
+import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as generated;
 import 'package:provider/provider.dart';
 
 class Ioka {
   Ioka._({
     required this.api,
-    required IokaConfiguration configuration,
+    required this.configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
-  })  : _configuration = configuration,
-        _theme = theme,
+  })  : _theme = theme,
         _darkTheme = darkTheme,
         _platform = platform;
 
@@ -47,7 +40,7 @@ class Ioka {
     return _instance!;
   }
 
-  final IokaConfiguration _configuration;
+  final IokaConfiguration configuration;
   final IokaApi api;
   final IokaTheme? _theme;
   final IokaTheme? _darkTheme;
@@ -63,24 +56,34 @@ class Ioka {
     }
 
     final brightness =
-        brightnessOverride ?? IokaThemeConversion.getBrightness(context);
+        brightnessOverride ?? IokaThemeUtils.getBrightness(context);
+
+    final automaticallyGenerateTheme = configuration.automaticallyGenerateTheme;
 
     if (brightness == Brightness.light) {
-      return _theme;
+      return automaticallyGenerateTheme
+          ? _theme
+          : _theme ?? IokaTheme.defaultLight;
     }
 
-    return _darkTheme;
+    return automaticallyGenerateTheme
+        ? _darkTheme
+        : _darkTheme ?? IokaTheme.defaultDark;
   }
 
   Future<void> startCheckoutFlow({
     required BuildContext context,
     required String orderAccessToken,
-    required int amount,
+    String? customerAccessToken,
     IokaTheme? theme,
     Brightness? brightness,
     Platform? platform,
     Locale? locale,
   }) async {
+    final order = await api.getOrderById(
+      orderAccessToken: orderAccessToken,
+    );
+
     final resolvedTheme = _resolveTheme(context, theme, brightness);
     final resolvedPlatform = platform ?? _platform;
 
@@ -89,13 +92,62 @@ class Ioka {
       (context, platform) => ChangeNotifierProvider(
         create: (_) => CheckoutModel(
           orderAccessToken: orderAccessToken,
-          amount: amount,
+          customerAccessToken: customerAccessToken,
+          order: order,
         ),
         builder: (context, _) => const CupertinoCheckoutView(),
       ),
       platform: resolvedPlatform,
       theme: resolvedTheme,
       locale: locale,
+    );
+  }
+
+  Future<List<SavedCard>> getSavedCards({
+    required String customerAccessToken,
+  }) async {
+    final cards = await api.getCards(customerAccessToken: customerAccessToken);
+    return cards.map(SavedCard.fromExtendedCard).toList();
+  }
+
+  Future<SavedCard?> saveNewCard({
+    required BuildContext context,
+    required String customerAccessToken,
+    IokaTheme? theme,
+    Brightness? brightness,
+    Platform? platform,
+    Locale? locale,
+  }) async {
+    final resolvedTheme = _resolveTheme(context, theme, brightness);
+    final resolvedPlatform = platform ?? _platform;
+
+    final result = await Navigator.of(context).pushWithViewWrapper(
+      context,
+      (context, platform) => ChangeNotifierProvider(
+        create: (_) => SaveCardModel(
+          customerAccessToken: customerAccessToken,
+        ),
+        builder: (context, _) => const CupertinoSaveCardView(),
+      ),
+      platform: resolvedPlatform,
+      theme: resolvedTheme,
+      locale: locale,
+    );
+
+    if (result is! generated.ExtendedCard) {
+      return null;
+    }
+
+    return SavedCard.fromExtendedCard(result);
+  }
+
+  Future<void> deleteSavedCard({
+    required String customerAccessToken,
+    required String cardId,
+  }) async {
+    await api.deleteCardById(
+      cardId: cardId,
+      customerAccessToken: customerAccessToken,
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:credit_card_validator/expiration_date.dart';
 import 'package:credit_card_validator/validation_results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
-import 'package:ioka/src/widgets/text_field/formatters/expiry_date_input_formatter.dart';
 
 class CupertinoExpiryDateFormField extends StatelessWidget {
   const CupertinoExpiryDateFormField({

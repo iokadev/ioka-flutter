@@ -7,9 +7,10 @@ class IokaIcons {
   static const angleRight = 'angle-right';
   static const camera = 'camera';
   static const cash = 'cash';
+  static const check = 'check';
   static const close = 'close';
-  static const creditCardBack = 'credit-card-back';
-  static const creditCardFront = 'credit-card-front';
+  static const creditCardAlt = 'credit-card-alt';
+  static const creditCard = 'credit-card';
   static const error = 'error';
   static const failure = 'failure';
   static const globe = 'globe';

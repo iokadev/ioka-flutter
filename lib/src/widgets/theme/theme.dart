@@ -1,7 +1,13 @@
 import 'dart:ui';
+
 import 'package:flutter/widgets.dart';
 
 import 'package:ioka/src/widgets/theme/theme_inherited_widget.dart';
+
+export './generator/cupertino_theme_generator.dart';
+export './generator/material_theme_generator.dart';
+export './generator/theme_generator.dart';
+export './theme_inherited_widget.dart';
 
 enum Platform {
   material,
@@ -15,6 +21,83 @@ class IokaTheme {
     required this.typography,
     required this.extras,
   });
+
+  factory IokaTheme.simple({
+    required Brightness brightness,
+    Color? primaryColor,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Color? textColor,
+    String? fontFamily,
+    String? fontPackage,
+    BorderRadius? borderRadius,
+  }) {
+    final _defaultColors = brightness == Brightness.light
+        ? IokaThemeColors.defaultLight
+        : IokaThemeColors.defaultDark;
+
+    final _colors = _defaultColors.copyWith(
+      primary: primaryColor,
+      fill1: backgroundColor,
+      fill2: textColor,
+      fill4: foregroundColor,
+    );
+
+    return IokaTheme(
+      brightness: brightness,
+      colors: _colors,
+      typography: IokaThemeTypography.generate(
+        color: _colors.fill2,
+        fontFamily: fontFamily ?? 'Inter',
+        package: fontFamily == null ? 'ioka' : fontPackage,
+      ),
+      extras: IokaThemeExtras.defaultExtras.copyWith(
+        borderRadius: borderRadius,
+      ),
+    );
+  }
+
+  factory IokaTheme.simpleLight({
+    Color? primaryColor,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Color? textColor,
+    String? fontFamily,
+    String? fontPackage,
+    BorderRadius? borderRadius,
+  }) {
+    return IokaTheme.simple(
+      brightness: Brightness.light,
+      primaryColor: primaryColor,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      textColor: textColor,
+      fontFamily: fontFamily,
+      fontPackage: fontPackage,
+      borderRadius: borderRadius,
+    );
+  }
+
+  factory IokaTheme.simpleDark({
+    Color? primaryColor,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Color? textColor,
+    String? fontFamily,
+    String? fontPackage,
+    BorderRadius? borderRadius,
+  }) {
+    return IokaTheme.simple(
+      brightness: Brightness.dark,
+      primaryColor: primaryColor,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      textColor: textColor,
+      fontFamily: fontFamily,
+      fontPackage: fontPackage,
+      borderRadius: borderRadius,
+    );
+  }
 
   final Brightness brightness;
   final IokaThemeColors colors;
@@ -45,12 +128,28 @@ class IokaTheme {
     ),
     extras: IokaThemeExtras.defaultExtras,
   );
+
+  IokaTheme copyWith({
+    Brightness? brightness,
+    IokaThemeColors? colors,
+    IokaThemeTypography? typography,
+    IokaThemeExtras? extras,
+  }) {
+    return IokaTheme(
+      brightness: brightness ?? this.brightness,
+      colors: colors ?? this.colors,
+      typography: typography ?? this.typography,
+      extras: extras ?? this.extras,
+    );
+  }
 }
 
 class IokaThemeColors {
   const IokaThemeColors({
     required this.primary,
+    required this.onPrimary,
     required this.secondary,
+    required this.onSecondary,
     required this.fill0,
     required this.fill1,
     required this.fill2,
@@ -65,7 +164,9 @@ class IokaThemeColors {
   });
 
   final Color primary;
+  final Color onPrimary;
   final Color secondary;
+  final Color onSecondary;
   final Color fill0;
   final Color fill1;
   final Color fill2;
@@ -83,7 +184,9 @@ class IokaThemeColors {
 
   IokaThemeColors copyWith({
     Color? primary,
+    Color? onPrimary,
     Color? secondary,
+    Color? onSecondary,
     Color? fill0,
     Color? fill1,
     Color? fill2,
@@ -98,7 +201,9 @@ class IokaThemeColors {
   }) {
     return IokaThemeColors(
       primary: primary ?? this.primary,
+      onPrimary: onPrimary ?? this.onPrimary,
       secondary: secondary ?? this.secondary,
+      onSecondary: onSecondary ?? this.onSecondary,
       fill0: fill0 ?? this.fill0,
       fill1: fill1 ?? this.fill1,
       fill2: fill2 ?? this.fill2,
@@ -115,7 +220,9 @@ class IokaThemeColors {
 
   static const defaultLight = IokaThemeColors(
     primary: Color(0xFF6467AA),
+    onPrimary: Color(0xFFFFFFFF),
     secondary: Color(0xFF94AA64),
+    onSecondary: Color(0xFFFFFFFF),
     fill0: Color(0xFFFFFFFF),
     fill1: Color(0xFFFFFFFF),
     fill2: Color(0xFF1A1A2B),
@@ -131,7 +238,9 @@ class IokaThemeColors {
 
   static const defaultDark = IokaThemeColors(
     primary: Color(0xFF6467AA),
+    onPrimary: Color(0xFFFFFFFF),
     secondary: Color(0xFF94AA64),
+    onSecondary: Color(0xFFFFFFFF),
     fill0: Color(0xFFFFFFFF),
     fill1: Color(0xFF1A1A2B),
     fill2: Color(0xFFFFFFFF),
@@ -192,7 +301,7 @@ class IokaThemeTypography {
   static IokaThemeTypography generate({
     required Color color,
     String fontFamily = 'Inter',
-    String package = 'ioka',
+    String? package = 'ioka',
   }) {
     final baseStyle = TextStyle(
       color: color,
@@ -256,4 +365,12 @@ class IokaThemeExtras {
   static final defaultExtras = IokaThemeExtras(
     borderRadius: BorderRadius.circular(12),
   );
+
+  IokaThemeExtras copyWith({
+    BorderRadius? borderRadius,
+  }) {
+    return IokaThemeExtras(
+      borderRadius: borderRadius ?? this.borderRadius,
+    );
+  }
 }

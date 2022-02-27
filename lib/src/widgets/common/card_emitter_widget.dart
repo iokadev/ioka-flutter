@@ -11,12 +11,15 @@ class CardEmitterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (cardEmitter == null || cardEmitter == 'unknown') {
-      return const SizedBox.shrink();
-    }
+    final isVisible = cardEmitter != null && cardEmitter!.isNotEmpty;
 
-    return CardWidget(
-      child: Text(cardEmitter!),
+    return SlideInAnimationWidget(
+      isVisible: isVisible,
+      child: isVisible
+          ? CardWidget(
+              child: Text(cardEmitter!),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

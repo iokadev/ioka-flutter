@@ -3,7 +3,6 @@ import 'package:credit_card_validator/security_code.dart';
 import 'package:credit_card_validator/validation_results.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
-import 'package:ioka/src/widgets/text_field/formatters/cvc_input_formatter.dart';
 
 class CupertinoCvcFormField extends StatelessWidget {
   const CupertinoCvcFormField({
@@ -49,7 +48,9 @@ class CupertinoCvcFormField extends StatelessWidget {
             IokaIcons.info,
             color: context.colors.grey,
           ),
-          onPressed: () {},
+          onPressed: () {
+            
+          },
         ),
       ),
       autovalidateMode: AutovalidateMode.disabled,

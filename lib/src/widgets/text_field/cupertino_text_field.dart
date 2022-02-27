@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:ioka/src/utils/lerp_implicit_animation_widget.dart';
 import 'package:ioka/src/widgets/cupertino_widgets.dart';
 
 class IokaCupertinoTextField extends StatefulWidget {

@@ -4,10 +4,10 @@ import 'package:ioka/src/widgets/cupertino_widgets.dart';
 class CupertinoPaymentFailureView extends StatelessWidget {
   const CupertinoPaymentFailureView({
     Key? key,
-    required this.reason,
+    this.reason,
   }) : super(key: key);
 
-  final String reason;
+  final String? reason;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CupertinoPaymentFailureView extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IokaIcon(
+                      const IokaIcon(
                         IokaIcons.failure,
                         size: 96.0,
                       ),
@@ -35,14 +35,16 @@ class CupertinoPaymentFailureView extends StatelessWidget {
                         'Платеж не прошел',
                         style: context.typography.heading,
                       ),
-                      const SizedBox(height: 8.0),
-                      Text(
-                        reason,
-                        textAlign: TextAlign.center,
-                        style: context.typography.subtitle.copyWith(
-                          color: context.colors.grey,
+                      if (reason != null) ...[
+                        const SizedBox(height: 8.0),
+                        Text(
+                          reason!,
+                          textAlign: TextAlign.center,
+                          style: context.typography.subtitle.copyWith(
+                            color: context.colors.grey,
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
@@ -52,10 +54,10 @@ class CupertinoPaymentFailureView extends StatelessWidget {
                 width: double.infinity,
                 height: 56.0,
                 child: CupertinoButton(
-                  child: Text('Попробовать заново'),
                   color: context.colors.primary,
                   borderRadius: context.themeExtras.borderRadius,
                   onPressed: () => Navigator.of(context).pop(true),
+                  child: Text('Попробовать заново'),
                 ),
               ),
             ],

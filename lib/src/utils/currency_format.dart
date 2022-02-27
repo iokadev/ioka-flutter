@@ -19,3 +19,7 @@ String formatTengeAmount(int amount) {
     return '$wholeFormattedString,$fraction ₸';
   }
 }
+
+String formatMaskedPan(String maskedPan) {
+  return '•••• ${maskedPan.split('*').last}';
+}

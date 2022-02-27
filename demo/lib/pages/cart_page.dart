@@ -1,3 +1,4 @@
+import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/widgets/amount_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,56 +16,63 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                ValueListenableBuilder(
-                  valueListenable: _amountNotifier,
-                  builder: (context, int amount, child) => _ItemCard(
-                    id: '248241',
-                    name: 'Набор керамики',
-                    amount: amount,
-                    image: AssetImage('assets/images/ceramics.jpeg'),
-                    onAmountChanged: (v) => _amountNotifier.value = v,
-                    onRemove: () {},
-                    price: 100.0 * amount,
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        title: const Text('Корзина'),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  ValueListenableBuilder(
+                    valueListenable: _amountNotifier,
+                    builder: (context, int amount, child) => _ItemCard(
+                      id: '248241',
+                      name: 'Набор керамики',
+                      amount: amount,
+                      image: AssetImage('assets/images/ceramics.jpeg'),
+                      onAmountChanged: (v) => _amountNotifier.value = v,
+                      onRemove: () {},
+                      price: 1000.0 * amount,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-          child: SizedBox(
-            width: double.infinity,
-            height: 56.0,
-            child: ElevatedButton(
-              onPressed: () {
-                Ioka.instance.startCheckoutFlow(
-                  context: context,
-                  orderAccessToken: '',
-                  amount: (100000 * _amountNotifier.value).round(),
-                );
-              },
-              child: const Text('Перейти к оформлению'),
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all<double>(0.0),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+            child: SizedBox(
+              width: double.infinity,
+              height: 56.0,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => CheckoutPage(
+                        amount: (1000.0 * _amountNotifier.value).round(),
+                      ),
+                    ),
+                  );
+                },
+                child: const Text('Перейти к оформлению'),
+                style: ButtonStyle(
+                  elevation: MaterialStateProperty.all<double>(0.0),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

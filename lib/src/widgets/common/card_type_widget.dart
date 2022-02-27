@@ -12,12 +12,15 @@ class CardTypeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (cardType == null || cardType == CreditCardType.unknown) {
-      return const SizedBox.shrink();
-    }
+    final isVisible = cardType != null && cardType != CreditCardType.unknown;
 
-    return CardWidget(
-      child: Text(cardType.toString().split('.').last),
+    return SlideInAnimationWidget(
+      isVisible: isVisible,
+      child: isVisible
+          ? CardWidget(
+              child: Text(cardType.toString().split('.').last),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

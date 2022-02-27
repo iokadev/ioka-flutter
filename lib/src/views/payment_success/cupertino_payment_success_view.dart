@@ -5,12 +5,12 @@ import 'package:ioka/src/widgets/cupertino_widgets.dart';
 class CupertinoPaymentSuccessView extends StatelessWidget {
   const CupertinoPaymentSuccessView({
     Key? key,
-    required this.orderNumber,
     required this.orderAmount,
+    this.orderNumber,
   }) : super(key: key);
 
-  final String orderNumber;
-  final int orderAmount;
+  final String? orderNumber;
+  final int? orderAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +40,22 @@ class CupertinoPaymentSuccessView extends StatelessWidget {
                           color: context.colors.success,
                         ),
                       ),
-                      const SizedBox(height: 40.0),
-                      Text(
-                        'Заказ №$orderNumber',
-                        style: context.typography.subtitle.copyWith(
-                          color: context.colors.grey,
+                      if (orderNumber != null) ...[
+                        const SizedBox(height: 40.0),
+                        Text(
+                          'Заказ №$orderNumber',
+                          style: context.typography.subtitle.copyWith(
+                            color: context.colors.grey,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4.0),
-                      Text(
-                        formatTengeAmount(orderAmount),
-                        style: context.typography.heading2,
-                      ),
+                      ],
+                      if (orderAmount != null) ...[
+                        const SizedBox(height: 4.0),
+                        Text(
+                          formatTengeAmount(orderAmount!),
+                          style: context.typography.heading2,
+                        ),
+                      ],
                     ],
                   ),
                 ),
