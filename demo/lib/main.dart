@@ -2,6 +2,7 @@ import 'package:demo/api/api.dart';
 import 'package:demo/models/brightness_model.dart';
 import 'package:demo/pages/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ioka/ioka.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
+
     return ChangeNotifierProvider(
       create: (_) => BrightnessModel(),
       builder: (context, _) => MaterialApp(
