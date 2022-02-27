@@ -9,11 +9,13 @@ class IokaIcon extends StatelessWidget {
     Key? key,
     this.size,
     this.color,
+    this.blendMode,
   }) : super(key: key);
 
   final String icon;
   final double? size;
   final Color? color;
+  final BlendMode? blendMode;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class IokaIcon extends StatelessWidget {
       width: size,
       height: size,
       color: color,
+      colorBlendMode: blendMode ?? BlendMode.srcIn,
     );
   }
 }

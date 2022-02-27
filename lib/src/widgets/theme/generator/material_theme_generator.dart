@@ -52,46 +52,47 @@ class IokaMaterialThemeGenerator extends IokaThemeGenerator<ThemeData> {
     );
 
     return materialTheme.copyWith(
-        cardTheme: CardTheme(
-          color: colors.fill6,
-          elevation: 0,
+      cardTheme: CardTheme(
+        color: colors.fill6,
+        elevation: 0,
+        shape: _shape,
+      ),
+      appBarTheme: AppBarTheme(
+        color: colors.fill1,
+        elevation: 0,
+        foregroundColor: colors.fill2,
+        titleTextStyle: typography.title,
+        systemOverlayStyle: theme.brightness == Brightness.dark
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark,
+      ),
+      scaffoldBackgroundColor: colors.fill1,
+      buttonTheme: ButtonThemeData(
+        shape: _shape,
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: colors.primary,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
           shape: _shape,
+          elevation: 0.0,
         ),
-        appBarTheme: AppBarTheme(
-          color: colors.fill1,
-          elevation: 0,
-          foregroundColor: colors.fill2,
-          titleTextStyle: typography.title,
-          systemOverlayStyle: theme.brightness == Brightness.dark
-              ? SystemUiOverlayStyle.light
-              : SystemUiOverlayStyle.dark,
-        ),
-        scaffoldBackgroundColor: colors.fill1,
-        buttonTheme: ButtonThemeData(
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
           shape: _shape,
+          elevation: 0.0,
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedItemColor: colors.primary,
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith(
+          (states) => states.contains(MaterialState.selected)
+              ? colors.primary
+              : colors.grey,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: _shape,
-            elevation: 0.0,
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            shape: _shape,
-            elevation: 0.0,
-          ),
-        ),
-        radioTheme: RadioThemeData(
-          fillColor: MaterialStateProperty.resolveWith(
-            (states) => states.contains(MaterialState.selected)
-                ? colors.primary
-                : colors.grey,
-          ),
-        ));
+      ),
+    );
   }
 
   @override

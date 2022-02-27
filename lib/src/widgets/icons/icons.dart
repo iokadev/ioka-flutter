@@ -11,6 +11,7 @@ class IokaIcons {
   static const close = 'close';
   static const creditCardAlt = 'credit-card-alt';
   static const creditCard = 'credit-card';
+  static const cvc = 'cvc';
   static const error = 'error';
   static const failure = 'failure';
   static const globe = 'globe';

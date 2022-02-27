@@ -43,14 +43,16 @@ class CupertinoCvcFormField extends StatelessWidget {
         secure: true,
         obscureText: true,
         enabled: isEnabled,
-        suffix: CupertinoButton(
-          child: IokaIcon(
-            IokaIcons.info,
-            color: context.colors.grey,
+        suffix: Builder(
+          builder: (context) => CupertinoButton(
+            child: IokaIcon(
+              IokaIcons.info,
+              color: context.colors.grey,
+            ),
+            onPressed: () {
+              showCvcTooltip(context);
+            },
           ),
-          onPressed: () {
-            
-          },
         ),
       ),
       autovalidateMode: AutovalidateMode.disabled,
