@@ -46,8 +46,7 @@ flutter:
   assets:
     - lib/assets/icons/
     - lib/assets/icons/card_types/
-    - lib/assets/icons/card_emitters/
-  
+
   fonts:
     - family: Inter
       fonts:
