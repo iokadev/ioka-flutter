@@ -37,13 +37,15 @@ class CheckoutWithSavedCardModel extends CheckoutModel {
   }
 
   @override
-  Future<void> onFailure(BuildContext context, {String? reason}) async {
+  Future<bool> onFailure(BuildContext context, {String? reason}) async {
     Navigator.pop(context);
 
     await showCupertinoPaymentFailureDialog(
       context,
       reason: reason,
     );
+
+    return false;
   }
 
   @override

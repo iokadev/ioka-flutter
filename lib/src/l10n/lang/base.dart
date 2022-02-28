@@ -1,3 +1,8 @@
+/// Базовый класс локализации.
+/// 
+/// - Русский язык: [RuIokaLocalization]
+/// 
+/// - Английский язык: [EnIokaLocalization]
 abstract class IokaLocalization {
   String checkoutWithNewCardViewTitle(int amount);
   String checkoutWithNewCardViewPayAction(int amount);

@@ -1,21 +1,46 @@
 import 'package:ioka/ioka.dart';
 
-String orderIdFromAccessToken(String orderAccessToken) {
-  return orderAccessToken.split('_secret_').first;
-}
+/// Получает идентификатор из токена.
+///
+/// Формат customerAccessToken и orderAccessToken включает в себя
+/// идентификатор объекта:
+///
+/// ```
+/// {id}_secret_{secret}
+/// ```
+///
+/// В случае неверного токена генерируется исключение типа FormatException.
+String idFromAccessToken(String customerAccessToken) {
+  final parts = customerAccessToken.split('_secret_');
 
-String customerIdFromAccessToken(String customerAccessToken) {
-  return customerAccessToken.split('_secret_').first;
-}
-
-IokaApiMode apiModeFromPublicKey(String publicKey) {
-  final type = publicKey.split('_')[1];
-
-  if (type == 'test') {
-    return IokaApiMode.staging;
-  } else if (type == 'live') {
-    return IokaApiMode.production;
+  if (parts.length != 2) {
+    throw const FormatException('Invalid access token format');
   }
 
-  throw Exception('Invalid public key format');
+  return parts.first;
+}
+
+/// Получает режим API из публичного ключа.
+///
+/// Формат publicKey включает в себя режим API:
+///
+/// ```
+/// {shop_id}_{mode}_public_{key}
+/// ```
+///
+/// В случае неверного токена генерируется исключение типа FormatException.
+IokaApiMode apiModeFromPublicKey(String publicKey) {
+  final parts = publicKey.split('_public_');
+
+  if (parts.length == 2) {
+    final type = parts[0];
+
+    if (type.endsWith('_test')) {
+      return IokaApiMode.staging;
+    } else if (type.endsWith('_live')) {
+      return IokaApiMode.production;
+    }
+  }
+
+  throw const FormatException('Invalid public key format');
 }

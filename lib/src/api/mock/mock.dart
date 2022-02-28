@@ -122,7 +122,7 @@ class MockIokaApi extends IokaApi {
     String? customerAccessToken,
     bool save = false,
   }) async {
-    final orderId = orderIdFromAccessToken(orderAccessToken);
+    final orderId = idFromAccessToken(orderAccessToken);
     final order = _orders[orderId];
 
     if (order == null) {
@@ -177,7 +177,7 @@ class MockIokaApi extends IokaApi {
     required String cardId,
     String? cvc,
   }) async {
-    final orderId = orderIdFromAccessToken(orderAccessToken);
+    final orderId = idFromAccessToken(orderAccessToken);
     final order = _orders[orderId];
 
     final cards = _savedCards.values.where((card) => card.id == cardId);
@@ -240,7 +240,7 @@ class MockIokaApi extends IokaApi {
   Future<g.OrderOut> getOrderById({
     required String orderAccessToken,
   }) async {
-    final order = _orders[orderIdFromAccessToken(orderAccessToken)];
+    final order = _orders[idFromAccessToken(orderAccessToken)];
 
     if (order == null) {
       throw IokaError(

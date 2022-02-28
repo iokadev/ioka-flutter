@@ -66,7 +66,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsGet(
-        customerId: customerIdFromAccessToken(customerAccessToken),
+        customerId: idFromAccessToken(customerAccessToken),
       ),
       customerAccessToken: customerAccessToken,
     );
@@ -82,7 +82,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsCardPost(
-        orderId: orderIdFromAccessToken(orderAccessToken),
+        orderId: idFromAccessToken(orderAccessToken),
         body: CardPayer(
           pan: pan,
           exp: expiryDate,
@@ -102,7 +102,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsCardPost(
-        orderId: orderIdFromAccessToken(orderAccessToken),
+        orderId: idFromAccessToken(orderAccessToken),
         body: CardPayer(
           cardId: cardId,
           cvc: cvc,
@@ -117,7 +117,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2OrdersOrderIdGet(
-        orderId: orderIdFromAccessToken(orderAccessToken),
+        orderId: idFromAccessToken(orderAccessToken),
       ),
       orderAccessToken: orderAccessToken,
     );
@@ -129,7 +129,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2OrdersOrderIdPaymentsPaymentIdGet(
-        orderId: orderIdFromAccessToken(orderAccessToken),
+        orderId: idFromAccessToken(orderAccessToken),
         paymentId: paymentId,
       ),
       orderAccessToken: orderAccessToken,
@@ -144,7 +144,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdBindingsPost(
-        customerId: customerIdFromAccessToken(customerAccessToken),
+        customerId: idFromAccessToken(customerAccessToken),
         body: BindingCard(
           pan: pan,
           cvc: cvc,
@@ -162,7 +162,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsCardIdGet(
-        customerId: customerIdFromAccessToken(customerAccessToken),
+        customerId: idFromAccessToken(customerAccessToken),
         cardId: cardId,
       ),
       customerAccessToken: customerAccessToken,
@@ -175,7 +175,7 @@ class IokaApi {
   }) {
     return _makeRequest(
       () => generatedApi.v2CustomersCustomerIdCardsCardIdDelete(
-        customerId: customerIdFromAccessToken(customerAccessToken),
+        customerId: idFromAccessToken(customerAccessToken),
         cardId: cardId,
       ),
       customerAccessToken: customerAccessToken,
