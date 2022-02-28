@@ -7,16 +7,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ioka/ioka.dart';
 import 'package:provider/provider.dart';
 
-import 'api/secrets.dart';
 import 'l10n/l10n.dart';
 
 void main() {
   Ioka.setup(
-    apiKey: Secrets.publicApiKey,
+    apiKey: const String.fromEnvironment('PUBLIC_API_KEY'),
   );
 
   DemoApi.setup(
-    baseUrl: Secrets.baseUrl,
+    baseUrl: const String.fromEnvironment('DEMO_API_BASE_URL'),
   );
 
   runApp(MyApp());
