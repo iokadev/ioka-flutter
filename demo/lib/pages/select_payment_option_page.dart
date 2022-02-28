@@ -1,6 +1,5 @@
 import 'package:demo/api/api.dart';
 import 'package:demo/l10n/l10n.dart';
-import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:demo/widgets/saved_cards_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +20,6 @@ class SelectPaymentOptionPage extends StatefulWidget {
 }
 
 class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
-  var _isLoading = true;
   String? _customerAccessToken;
   List<SavedCard>? _cards;
 
@@ -36,19 +34,17 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
   }
 
   Future<void> _loadSavedCards() async {
-    setState(() => _isLoading = true);
-
     try {
       _customerAccessToken = await DemoApi.instance.getProfile();
       _cards = await Ioka.instance.getSavedCards(
         customerAccessToken: _customerAccessToken!,
       );
     } catch (e) {
-      // Show error
-      print(e);
+      // TODO: Show error
+
     }
 
-    setState(() => _isLoading = false);
+    setState(() {});
   }
 
   @override

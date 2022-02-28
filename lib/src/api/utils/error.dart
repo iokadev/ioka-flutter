@@ -6,6 +6,16 @@ class IokaError {
     required this.message,
   });
 
+  factory IokaError.fromMap(Map<String, dynamic> map) {
+    return IokaError(
+      code: map['code'] ?? '',
+      message: map['message'] ?? '',
+    );
+  }
+
+  factory IokaError.fromJson(String source) =>
+      IokaError.fromMap(json.decode(source));
+
   final String code;
   final String message;
 
@@ -26,17 +36,7 @@ class IokaError {
     };
   }
 
-  factory IokaError.fromMap(Map<String, dynamic> map) {
-    return IokaError(
-      code: map['code'] ?? '',
-      message: map['message'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory IokaError.fromJson(String source) =>
-      IokaError.fromMap(json.decode(source));
 
   @override
   String toString() => 'IokaError(code: $code, message: $message)';

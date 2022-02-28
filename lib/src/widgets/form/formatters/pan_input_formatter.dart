@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/services.dart';
 
 class PanInputFormatter extends TextInputFormatter {

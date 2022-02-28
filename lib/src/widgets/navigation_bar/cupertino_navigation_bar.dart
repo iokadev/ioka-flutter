@@ -61,7 +61,7 @@ class IokaCupertinoNavigationBar extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => const Size.fromHeight(56.0);
 
   @override
   bool shouldFullyObstruct(BuildContext context) => true;

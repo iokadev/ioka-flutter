@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ioka/ioka.dart';
 
 void main() {
   runApp(const MyApp());

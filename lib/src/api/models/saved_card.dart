@@ -1,8 +1,5 @@
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:credit_card_validator/card_number.dart';
-
-import 'package:ioka/ioka.dart';
-import 'package:ioka/src/api/api.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
 
 class SavedCard {

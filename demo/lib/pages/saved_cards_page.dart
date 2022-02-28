@@ -15,7 +15,6 @@ class SavedCardsPage extends StatefulWidget {
 }
 
 class _SavedCardsPageState extends State<SavedCardsPage> {
-  var _isLoading = true;
   String? _customerAccessToken;
   List<SavedCard>? _cards;
 
@@ -26,7 +25,7 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
   }
 
   Future<void> _loadSavedCards() async {
-    setState(() => _isLoading = true);
+    setState(() {});
 
     try {
       _customerAccessToken = await DemoApi.instance.getProfile();
@@ -34,11 +33,10 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
         customerAccessToken: _customerAccessToken!,
       );
     } catch (e) {
-      // Show error
-      print(e);
+      // TODO: Show error
     }
 
-    setState(() => _isLoading = false);
+    setState(() {});
   }
 
   @override

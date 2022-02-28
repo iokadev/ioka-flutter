@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SettingsModel extends ChangeNotifier {
   var _themeMode = ThemeMode.system;

@@ -3,7 +3,6 @@ import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/widgets/amount_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ioka/ioka.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -39,7 +38,7 @@ class _CartPageState extends State<CartPage> {
                       id: '248241',
                       name: l10n.sampleItemName,
                       amount: amount,
-                      image: AssetImage('assets/images/ceramics.jpeg'),
+                      image: const AssetImage('assets/images/ceramics.jpeg'),
                       onAmountChanged: (v) => _amountNotifier.value = v,
                       onRemove: () {},
                       price: 1000.0 * amount,
@@ -65,11 +64,11 @@ class _CartPageState extends State<CartPage> {
                     ),
                   );
                 },
-                child: Text(l10n.cartPageCheckoutAction),
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0.0),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
+                child: Text(l10n.cartPageCheckoutAction),
               ),
             ),
           ),
@@ -150,7 +149,7 @@ class _ItemCard extends StatelessWidget {
                 )
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               children: [
                 Expanded(

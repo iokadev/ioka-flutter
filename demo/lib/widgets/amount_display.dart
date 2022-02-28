@@ -15,15 +15,15 @@ class AmountDisplayWidget extends StatelessWidget {
     return Row(
       children: [
         _AmountDisplayWidgetButton(
-          child: const Text('-'),
           onPressed: amount > 1 ? () => onChanged(amount - 1) : null,
+          child: const Text('-'),
         ),
         const SizedBox(width: 12.0),
         Text('$amount'),
         const SizedBox(width: 12.0),
         _AmountDisplayWidgetButton(
-          child: const Text('+'),
           onPressed: () => onChanged(amount + 1),
+          child: const Text('+'),
         ),
       ],
     );

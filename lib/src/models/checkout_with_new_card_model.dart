@@ -2,13 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
 import 'package:ioka/src/models/checkout_model.dart';
-import 'package:ioka/src/models/payment_confirmation_model.dart';
-import 'package:ioka/src/utils/navigation.dart';
-import 'package:ioka/src/views/payment_confirmation/cupertino_payment_confirmation_view.dart';
-import 'package:ioka/src/views/payment_failure/cupertino_payment_failure_view.dart';
-import 'package:ioka/src/views/payment_success/cupertino_payment_success_view.dart';
-import 'package:ioka/src/widgets/form/card_input_form.dart';
-import 'package:provider/provider.dart';
 
 class CheckoutWithNewCardModel extends CheckoutModel {
   CheckoutWithNewCardModel({

@@ -139,13 +139,15 @@ class Ioka {
     final resolvedPlatform = platform ?? _platform;
 
     if (savedCard.cvcRequired) {
-      final cvc = await showCvcConfirmationDialog(
+      await showCvcConfirmationDialog(
         context,
         model: model,
         theme: resolvedTheme,
         platform: resolvedPlatform,
         locale: locale,
       );
+    } else {
+      await model.submit(context);
     }
   }
 
