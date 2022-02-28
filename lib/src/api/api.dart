@@ -19,10 +19,10 @@ class IokaApi {
     required String apiKey,
     required String baseUrl,
   }) : _interceptor = IokaAuthenticationRequestInterceptor(apiKey: apiKey) {
-    _init(baseUrl);
+    init(baseUrl);
   }
 
-  void _init(String baseUrl) {
+  void init(String baseUrl) {
     generatedApi = g.IokaApi.create(
       client: ChopperClient(
         converter: $JsonSerializableConverter(),

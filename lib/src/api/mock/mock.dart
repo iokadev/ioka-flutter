@@ -48,6 +48,9 @@ class MockIokaApi extends IokaApi {
   final _orders = <String, MockOrder>{};
 
   @override
+  void init(String baseUrl) {}
+
+  @override
   Future<List<g.ExtendedCard>> getCards({
     required String customerAccessToken,
   }) async {
@@ -65,7 +68,7 @@ class MockIokaApi extends IokaApi {
     final id = _orders.length.toString();
     final token = '${id}_secret_secret';
 
-    _orders[token] = MockOrder(
+    _orders[id] = MockOrder(
       id: id,
       amount: amount,
       status: OrderStatus.unpaid,

@@ -71,5 +71,5 @@ class RuIokaLocalization extends IokaLocalization {
   String get saveCardViewTitle => 'Новая карта';
 
   @override
-  String get transactionsSecureLabel => 'Все транзакции запрещены';
+  String get transactionsSecureLabel => 'Все транзакции защищены';
 }

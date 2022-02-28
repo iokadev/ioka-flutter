@@ -10,6 +10,7 @@ class CupertinoCheckoutWithNewCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CheckoutWithNewCardModel>();
+    final mediaQuery = MediaQuery.of(context);
 
     return CupertinoPageScaffold(
       navigationBar: IokaCupertinoNavigationBar(
@@ -33,12 +34,8 @@ class CupertinoCheckoutWithNewCardView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: KeyboardVisibilityBuilder(
-                  builder: (context, isKeyboardVisible) {
-                    return _CupertinoCheckoutViewActions(
-                      isSafetyLabelVisible: !isKeyboardVisible,
-                    );
-                  },
+                child: _CupertinoCheckoutViewActions(
+                  isSafetyLabelVisible: mediaQuery.viewInsets.bottom == 0.0,
                 ),
               ),
             ],
