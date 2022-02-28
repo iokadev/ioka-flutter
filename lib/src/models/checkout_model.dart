@@ -22,14 +22,18 @@ abstract class CheckoutModel extends ChangeNotifier {
   bool get isValid;
   Future<ExtendedPayment> createPayment();
 
-  Future<void> submit(BuildContext context) async {
+  Future<ExtendedPayment?> submit(
+    BuildContext context, {
+    bool shouldPopRoute = true,
+  }) async {
     assert(isValid);
 
     isInteractableNotifier.value = false;
     notifyListeners();
 
+    ExtendedPayment? payment;
     try {
-      var payment = await createPayment();
+      payment = await createPayment();
 
       if (payment.status == PaymentStatus.pending && payment.action != null) {
         final newPayment = await IokaNavigation.showPaymentConfirmationView(
@@ -40,8 +44,11 @@ abstract class CheckoutModel extends ChangeNotifier {
         );
 
         if (newPayment == null) {
-          Navigator.pop(context);
-          return;
+          if (shouldPopRoute) {
+            Navigator.pop(context);
+          }
+
+          return null;
         }
 
         payment = newPayment;
@@ -55,18 +62,26 @@ abstract class CheckoutModel extends ChangeNotifier {
           context,
           reason: payment.error?.message,
         );
+
+        payment = null;
       }
     } catch (e) {
       await onFailure(
         context,
         reason: (e as dynamic).message,
       );
+
+      payment = null;
     }
 
-    Navigator.pop(context);
+    if (shouldPopRoute) {
+      Navigator.of(context).pop(payment);
+    }
 
     isInteractableNotifier.value = true;
     notifyListeners();
+
+    return payment;
   }
 
   Future<void> onSuccess(BuildContext context) {

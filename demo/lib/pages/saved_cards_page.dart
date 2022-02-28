@@ -83,7 +83,7 @@ class _SavedCardsPageState extends State<SavedCardsPage> {
                   ),
                   trailingBuilder: (context, borderRadius) => CardRowWidget(
                     onTap: () async {
-                      final card = await Ioka.instance.saveNewCard(
+                      final card = await Ioka.instance.startSaveNewCardFlow(
                         context: context,
                         customerAccessToken: _customerAccessToken!,
                       );

@@ -1,15 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
+import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as generated;
 import 'package:provider/provider.dart';
 
-Future<String?> showCvcConfirmationDialog(
+Future<generated.ExtendedPayment?> showCvcConfirmationDialog(
   BuildContext context, {
   required CheckoutWithSavedCardModel model,
   IokaTheme? theme,
   Platform? platform,
   Locale? locale,
 }) {
-  return showIokaDialog<String?>(
+  return showIokaDialog<generated.ExtendedPayment?>(
     context,
     title: (context) => Text(context.l10n.cvcConfirmationDialogTitle),
     alignment: Alignment.bottomCenter,

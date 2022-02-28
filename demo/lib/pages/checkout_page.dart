@@ -193,7 +193,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             await Ioka.instance.startCheckoutWithSavedCardFlow(
                               context: context,
                               orderAccessToken: tokens.orderAccessToken,
-                              customerAccessToken: tokens.customerAccessToken,
                               savedCard: _paymentOption,
                             );
                           }
