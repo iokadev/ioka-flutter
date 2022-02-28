@@ -174,7 +174,7 @@ class __ToastOverlayEntryState extends State<_ToastOverlayEntry> {
 
     Future.delayed(
       const Duration(milliseconds: 150),
-      onDispose,
+      () => widget.onDispose(),
     );
   }
 

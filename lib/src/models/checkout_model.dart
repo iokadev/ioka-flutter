@@ -63,6 +63,8 @@ abstract class CheckoutModel extends ChangeNotifier {
       );
     }
 
+    Navigator.pop(context);
+
     isInteractableNotifier.value = true;
     notifyListeners();
   }

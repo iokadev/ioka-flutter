@@ -13,7 +13,6 @@ import 'l10n/l10n.dart';
 void main() {
   Ioka.setup(
     apiKey: Secrets.publicApiKey,
-    configuration: IokaConfiguration(mode: IokaApiMode.staging),
   );
 
   DemoApi.setup(

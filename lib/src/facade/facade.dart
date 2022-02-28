@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as generated;
+import 'package:ioka/src/api/utils/access_token_helpers.dart';
 import 'package:provider/provider.dart';
 
 class Ioka {
@@ -17,16 +18,27 @@ class Ioka {
 
   static void setup({
     required String apiKey,
-    required IokaConfiguration configuration,
+    IokaConfiguration? configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
   }) {
     assert(_instance == null);
 
+    final apiMode = apiModeFromPublicKey(apiKey);
+
+    final _configuration = IokaInternalConfiguration(
+      mode: apiMode,
+      automaticallyGenerateTheme:
+          configuration?.automaticallyGenerateTheme ?? false,
+    );
+
     _instance = Ioka._(
-      api: IokaApi(apiKey: apiKey, baseUrl: configuration.baseUrl),
-      configuration: configuration,
+      api: IokaApi(
+        apiKey: apiKey,
+        baseUrl: _configuration.baseUrl,
+      ),
+      configuration: _configuration,
       theme: theme,
       darkTheme: darkTheme,
       platform: platform,
@@ -40,7 +52,7 @@ class Ioka {
     return _instance!;
   }
 
-  final IokaConfiguration configuration;
+  final IokaInternalConfiguration configuration;
   final IokaApi api;
   final IokaTheme? _theme;
   final IokaTheme? _darkTheme;

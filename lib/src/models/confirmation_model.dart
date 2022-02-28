@@ -35,11 +35,9 @@ abstract class ConfirmationModel<T> extends ChangeNotifier {
     if (url.startsWith(redirectUrl)) {
       _debounceTimer?.cancel();
       _debounceTimer = Timer(
-        const Duration(seconds: 1),
+        const Duration(seconds: 3),
         () => _onRedirect(context),
       );
-      
-      _onRedirect(context);
     }
   }
 
