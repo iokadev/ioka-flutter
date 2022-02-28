@@ -285,20 +285,30 @@ class Ioka {
     Platform? platform,
     Locale? locale,
   }) async {
+    // Получаем заказ из [IokaApi].
     final order = await api.getOrderById(
       orderAccessToken: orderAccessToken,
     );
 
+    // Создаем модель для оплаты. В случае, если нужно подтверждение CVC,
+    // модель передаётся в диалоговое окно подтверждения.
     final model = CheckoutWithSavedCardModel(
       order: order,
       orderAccessToken: orderAccessToken,
       savedCard: savedCard,
     );
 
+    // Получаем тему из метода [_resolveTheme] - подробная логика описана
+    // в самом методе.
     final resolvedTheme = _resolveTheme(context, theme, brightness);
     final resolvedPlatform = platform ?? _platform;
 
     generated.ExtendedPayment? result;
+
+    // Если нужно подтверждение CVC, модель передаётся в диалоговое окно и
+    // [model.submit()] вызывается внутри этого окна.
+    //
+    // Если нет, то вызывается [model.submit()] и возвращается результат
     if (savedCard.cvcRequired) {
       result = await showCvcConfirmationDialog(
         context,
@@ -334,7 +344,10 @@ class Ioka {
   Future<List<SavedCard>> getSavedCards({
     required String customerAccessToken,
   }) async {
+    // Получаем карты из [IokaApi]
     final cards = await api.getCards(customerAccessToken: customerAccessToken);
+
+    // Конвертируем тип данных из генерированной в [SavedCard].
     return cards.map(SavedCard.fromExtendedCard).toList();
   }
 
@@ -376,9 +389,12 @@ class Ioka {
     Platform? platform,
     Locale? locale,
   }) async {
+    // Получаем тему из метода [_resolveTheme] - подробная логика описана
+    // в самом методе.
     final resolvedTheme = _resolveTheme(context, theme, brightness);
     final resolvedPlatform = platform ?? _platform;
 
+    // result - generated.ExtendedCard? или IokaError
     final result = await Navigator.of(context).pushWithViewWrapper(
       context,
       (context, platform) => ChangeNotifierProvider(
