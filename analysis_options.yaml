@@ -28,3 +28,7 @@ linter:
     unnecessary_await_in_return: true
     use_full_hex_values_for_flutter_colors: true
     use_named_constants: true
+
+analyzer:
+  exclude:
+    - lib/**/generated/*.dart

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ioka/ioka.dart';
 
 void main() {
-  Ioka.setup(apiKey: 'API_KEY');
   runApp(const MyApp());
 }
 

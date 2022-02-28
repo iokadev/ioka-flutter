@@ -1,0 +1,1 @@
+openapi-generator generate -i "./tool/ioka-openapi-spec.json" -g dart -o "./api" --skip-validate-spec
