@@ -86,6 +86,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = DemoLocalizations.of(context);
+    final materialL10n = MaterialLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -116,7 +117,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '${MaterialLocalizations.of(context).formatDecimal(widget.amount)} ₸',
+                    '${materialL10n.formatDecimal(widget.amount)} ₸',
                     style: theme.textTheme.headline3,
                   ),
                   const SizedBox(height: 24),

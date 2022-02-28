@@ -100,6 +100,8 @@ class _ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = MaterialLocalizations.of(context);
+    
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -154,7 +156,7 @@ class _ItemCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '${MaterialLocalizations.of(context).formatDecimal(price.round())} ₸',
+                    '${l10n.formatDecimal(price.round())} ₸',
                     style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,

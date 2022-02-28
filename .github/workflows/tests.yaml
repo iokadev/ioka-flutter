@@ -25,6 +25,9 @@ jobs:
       
       - name: Install packages
         run: flutter pub get
+      
+      - name: Get packages in ./demo
+        run: cd demo && flutter pub get
 
       - name: Analyze
         run: flutter analyze
