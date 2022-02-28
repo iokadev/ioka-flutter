@@ -1,12 +1,18 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ioka/src/models/confirmation_model.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../test_utils.dart';
-import 'confirmation_model_test.mocks.dart';
+
+class MockWebViewController extends Mock implements WebViewController {
+  @override
+  Future<void> clearCache() =>
+      (super.noSuchMethod(Invocation.method(#clearCache, []),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as Future<void>);
+}
 
 class TestConfirmationModel extends ConfirmationModel<String> {
   TestConfirmationModel({required String url, required String redirectUrl})
@@ -16,7 +22,6 @@ class TestConfirmationModel extends ConfirmationModel<String> {
   Future<String> fetchData(BuildContext context) async => 'success';
 }
 
-@GenerateMocks([WebViewController])
 void main() {
   group('ConfirmationModel', () {
     test('clears WebView cache after it\'s disposed', () {
