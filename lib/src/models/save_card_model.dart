@@ -24,7 +24,7 @@ class SaveCardModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      var card = await Ioka.instance.api.createBinding(
+      var card = await Ioka.api.createBinding(
         customerAccessToken: customerAccessToken,
         pan: cardInputData!.cardNumber,
         expiryDate: cardInputData!.expiryDate,

@@ -23,7 +23,7 @@ class CheckoutWithSavedCardModel extends CheckoutModel {
 
   @override
   Future<ExtendedPayment> createPayment() {
-    return Ioka.instance.api.createSavedCardPayment(
+    return Ioka.api.createSavedCardPayment(
       orderAccessToken: orderAccessToken,
       cardId: savedCard.id,
       cvc: cvc,

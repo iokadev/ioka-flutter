@@ -26,7 +26,7 @@ class CheckoutWithNewCardModel extends CheckoutModel {
 
   @override
   Future<ExtendedPayment> createPayment() async {
-    return Ioka.instance.api.createNewCardPayment(
+    return Ioka.api.createNewCardPayment(
       orderAccessToken: orderAccessToken,
       customerAccessToken: customerAccessToken,
       pan: cardInputData!.cardNumber,

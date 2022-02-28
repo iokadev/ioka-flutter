@@ -78,7 +78,7 @@ class _CardInputFormState extends State<CardInputForm> {
         return;
       }
 
-      final info = await Ioka.instance.api.getEmitterByBinCode(
+      final info = await Ioka.api.getEmitterByBinCode(
         binCode: _cardBinNotifier.value!,
       );
 

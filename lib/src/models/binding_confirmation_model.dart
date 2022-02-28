@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
 import 'package:ioka/src/models/confirmation_model.dart';
@@ -21,7 +22,7 @@ class BindingConfirmationModel extends ConfirmationModel<ExtendedCard> {
 
   @override
   Future<ExtendedCard> fetchData(BuildContext context) {
-    return Ioka.instance.api.getCardById(
+    return Ioka.api.getCardById(
       cardId: cardId,
       customerAccessToken: customerAccessToken,
     );

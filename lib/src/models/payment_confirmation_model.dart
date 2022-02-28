@@ -21,7 +21,7 @@ class PaymentConfirmationModel extends ConfirmationModel<ExtendedPayment> {
 
   @override
   Future<ExtendedPayment> fetchData(BuildContext context) {
-    return Ioka.instance.api.getPaymentById(
+    return Ioka.api.getPaymentById(
       paymentId: paymentId,
       orderAccessToken: orderAccessToken,
     );

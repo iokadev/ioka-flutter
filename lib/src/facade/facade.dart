@@ -25,12 +25,13 @@ import 'package:provider/provider.dart';
 /// ```
 class Ioka {
   Ioka._({
-    required this.api,
+    required IokaApi api,
     required this.configuration,
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
-  })  : _theme = theme,
+  })  : _api = api,
+        _theme = theme,
         _darkTheme = darkTheme,
         _platform = platform;
 
@@ -63,7 +64,7 @@ class Ioka {
     IokaTheme? darkTheme,
     Platform? platform,
   }) {
-    assert(_instance == null);
+    assert(!GetIt.I.isRegistered<Ioka>());
 
     // Получаем режим API из публичного ключа.
     final apiMode = apiModeFromPublicKey(apiKey);
@@ -82,13 +83,14 @@ class Ioka {
     );
 
     GetIt.I.registerSingleton<IokaApi>(api);
-
-    _instance = Ioka._(
-      api: api,
-      configuration: _configuration,
-      theme: theme,
-      darkTheme: darkTheme,
-      platform: platform,
+    GetIt.I.registerSingleton<Ioka>(
+      Ioka._(
+        api: api,
+        configuration: _configuration,
+        theme: theme,
+        darkTheme: darkTheme,
+        platform: platform,
+      ),
     );
   }
 
@@ -104,7 +106,7 @@ class Ioka {
     IokaTheme? darkTheme,
     Platform? platform,
   }) {
-    assert(_instance == null);
+    assert(!GetIt.I.isRegistered<Ioka>());
 
     final api = MockIokaApi();
 
@@ -115,25 +117,37 @@ class Ioka {
     );
 
     GetIt.I.registerSingleton<IokaApi>(api);
-
-    _instance = Ioka._(
-      api: api,
-      configuration: _configuration,
-      theme: theme,
-      darkTheme: darkTheme,
-      platform: platform,
+    GetIt.I.registerSingleton<Ioka>(
+      Ioka._(
+        api: api,
+        configuration: _configuration,
+        theme: theme,
+        darkTheme: darkTheme,
+        platform: platform,
+      ),
     );
   }
-
-  static Ioka? _instance;
 
   /// Получает экземпляр класса [Ioka].
   ///
   /// Важно: перед вызовом необходимо удостовериться что SDK был инициализирован
   /// через [Ioka.setup()].
   static Ioka get instance {
-    assert(_instance != null);
-    return _instance!;
+    assert(GetIt.I.isRegistered<Ioka>());
+
+    final _instance = GetIt.I.get<Ioka>();
+    return _instance;
+  }
+
+  /// Получает экземпляр класса [IokaApi].
+  ///
+  /// Важно: перед вызовом необходимо удостовериться что SDK был инициализирован
+  /// через [Ioka.setup()].
+  static IokaApi get api {
+    assert(GetIt.I.isRegistered<IokaApi>());
+
+    final _instance = GetIt.I.get<IokaApi>();
+    return _instance;
   }
 
   /// Конфигурация SDK. Содержит настройки, переданные в [Ioka.setup()] вместе
@@ -143,7 +157,7 @@ class Ioka {
   /// Экземпляр API. Используется для вызовов методов API.
   ///
   /// Эндпоинт сервера определяется автоматически при вызове [Ioka.setup()].
-  final IokaApi api;
+  final IokaApi _api;
 
   /// Светлая тема SDK. По умолчанию не задана - используется метод
   /// [_resolveTheme] чтобы получить необходимую тему.
