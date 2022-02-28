@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 
 import 'package:chopper/chopper.dart';
+import 'dart:convert';
+
 import 'client_mapping.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'ioka_api.enums.swagger.dart' as enums;
@@ -1550,6 +1552,9 @@ class Error {
   Map<String, dynamic> toJson() => _$ErrorToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Error &&
@@ -1589,6 +1594,9 @@ class ValidationError {
   static const fromJsonFactory = _$ValidationErrorFromJson;
   static const toJsonFactory = _$ValidationErrorToJson;
   Map<String, dynamic> toJson() => _$ValidationErrorToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -1649,6 +1657,9 @@ class CardPayer {
   static const fromJsonFactory = _$CardPayerFromJson;
   static const toJsonFactory = _$CardPayerToJson;
   Map<String, dynamic> toJson() => _$CardPayerToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -1726,6 +1737,9 @@ class Contacts {
   Map<String, dynamic> toJson() => _$ContactsToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Contacts &&
@@ -1798,6 +1812,9 @@ class OrderEventOut {
   static const fromJsonFactory = _$OrderEventOutFromJson;
   static const toJsonFactory = _$OrderEventOutToJson;
   Map<String, dynamic> toJson() => _$OrderEventOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -1928,6 +1945,9 @@ class CustomerEventOut {
   static const fromJsonFactory = _$CustomerEventOutFromJson;
   static const toJsonFactory = _$CustomerEventOutToJson;
   Map<String, dynamic> toJson() => _$CustomerEventOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2063,6 +2083,9 @@ class OrderIn {
   static const fromJsonFactory = _$OrderInFromJson;
   static const toJsonFactory = _$OrderInToJson;
   Map<String, dynamic> toJson() => _$OrderInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2237,6 +2260,9 @@ class OrderOut {
   Map<String, dynamic> toJson() => _$OrderOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is OrderOut &&
@@ -2376,6 +2402,9 @@ class CustomerAndAccessToken {
   Map<String, dynamic> toJson() => _$CustomerAndAccessTokenToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is CustomerAndAccessToken &&
@@ -2422,6 +2451,9 @@ class OrderAndAccessToken {
   Map<String, dynamic> toJson() => _$OrderAndAccessTokenToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is OrderAndAccessToken &&
@@ -2466,6 +2498,9 @@ class PaginatedOrderOut {
   Map<String, dynamic> toJson() => _$PaginatedOrderOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PaginatedOrderOut &&
@@ -2508,6 +2543,9 @@ class PaginatedPaymentOut {
   Map<String, dynamic> toJson() => _$PaginatedPaymentOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PaginatedPaymentOut &&
@@ -2548,6 +2586,9 @@ class PaginatedRefundOut {
   static const fromJsonFactory = _$PaginatedRefundOutFromJson;
   static const toJsonFactory = _$PaginatedRefundOutToJson;
   Map<String, dynamic> toJson() => _$PaginatedRefundOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2611,6 +2652,9 @@ class PayerOut {
   static const fromJsonFactory = _$PayerOutFromJson;
   static const toJsonFactory = _$PayerOutToJson;
   Map<String, dynamic> toJson() => _$PayerOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2695,6 +2739,9 @@ class PaymentCancel {
   Map<String, dynamic> toJson() => _$PaymentCancelToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PaymentCancel &&
@@ -2730,6 +2777,9 @@ class PaymentCapture {
   static const fromJsonFactory = _$PaymentCaptureFromJson;
   static const toJsonFactory = _$PaymentCaptureToJson;
   Map<String, dynamic> toJson() => _$PaymentCaptureToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2772,6 +2822,9 @@ class PaymentError {
   static const fromJsonFactory = _$PaymentErrorFromJson;
   static const toJsonFactory = _$PaymentErrorToJson;
   Map<String, dynamic> toJson() => _$PaymentErrorToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2820,6 +2873,9 @@ class PaymentIn {
   static const fromJsonFactory = _$PaymentInFromJson;
   static const toJsonFactory = _$PaymentInToJson;
   Map<String, dynamic> toJson() => _$PaymentInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2880,6 +2936,9 @@ class PaymentMethod {
   Map<String, dynamic> toJson() => _$PaymentMethodToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PaymentMethod &&
@@ -2929,6 +2988,9 @@ class Card {
   static const fromJsonFactory = _$CardFromJson;
   static const toJsonFactory = _$CardToJson;
   Map<String, dynamic> toJson() => _$CardToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -2993,6 +3055,9 @@ class Client {
   Map<String, dynamic> toJson() => _$ClientToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Client &&
@@ -3037,6 +3102,9 @@ class ApplePayIn {
   static const fromJsonFactory = _$ApplePayInFromJson;
   static const toJsonFactory = _$ApplePayInToJson;
   Map<String, dynamic> toJson() => _$ApplePayInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3110,6 +3178,9 @@ class ApplePayOut {
   static const fromJsonFactory = _$ApplePayOutFromJson;
   static const toJsonFactory = _$ApplePayOutToJson;
   Map<String, dynamic> toJson() => _$ApplePayOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3196,7 +3267,7 @@ extension $ApplePayOutExtension on ApplePayOut {
 class PaymentMethodIn {
   PaymentMethodIn({
     this.paymentTool,
-    this.$Client,
+    this.$client,
   });
 
   factory PaymentMethodIn.fromJson(Map<String, dynamic> json) =>
@@ -3205,10 +3276,13 @@ class PaymentMethodIn {
   @JsonKey(name: 'payment_tool')
   final PaymentTool? paymentTool;
   @JsonKey(name: 'client')
-  final Client? $Client;
+  final Client? $client;
   static const fromJsonFactory = _$PaymentMethodInFromJson;
   static const toJsonFactory = _$PaymentMethodInToJson;
   Map<String, dynamic> toJson() => _$PaymentMethodInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3217,22 +3291,22 @@ class PaymentMethodIn {
             (identical(other.paymentTool, paymentTool) ||
                 const DeepCollectionEquality()
                     .equals(other.paymentTool, paymentTool)) &&
-            (identical(other.$Client, $Client) ||
-                const DeepCollectionEquality().equals(other.$Client, $Client)));
+            (identical(other.$client, $client) ||
+                const DeepCollectionEquality().equals(other.$client, $client)));
   }
 
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(paymentTool) ^
-      const DeepCollectionEquality().hash($Client) ^
+      const DeepCollectionEquality().hash($client) ^
       runtimeType.hashCode;
 }
 
 extension $PaymentMethodInExtension on PaymentMethodIn {
-  PaymentMethodIn copyWith({PaymentTool? paymentTool, Client? $Client}) {
+  PaymentMethodIn copyWith({PaymentTool? paymentTool, Client? $client}) {
     return PaymentMethodIn(
         paymentTool: paymentTool ?? this.paymentTool,
-        $Client: $Client ?? this.$Client);
+        $client: $client ?? this.$client);
   }
 }
 
@@ -3259,6 +3333,9 @@ class PaymentMethodOut {
   static const fromJsonFactory = _$PaymentMethodOutFromJson;
   static const toJsonFactory = _$PaymentMethodOutToJson;
   Map<String, dynamic> toJson() => _$PaymentMethodOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3331,6 +3408,9 @@ class PaymentTool {
   static const fromJsonFactory = _$PaymentToolFromJson;
   static const toJsonFactory = _$PaymentToolToJson;
   Map<String, dynamic> toJson() => _$PaymentToolToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3409,6 +3489,9 @@ class ApplePayData {
   Map<String, dynamic> toJson() => _$ApplePayDataToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ApplePayData &&
@@ -3462,6 +3545,9 @@ class GooglePayData {
   Map<String, dynamic> toJson() => _$GooglePayDataToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is GooglePayData &&
@@ -3510,6 +3596,9 @@ class CustomerCard {
   static const fromJsonFactory = _$CustomerCardFromJson;
   static const toJsonFactory = _$CustomerCardToJson;
   Map<String, dynamic> toJson() => _$CustomerCardToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3575,6 +3664,9 @@ class PaymentOut {
   static const fromJsonFactory = _$PaymentOutFromJson;
   static const toJsonFactory = _$PaymentOutToJson;
   Map<String, dynamic> toJson() => _$PaymentOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3662,6 +3754,9 @@ class RefundIn {
   Map<String, dynamic> toJson() => _$RefundInToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is RefundIn &&
@@ -3714,6 +3809,9 @@ class RefundOut {
   static const fromJsonFactory = _$RefundOutFromJson;
   static const toJsonFactory = _$RefundOutToJson;
   Map<String, dynamic> toJson() => _$RefundOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3787,6 +3885,9 @@ class ScheduleOut {
   static const fromJsonFactory = _$ScheduleOutFromJson;
   static const toJsonFactory = _$ScheduleOutToJson;
   Map<String, dynamic> toJson() => _$ScheduleOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3874,6 +3975,9 @@ class ExtendedCard {
   static const fromJsonFactory = _$ExtendedCardFromJson;
   static const toJsonFactory = _$ExtendedCardToJson;
   Map<String, dynamic> toJson() => _$ExtendedCardToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -3999,6 +4103,9 @@ class ExtendedCustomer {
   Map<String, dynamic> toJson() => _$ExtendedCustomerToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ExtendedCustomer &&
@@ -4084,6 +4191,9 @@ class BindingCard {
   Map<String, dynamic> toJson() => _$BindingCardToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is BindingCard &&
@@ -4158,6 +4268,9 @@ class SubscriptionIn {
   static const fromJsonFactory = _$SubscriptionInFromJson;
   static const toJsonFactory = _$SubscriptionInToJson;
   Map<String, dynamic> toJson() => _$SubscriptionInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4263,6 +4376,9 @@ class SubscriptionOut {
   Map<String, dynamic> toJson() => _$SubscriptionOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SubscriptionOut &&
@@ -4343,6 +4459,9 @@ class SubscriptionStatusIn {
   Map<String, dynamic> toJson() => _$SubscriptionStatusInToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SubscriptionStatusIn &&
@@ -4402,6 +4521,9 @@ class SubscriptionUpdate {
   static const fromJsonFactory = _$SubscriptionUpdateFromJson;
   static const toJsonFactory = _$SubscriptionUpdateToJson;
   Map<String, dynamic> toJson() => _$SubscriptionUpdateToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4492,6 +4614,9 @@ class WebhookIn {
   Map<String, dynamic> toJson() => _$WebhookInToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is WebhookIn &&
@@ -4546,6 +4671,9 @@ class WebhookOut {
   static const fromJsonFactory = _$WebhookOutFromJson;
   static const toJsonFactory = _$WebhookOutToJson;
   Map<String, dynamic> toJson() => _$WebhookOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4617,6 +4745,9 @@ class WebhookPatch {
   Map<String, dynamic> toJson() => _$WebhookPatchToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is WebhookPatch &&
@@ -4653,6 +4784,9 @@ class CardIn {
   static const fromJsonFactory = _$CardInFromJson;
   static const toJsonFactory = _$CardInToJson;
   Map<String, dynamic> toJson() => _$CardInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4693,6 +4827,9 @@ class CustomerIn {
   static const fromJsonFactory = _$CustomerInFromJson;
   static const toJsonFactory = _$CustomerInToJson;
   Map<String, dynamic> toJson() => _$CustomerInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4747,6 +4884,9 @@ class WebhookEvent {
   static const fromJsonFactory = _$WebhookEventFromJson;
   static const toJsonFactory = _$WebhookEventToJson;
   Map<String, dynamic> toJson() => _$WebhookEventToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4831,6 +4971,9 @@ class WebhookOrder {
   static const fromJsonFactory = _$WebhookOrderFromJson;
   static const toJsonFactory = _$WebhookOrderToJson;
   Map<String, dynamic> toJson() => _$WebhookOrderToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -4962,6 +5105,9 @@ class ExtendedPayment {
   Map<String, dynamic> toJson() => _$ExtendedPaymentToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ExtendedPayment &&
@@ -5082,6 +5228,9 @@ class ExtendedRefund {
   Map<String, dynamic> toJson() => _$ExtendedRefundToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ExtendedRefund &&
@@ -5156,6 +5305,9 @@ class Acquirer {
   Map<String, dynamic> toJson() => _$AcquirerToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Acquirer &&
@@ -5196,6 +5348,9 @@ class TDSAction {
   Map<String, dynamic> toJson() => _$TDSActionToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TDSAction &&
@@ -5231,6 +5386,9 @@ class BrandOut {
   static const fromJsonFactory = _$BrandOutFromJson;
   static const toJsonFactory = _$BrandOutToJson;
   Map<String, dynamic> toJson() => _$BrandOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -5277,6 +5435,9 @@ class BinInfo {
   static const fromJsonFactory = _$BinInfoFromJson;
   static const toJsonFactory = _$BinInfoToJson;
   Map<String, dynamic> toJson() => _$BinInfoToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -5347,6 +5508,9 @@ class SessionCard {
   Map<String, dynamic> toJson() => _$SessionCardToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SessionCard &&
@@ -5402,6 +5566,9 @@ class SessionIn {
   static const fromJsonFactory = _$SessionInFromJson;
   static const toJsonFactory = _$SessionInToJson;
   Map<String, dynamic> toJson() => _$SessionInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -5467,6 +5634,9 @@ class SessionOut {
   Map<String, dynamic> toJson() => _$SessionOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SessionOut &&
@@ -5525,6 +5695,9 @@ class MasterpassCardIn {
   Map<String, dynamic> toJson() => _$MasterpassCardInToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is MasterpassCardIn &&
@@ -5579,6 +5752,9 @@ class MasterpassCardOut {
   static const fromJsonFactory = _$MasterpassCardOutFromJson;
   static const toJsonFactory = _$MasterpassCardOutToJson;
   Map<String, dynamic> toJson() => _$MasterpassCardOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -5638,6 +5814,9 @@ class ChangePhoneIn {
   Map<String, dynamic> toJson() => _$ChangePhoneInToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ChangePhoneIn &&
@@ -5680,6 +5859,9 @@ class ChangePhoneOut {
   Map<String, dynamic> toJson() => _$ChangePhoneOutToJson(this);
 
   @override
+  String toString() => jsonEncode(this);
+
+  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is ChangePhoneOut &&
@@ -5718,6 +5900,9 @@ class MasterpassPostbackIn {
   static const fromJsonFactory = _$MasterpassPostbackInFromJson;
   static const toJsonFactory = _$MasterpassPostbackInToJson;
   Map<String, dynamic> toJson() => _$MasterpassPostbackInToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {
@@ -5768,6 +5953,9 @@ class MasterpassPostbackOut {
   static const fromJsonFactory = _$MasterpassPostbackOutFromJson;
   static const toJsonFactory = _$MasterpassPostbackOutToJson;
   Map<String, dynamic> toJson() => _$MasterpassPostbackOutToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
 
   @override
   bool operator ==(dynamic other) {

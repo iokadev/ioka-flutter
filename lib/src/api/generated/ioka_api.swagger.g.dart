@@ -440,7 +440,7 @@ PaymentMethodIn _$PaymentMethodInFromJson(Map<String, dynamic> json) =>
       paymentTool: json['payment_tool'] == null
           ? null
           : PaymentTool.fromJson(json['payment_tool'] as Map<String, dynamic>),
-      $Client: json['client'] == null
+      $client: json['client'] == null
           ? null
           : Client.fromJson(json['client'] as Map<String, dynamic>),
     );
@@ -448,7 +448,7 @@ PaymentMethodIn _$PaymentMethodInFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PaymentMethodInToJson(PaymentMethodIn instance) =>
     <String, dynamic>{
       'payment_tool': instance.paymentTool?.toJson(),
-      'client': instance.$Client?.toJson(),
+      'client': instance.$client?.toJson(),
     };
 
 PaymentMethodOut _$PaymentMethodOutFromJson(Map<String, dynamic> json) =>

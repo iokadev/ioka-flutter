@@ -1,12 +1,12 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ioka/src/models/confirmation_model.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../test_utils.dart';
-
-class MockWebViewController extends Mock implements WebViewController {}
+import 'confirmation_model_test.mocks.dart';
 
 class TestConfirmationModel extends ConfirmationModel<String> {
   TestConfirmationModel({required String url, required String redirectUrl})
@@ -16,6 +16,7 @@ class TestConfirmationModel extends ConfirmationModel<String> {
   Future<String> fetchData(BuildContext context) async => 'success';
 }
 
+@GenerateMocks([WebViewController])
 void main() {
   group('ConfirmationModel', () {
     test('clears WebView cache after it\'s disposed', () {
@@ -40,8 +41,6 @@ void main() {
       final model = TestConfirmationModel(url: url, redirectUrl: redirectUrl);
 
       final controller = MockWebViewController();
-      controller.loadUrl('https://example.com');
-
       model.onControllerInitialized(controller);
 
       expect(model.onPageFinished(context, url), false);
