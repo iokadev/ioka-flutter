@@ -10,8 +10,10 @@ import 'utils/access_token_helpers.dart';
 import 'utils/error.dart';
 
 export './generated/ioka_api.enums.swagger.dart';
+export './mock/card_data.dart';
+export './mock/mock.dart';
+export './mock/order.dart';
 export './models/saved_card.dart';
-
 class IokaApi {
   IokaApi({
     required String apiKey,

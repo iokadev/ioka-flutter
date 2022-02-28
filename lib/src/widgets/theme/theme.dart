@@ -14,6 +14,29 @@ enum Platform {
   cupertino,
 }
 
+/// Тема Ioka SDK.
+/// 
+/// Подробнее можно прочитать в [doc/how-tos/customize.md].
+/// 
+/// Состоит из 4 компонентов:
+/// 
+/// - [Brightness] - яркость темы (light/dark).
+/// 
+/// - [IokaThemeColors] - цвета, использующиеся в экранах SDK.
+/// 
+/// - [IokaThemeTypography] - типографика, использующаяся в экранах SDK.
+/// 
+/// - [IokaThemeExtras] - другие параметры. Например, [BorderRadius].
+/// 
+/// Чтобы изменить тему, создайте экземпляр этого класса используя:
+/// 
+/// - [IokaTheme()] - полная кастомизация темы.
+/// 
+/// - [IokaTheme.simple()] или [IokaTheme.simpleDark()], 
+///   [IokaTheme.simpleLight()] - простая кастомизация темы.
+/// 
+/// - [IokaMaterialThemeGenerator()] или [IokaCupertinoThemeGenerator()] -
+///   генераторы темы для платформ [Material] или [Cupertino].
 class IokaTheme {
   IokaTheme({
     required this.brightness,

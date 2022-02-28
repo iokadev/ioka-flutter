@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as generated;
 import 'package:ioka/src/api/utils/access_token_helpers.dart';
@@ -40,16 +41,15 @@ class Ioka {
   /// - [apiKey]: Ключ доступа к API. Режим сервера (production / staging)
   ///   определяется автоматически.
   ///
-  /// - [configuration]: Опционально: конфигурация SDK. Смотрите
-  ///
+  /// - [configuration]: конфигурация SDK. Смотрите
   ///   [IokaConfiguration] чтобы узнать подробнее о возможных настройках.
   ///
-  /// - [theme]: Опционально: светлая тема SDK.
+  /// - (опционально) [theme]: светлая тема SDK.
   ///
-  /// - [darkTheme]: Опционально: тёмная тема SDK.
+  /// - (опционально) [darkTheme]: тёмная тема SDK.
   ///
-  /// - [platform]: Опционально: платформа (Material / Cupertino). В случае
-  ///   если [platform == null], определяется автоматически.
+  /// - (опционально) [platform]: платформа (Material / Cupertino). В случае
+  ///   если `platform == null`, определяется автоматически.
   ///
   /// Чтобы узнать подробнее о кастомизации темы, смотрите [IokaTheme].
   ///
@@ -76,11 +76,48 @@ class Ioka {
           configuration?.automaticallyGenerateTheme ?? false,
     );
 
+    final api = IokaApi(
+      apiKey: apiKey,
+      baseUrl: _configuration.baseUrl,
+    );
+
+    GetIt.I.registerSingleton<IokaApi>(api);
+
     _instance = Ioka._(
-      api: IokaApi(
-        apiKey: apiKey,
-        baseUrl: _configuration.baseUrl,
-      ),
+      api: api,
+      configuration: _configuration,
+      theme: theme,
+      darkTheme: darkTheme,
+      platform: platform,
+    );
+  }
+
+  /// Инициализирует SDK для тестов.
+  ///
+  /// Разница от [setup] в том, что SDK не будет подключаться к API, а будет
+  /// использовать [MockIokaApi].
+  ///
+  /// Подробнее можно прочитать в [doc/how-tos/test.md] или в [MockIokaApi].
+  static void setupMock({
+    IokaConfiguration? configuration,
+    IokaTheme? theme,
+    IokaTheme? darkTheme,
+    Platform? platform,
+  }) {
+    assert(_instance == null);
+
+    final api = MockIokaApi();
+
+    final _configuration = IokaInternalConfiguration(
+      mode: IokaApiMode.staging,
+      automaticallyGenerateTheme:
+          configuration?.automaticallyGenerateTheme ?? false,
+    );
+
+    GetIt.I.registerSingleton<IokaApi>(api);
+
+    _instance = Ioka._(
+      api: api,
       configuration: _configuration,
       theme: theme,
       darkTheme: darkTheme,
@@ -180,19 +217,19 @@ class Ioka {
   /// - [orderAccessToken] - токен доступа к заказу. Необходим для получения
   ///   информации о заказе и оплаты.
   ///
-  /// - [customerAccessToken] - опционально, токен доступа к пользователю. Если
+  /// - (опционально) [customerAccessToken] - токен доступа к пользователю. Если
   ///   задан, то при оплате можно будет привязать карту к пользователю.
   ///
-  /// - [theme] - опционально, тема для отображения окна оплаты. Если не задана,
-  ///   используется логика получения темы из [_resolveTheme].
+  /// - (опционально) [theme] - тема для отображения окна оплаты. Если не
+  ///   задана, используется логика получения темы из [_resolveTheme].
   ///
-  /// - [brightness] - опционально, яркость окна оплаты. Если не задана, то
+  /// - (опционально) [brightness] - яркость окна оплаты. Если не задана, то
   ///   яркость получается автоматически из [context].
   ///
-  /// - [platform] - опционально, "платформа" виджетов (Material или Cupertino).
-  ///   Если не задана, то получается автоматически из [context].
+  /// - (опционально) [platform] - "платформа" виджетов (Material или
+  ///   Cupertino). Если не задана, то получается автоматически из [context].
   ///
-  /// - [locale] - опционально, локаль для окна оплаты. Если не задана, то
+  /// - (опционально) [locale] - локаль для окна оплаты. Если не задана, то
   ///   получается автоматически из [context].
   ///
   /// Возвращает:
@@ -257,16 +294,16 @@ class Ioka {
   ///   о сохраненной карте. Чтобы получить сохраненную карту, используйте
   ///   [getSavedCards].
   ///
-  /// - [theme] - опционально, тема для отображения окна оплаты. Если не задана,
-  ///   используется логика получения темы из [_resolveTheme].
+  /// - (опционально) [theme] - тема для отображения окна оплаты. Если не
+  ///   задана, используется логика получения темы из [_resolveTheme].
   ///
-  /// - [brightness] - опционально, яркость окна оплаты. Если не задана, то
+  /// - (опционально) [brightness] - яркость окна оплаты. Если не задана, то
   ///   яркость получается автоматически из [context].
   ///
-  /// - [platform] - опционально, "платформа" виджетов (Material или Cupertino).
-  ///   Если не задана, то получается автоматически из [context].
+  /// - (опционально) [platform] - "платформа" виджетов (Material или
+  ///   Cupertino). Если не задана, то получается автоматически из [context].
   ///
-  /// - [locale] - опционально, локаль для окна оплаты. Если не задана, то
+  /// - (опционально) [locale] - локаль для окна оплаты. Если не задана, то
   ///   получается автоматически из [context].
   ///
   /// Возвращает:
@@ -328,18 +365,18 @@ class Ioka {
   }
 
   /// Получает список сохраненных карт пользователя.
-  /// 
+  ///
   /// Инструкции можно прочитать в [doc/how-tos/save-and-delete-cards.md].
-  /// 
+  ///
   /// Аргументы:
-  /// 
+  ///
   /// - [customerAccessToken] - токен доступа к пользователю.
-  /// 
+  ///
   /// Возвращает:
-  /// 
+  ///
   /// - [List<SavedCard>] в случае успешного получения списка сохраненных карт.
   ///   Список может быть пустым.
-  /// 
+  ///
   /// В случае ошибки генерирует исключение типа [IokaError].
   Future<List<SavedCard>> getSavedCards({
     required String customerAccessToken,
@@ -362,16 +399,16 @@ class Ioka {
   ///
   /// - [customerAccessToken] - токен доступа к пользователю.
   ///
-  /// - [theme] - опционально, тема для отображения окна оплаты. Если не задана,
-  ///   используется логика получения темы из [_resolveTheme].
+  /// - (опционально) [theme] - тема для отображения окна оплаты. Если не
+  ///   задана, используется логика получения темы из [_resolveTheme].
   ///
-  /// - [brightness] - опционально, яркость окна оплаты. Если не задана, то
+  /// - (опционально) [brightness] - яркость окна оплаты. Если не задана, то
   ///   яркость получается автоматически из [context].
   ///
-  /// - [platform] - опционально, "платформа" виджетов (Material или Cupertino).
-  ///   Если не задана, то получается автоматически из [context].
+  /// - (опционально) [platform] - "платформа" виджетов (Material или
+  ///   Cupertino). Если не задана, то получается автоматически из [context].
   ///
-  /// - [locale] - опционально, локаль для окна оплаты. Если не задана, то
+  /// - (опционально) [locale] - локаль для окна оплаты. Если не задана, то
   ///   получается автоматически из [context].
   ///
   /// Возвращает:
@@ -416,17 +453,17 @@ class Ioka {
   }
 
   /// Удаляет сохраненную карту у пользователя.
-  /// 
+  ///
   /// Инструкции можно прочитать в [doc/how-tos/save-and-delete-cards.md].
-  /// 
+  ///
   /// Аргументы:
-  /// 
+  ///
   /// - [customerAccessToken] - токен доступа к пользователю.
-  /// 
+  ///
   /// - [cardId] - идентификатор карты. Обычно это [SavedCard.id].
-  /// 
+  ///
   /// Ничего не возвращает - в случае успеха вызов срабатывает без исключении.
-  /// 
+  ///
   /// В случае ошибки генерирует исключение типа [IokaError].
   Future<void> deleteSavedCard({
     required String customerAccessToken,
