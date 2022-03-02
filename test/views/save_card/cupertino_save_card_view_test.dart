@@ -8,7 +8,7 @@ Future<void> main() async {
   const customerAccessToken = 'token';
 
   group('CupertinoSaveCardView', () {
-    autoGoldenTestViewWithDifferentParameters(
+    autoGoldenTest(
       name: 'cupertino_save card_view',
       child: ChangeNotifierProvider(
         create: (_) => SaveCardModel(

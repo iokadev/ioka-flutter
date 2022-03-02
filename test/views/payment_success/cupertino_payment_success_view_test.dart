@@ -5,7 +5,7 @@ import '../view_test_utils.dart';
 
 Future<void> main() async {
   group('CupertinoPaymentSuccessView', () {
-    autoGoldenTestViewWithDifferentParameters(
+    autoGoldenTest(
       name: 'cupertino_payment_success_view_with_order_number',
       child: const CupertinoPaymentSuccessView(
         orderAmount: 1000,
@@ -13,7 +13,7 @@ Future<void> main() async {
       ),
     );
 
-    autoGoldenTestViewWithDifferentParameters(
+    autoGoldenTest(
       name: 'cupertino_payment_success_view_without_order_number',
       child: const CupertinoPaymentSuccessView(
         orderAmount: 1000,

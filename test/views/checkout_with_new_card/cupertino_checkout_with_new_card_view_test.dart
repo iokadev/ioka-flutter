@@ -12,7 +12,7 @@ Future<void> main() async {
   );
 
   group('CupertinoCheckoutWithNewCardView', () {
-    autoGoldenTestViewWithDifferentParameters(
+    autoGoldenTest(
       name: 'cupertino_checkout_with_new_card_view',
       child: ChangeNotifierProvider(
         create: (_) => CheckoutWithNewCardModel(

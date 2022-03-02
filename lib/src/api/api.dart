@@ -6,14 +6,16 @@ import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
 import 'package:ioka/src/api/utils/request_interceptor.dart';
 
 import './generated/client_index.dart' as g;
+import 'models/error.dart';
 import 'utils/access_token_helpers.dart';
-import 'utils/error.dart';
 
 export './generated/ioka_api.enums.swagger.dart';
 export './mock/card_data.dart';
 export './mock/mock.dart';
 export './mock/order.dart';
+export './models/error.dart';
 export './models/saved_card.dart';
+
 class IokaApi {
   IokaApi({
     required String apiKey,

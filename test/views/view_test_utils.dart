@@ -11,7 +11,7 @@ final _themes = {
 };
 
 @isTest
-void autoGoldenTestViewWithDifferentParameters({
+void autoGoldenTest({
   required String name,
   required Widget child,
 }) {
@@ -27,14 +27,17 @@ void autoGoldenTestViewWithDifferentParameters({
         'renders correctly with theme: $themeName, locale: $localeName',
         fileName: fileName,
         constraints: const BoxConstraints(
-          maxWidth: 720.0,
-          maxHeight: 1280.0,
+          maxWidth: 1080.0,
+          maxHeight: 1920.0,
         ),
         pumpBeforeTest: (t) => t.pump(),
-        widget: viewWrapper(
-          locale: locale,
-          theme: theme,
-          child: child,
+        widget: Container(
+          color: theme!.colors.background,
+          child: viewWrapper(
+            locale: locale,
+            theme: theme,
+            child: child,
+          ),
         ),
       );
     }

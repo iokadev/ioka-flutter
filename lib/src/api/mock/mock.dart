@@ -3,36 +3,15 @@ import 'package:credit_card_validator/card_number.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as g;
 import 'package:ioka/src/api/utils/access_token_helpers.dart';
-import 'package:ioka/src/api/utils/error.dart';
-
-const _defaultSuccessfulCards = <String, MockCardData>{
-  '4111111111111111': MockCardData(
-    cardNumber: '4111111111111111',
-    expiryDate: '12/24',
-    cvc: '123',
-    requiresCvc: true,
-    emitter: 'kaspi',
-    type: 'visa',
-  ),
-  '5555555555555599': MockCardData(
-    cardNumber: '5555555555555599',
-    expiryDate: '12/24',
-    cvc: '123',
-    requiresCvc: false,
-    emitter: 'jysan',
-    type: 'mastercard',
-  ),
-};
-
-const _defaultCustomerAccessToken = 'customerid_secret_secret';
+import 'package:ioka/src/api/models/error.dart';
 
 class MockIokaApi extends IokaApi {
   MockIokaApi({
     String? customerAccessToken,
     Map<String, MockCardData>? successfulCards,
   })  : _customerAccessToken =
-            customerAccessToken ?? _defaultCustomerAccessToken,
-        _successfulCards = successfulCards ?? _defaultSuccessfulCards,
+            customerAccessToken ?? defaultCustomerAccessToken,
+        _successfulCards = successfulCards ?? defaultSuccessfulCards,
         super(apiKey: '', baseUrl: '');
 
   final String _customerAccessToken;
@@ -42,6 +21,27 @@ class MockIokaApi extends IokaApi {
 
   final _payments = <String, g.ExtendedPayment>{};
   final _orders = <String, MockOrder>{};
+
+  static String get defaultCustomerAccessToken => 'customerid_secret_secret';
+
+  static Map<String, MockCardData> get defaultSuccessfulCards => const {
+        '4111111111111111': MockCardData(
+          cardNumber: '4111111111111111',
+          expiryDate: '12/24',
+          cvc: '123',
+          requiresCvc: true,
+          emitter: 'kaspi',
+          type: 'visa',
+        ),
+        '5555555555555599': MockCardData(
+          cardNumber: '5555555555555599',
+          expiryDate: '12/24',
+          cvc: '123',
+          requiresCvc: false,
+          emitter: 'jysan',
+          type: 'mastercard',
+        ),
+      };
 
   @override
   void init(String baseUrl) {}
@@ -93,6 +93,10 @@ class MockIokaApi extends IokaApi {
     }
 
     if (card.requiresCvc && cvc == null) {
+      return false;
+    }
+
+    if (cvc != null && card.cvc != cvc) {
       return false;
     }
 
@@ -157,7 +161,13 @@ class MockIokaApi extends IokaApi {
     }
 
     return _mockCreatePayment(
-      payment.copyWith(
+      g.ExtendedPayment(
+        id: 'payment_id',
+        orderId: order.id,
+        approvedAmount: 0,
+        capturedAmount: 0,
+        processingFee: 0.0,
+        refundedAmount: 0,
         status: PaymentStatus.declined,
         error: g.PaymentError(
           code: 'error',
@@ -276,7 +286,7 @@ class MockIokaApi extends IokaApi {
     required String cvc,
     required String customerAccessToken,
   }) async {
-    if (customerAccessToken != _defaultCustomerAccessToken) {
+    if (customerAccessToken != _customerAccessToken) {
       throw IokaError(
         code: 'code',
         message: 'Customer not found',
@@ -284,7 +294,7 @@ class MockIokaApi extends IokaApi {
     }
 
     final card = g.ExtendedCard(
-      id: 'card_id',
+      id: pan,
       panMasked: _maskPan(pan),
       expiryDate: expiryDate,
       holder: 'holder',
@@ -299,7 +309,7 @@ class MockIokaApi extends IokaApi {
     required String cardId,
     required String customerAccessToken,
   }) async {
-    if (customerAccessToken != _defaultCustomerAccessToken) {
+    if (customerAccessToken != _customerAccessToken) {
       throw IokaError(
         code: 'code',
         message: 'Customer not found',
@@ -324,7 +334,7 @@ class MockIokaApi extends IokaApi {
     required String cardId,
     required String customerAccessToken,
   }) async {
-    if (customerAccessToken != _defaultCustomerAccessToken) {
+    if (customerAccessToken != _customerAccessToken) {
       throw IokaError(
         code: 'code',
         message: 'Customer not found',
