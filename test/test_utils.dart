@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ioka/ioka.dart';
+import 'package:meta/meta.dart';
 import 'package:mockito/mockito.dart';
 
 Widget necessaryAncestors({
@@ -50,6 +51,7 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {
       super.noSuchMethod(Invocation.method(#didPop, [a, b]));
 }
 
+@isTest
 void testWithBuildContext(
   String description,
   Future<void> Function(BuildContext, MockNavigatorObserver) test,
