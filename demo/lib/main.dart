@@ -3,19 +3,22 @@ import 'package:demo/models/settings_model.dart';
 import 'package:demo/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ioka/ioka.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
+
   Ioka.setup(
-    apiKey: const String.fromEnvironment('PUBLIC_API_KEY'),
+    apiKey: dotenv.env['PUBLIC_API_KEY'] ?? '',
   );
 
   DemoApi.setup(
-    baseUrl: const String.fromEnvironment('DEMO_API_BASE_URL'),
+    baseUrl: dotenv.env['DEMO_API_BASE_URL'] ?? '',
   );
 
   runApp(MyApp());
