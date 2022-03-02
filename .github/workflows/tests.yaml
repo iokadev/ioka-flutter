@@ -28,6 +28,9 @@ jobs:
       
       - name: Install packages in ./demo
         run: cd demo && flutter pub get
+      
+      - name: Generate coverage helper test
+        run: ./tool/generate_coverage_helper.sh
 
       - name: Analyze
         run: flutter analyze
@@ -35,6 +38,14 @@ jobs:
       - name: Run tests
         run: flutter test --coverage
 
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
+
+      - name: Remove generated files from coverage
+        run: ./tool/remove_generated_files_from_coverage.sh
+
       - name: Upload coverage to codecov
-        run: curl -s https://codecov.io/bash
-        shell: bash
+        uses: codecov/codecov-action@v2
+        with:
+          files: coverage/lcov.info
+          fail_ci_if_error: true

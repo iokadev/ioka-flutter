@@ -1,0 +1,70 @@
+/// *** GENERATED FILE - ANY CHANGES WOULD BE OBSOLETE ON NEXT GENERATION *** ///
+
+/// Helper to test coverage for all project files
+// ignore_for_file: unused_import, directives_ordering
+import 'package:ioka/ioka.dart';
+import 'package:ioka/src/l10n/lang/base.dart';
+import 'package:ioka/src/l10n/lang/ru.dart';
+import 'package:ioka/src/l10n/lang/en.dart';
+import 'package:ioka/src/l10n/l10n_inherited_widget.dart';
+import 'package:ioka/src/l10n/l10n.dart';
+import 'package:ioka/src/facade/config.dart';
+import 'package:ioka/src/facade/facade.dart';
+import 'package:ioka/src/utils/navigation.dart';
+import 'package:ioka/src/models/confirmation_model.dart';
+import 'package:ioka/src/models/save_card_model.dart';
+import 'package:ioka/src/models/payment_confirmation_model.dart';
+import 'package:ioka/src/models/checkout_with_new_card_model.dart';
+import 'package:ioka/src/models/checkout_model.dart';
+import 'package:ioka/src/models/checkout_with_saved_card_model.dart';
+import 'package:ioka/src/models/binding_confirmation_model.dart';
+import 'package:ioka/src/api/mock/order.dart';
+import 'package:ioka/src/api/mock/card_data.dart';
+import 'package:ioka/src/api/mock/mock.dart';
+import 'package:ioka/src/api/utils/access_token_helpers.dart';
+import 'package:ioka/src/api/utils/request_interceptor.dart';
+import 'package:ioka/src/api/utils/error.dart';
+import 'package:ioka/src/api/models/saved_card.dart';
+import 'package:ioka/src/api/api.dart';
+import 'package:ioka/src/views/checkout_with_new_card/cupertino_checkout_with_new_card_view.dart';
+import 'package:ioka/src/views/payment_failure/cupertino_payment_failure_view.dart';
+import 'package:ioka/src/views/payment_failure/cupertino_payment_failure_dialog.dart';
+import 'package:ioka/src/views/payment_confirmation/cupertino_payment_confirmation_view.dart';
+import 'package:ioka/src/views/binding_confirmation/binding_confirmation_view.dart';
+import 'package:ioka/src/views/confirmation/cupertino_confirmation_view.dart';
+import 'package:ioka/src/views/checkout_with_saved_card/cupertino_checkout_with_saved_card_view.dart';
+import 'package:ioka/src/views/save_card/cupertino_save_card_view.dart';
+import 'package:ioka/src/views/view_wrapper.dart';
+import 'package:ioka/src/views/payment_success/cupertino_payment_success_view.dart';
+import 'package:ioka/src/widgets/form/card_number_form_field.dart';
+import 'package:ioka/src/widgets/form/card_input_form.dart';
+import 'package:ioka/src/widgets/form/formatters/pan_input_formatter.dart';
+import 'package:ioka/src/widgets/form/formatters/cvc_input_formatter.dart';
+import 'package:ioka/src/widgets/form/formatters/expiry_date_input_formatter.dart';
+import 'package:ioka/src/widgets/form/expiry_date_form_field.dart';
+import 'package:ioka/src/widgets/form/cvc_form_field.dart';
+import 'package:ioka/src/widgets/tooltip/cvc_tooltip.dart';
+import 'package:ioka/src/widgets/tooltip/tooltip.dart';
+import 'package:ioka/src/widgets/cupertino_widgets.dart';
+import 'package:ioka/src/widgets/toast/toast.dart';
+import 'package:ioka/src/widgets/utils/lerp_implicit_animation_widget.dart';
+import 'package:ioka/src/widgets/utils/slide_in_animation_widget.dart';
+import 'package:ioka/src/widgets/utils/multi_value_listenable_builder.dart';
+import 'package:ioka/src/widgets/dialog/dialog.dart';
+import 'package:ioka/src/widgets/common/card_type_widget.dart';
+import 'package:ioka/src/widgets/common/card_widget.dart';
+import 'package:ioka/src/widgets/common/card_emitter_widget.dart';
+import 'package:ioka/src/widgets/common/transactions_secure_label_widget.dart';
+import 'package:ioka/src/widgets/text_field/cupertino_text_field.dart';
+import 'package:ioka/src/widgets/theme/utils.dart';
+import 'package:ioka/src/widgets/theme/generator/cupertino_theme_generator.dart';
+import 'package:ioka/src/widgets/theme/generator/theme_generator.dart';
+import 'package:ioka/src/widgets/theme/generator/material_theme_generator.dart';
+import 'package:ioka/src/widgets/theme/theme_inherited_widget.dart';
+import 'package:ioka/src/widgets/theme/theme.dart';
+import 'package:ioka/src/widgets/navigation_bar/cupertino_navigation_bar.dart';
+import 'package:ioka/src/widgets/icons/icon.dart';
+import 'package:ioka/src/widgets/icons/icons.dart';
+import 'package:ioka/src/widgets/progress_button/cupertino_progress_button.dart';
+
+void main() {}
