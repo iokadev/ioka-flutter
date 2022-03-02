@@ -29,6 +29,9 @@ linter:
     use_full_hex_values_for_flutter_colors: true
     use_named_constants: true
 
+    # Ignore this to avoid issues related to .env file missing
+    asset_does_not_exist: false
+
 analyzer:
   exclude:
     - lib/**/generated/*.dart

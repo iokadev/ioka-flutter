@@ -1,7 +1,7 @@
-
 /// Generated file, do not edit.
 ///
 /// tool/generate_icons_class.py
+
 class IokaIcons {
   static const angleLeft = 'angle-left';
   static const angleRight = 'angle-right';
@@ -27,4 +27,31 @@ class IokaIcons {
   static const smile = 'smile';
   static const success = 'success';
   static const time = 'time';
+
+  static List<String> get values => [
+    angleLeft, 
+    angleRight, 
+    camera, 
+    cash, 
+    check, 
+    close, 
+    creditCardAlt, 
+    creditCard, 
+    cvc, 
+    error, 
+    failure, 
+    globe, 
+    info, 
+    location, 
+    minus, 
+    moon, 
+    plusAlt, 
+    plus, 
+    remove, 
+    security, 
+    shoppingCart, 
+    smile, 
+    success, 
+    time, 
+  ];
 }
