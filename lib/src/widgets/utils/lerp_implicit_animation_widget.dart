@@ -1,6 +1,15 @@
 import 'package:flutter/widgets.dart';
 
+/// Позволяет анимировать значения типа [T]. Тип [T] должен иметь функцию
+/// линейной интерполяции (например, [Color.lerp]).
 class LerpImplicitAnimationWidget<T> extends StatefulWidget {
+  /// Создает новый экземпляр [LerpImplicitAnimationWidget].
+  ///
+  /// - [value] - текущее значение. При изменении [value] автоматически
+  ///   запускается [Tween] со старого значения на новый
+  /// - [builder] - строитель анимируемого виджета
+  /// - [duration] - длительность анимации, по умолчанию `150мс`
+  /// - [curve] - кривая анимации, по умолчанию `Curves.easeInOut`
   const LerpImplicitAnimationWidget({
     Key? key,
     required this.value,
@@ -9,9 +18,17 @@ class LerpImplicitAnimationWidget<T> extends StatefulWidget {
     this.duration,
   }) : super(key: key);
 
+  /// Текущее значение анимации. При первом создании этого виджета значение
+  /// анимации будет равно значению [value].
   final T value;
+
+  /// Строитель анимируемого виджета.
   final Widget Function(BuildContext context, T value) builder;
+
+  /// Длительность анимации.
   final Duration? duration;
+
+  /// Кривая анимации.
   final Curve? curve;
 
   @override
@@ -24,6 +41,8 @@ class _LerpImplicitAnimationWidgetState<T>
   Tween? _tween;
 
   void _buildTween(T oldValue) {
+    // Для типа [Color] используется [ColorTween] из-за улучшенной
+    // производительности.
     if (T == Color) {
       _tween = ColorTween(
         begin: oldValue as Color,
@@ -39,7 +58,9 @@ class _LerpImplicitAnimationWidgetState<T>
 
   @override
   void didUpdateWidget(covariant LerpImplicitAnimationWidget<T> oldWidget) {
+    // В случае изменения виджета строим новый [Tween].
     _buildTween(oldWidget.value);
+
     super.didUpdateWidget(oldWidget);
   }
 

@@ -3,7 +3,6 @@ import 'package:credit_card_validator/card_number.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as g;
 import 'package:ioka/src/api/utils/access_token_helpers.dart';
-import 'package:ioka/src/api/models/error.dart';
 
 class MockIokaApi extends IokaApi {
   MockIokaApi({

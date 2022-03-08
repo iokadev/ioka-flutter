@@ -6,10 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
 
+/// Утилиты для темы.
 class IokaThemeUtils {
   static final _materialThemeGenerator = IokaMaterialThemeGenerator();
   static final _cupertinoThemeGenerator = IokaCupertinoThemeGenerator();
-
+  
+  /// Получает [Brightness] в этом [context]. Автоматически определяет,
+  /// какая платформа используется (Material/Cupertino) и вызывает 
+  /// соответствующий метод.
   static Brightness getBrightness(BuildContext context) {
     final hasMaterial = _materialThemeGenerator.hasAncestorTheme(context);
     final hasCupertino = _cupertinoThemeGenerator.hasAncestorTheme(context);
@@ -23,6 +27,7 @@ class IokaThemeUtils {
     return Brightness.light;
   }
 
+  /// Получает платформу в этом [context].
   static Platform getPlatform(BuildContext context) {
     if (_cupertinoThemeGenerator.hasAncestorTheme(context)) {
       return Platform.cupertino;
