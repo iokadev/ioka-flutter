@@ -206,7 +206,7 @@ Future<void> _loadCards() {
 
 ### 3. Отобразить сохраненные карты в своем интерфейсе
 
-<img src="../assets/checkout-saved-card/payment-option-selection-screenshot.png" height="400px" float="right">
+<img src="../assets/checkout-saved-card/payment-option-selection-screenshot.png" height="400px" align="right">
 
 На картинке справа [пример](/demo/lib/pages/select_payment_option_page.dart) 
 такой страницы в демо-приложении SDK.
