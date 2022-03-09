@@ -2,6 +2,8 @@
 ///
 /// tool/generate_icons_class.py
 
+// ignore_for_file: public_member_api_docs
+
 class IokaIcons {
   static const angleLeft = 'angle-left';
   static const angleRight = 'angle-right';

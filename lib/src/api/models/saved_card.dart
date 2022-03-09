@@ -40,6 +40,10 @@ class SavedCard {
     return validateCardNumber(panMasked.split('*').first).ccType;
   }
 
+  String get cardTypeString {
+    return cardType.toString().split('.').last;
+  }
+
   String get formattedMaskedPan => '•••• ${panMasked.split('*').last}';
 
   @override

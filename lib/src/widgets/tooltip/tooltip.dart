@@ -3,6 +3,24 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ioka/ioka.dart';
 
+/// Показывает подсказку пользователю. Локация и размеры подсказки высчитываются
+/// автоматически в зависимости от контекста, который вызвал этот метод.
+/// 
+/// Например, чтобы показать подсказку для кнопки, нужно обложить эту кнопку
+/// в [Builder], чтобы получить контекст именно в этом участке экрана:
+/// 
+/// ```dart
+/// Builder(
+///   builder: (context) {
+///     return RaisedButton(
+///       child: Text('Показать подсказку'),
+///       onPressed: () {
+///         showTooltip(context, ...);
+///       },
+///     );
+///   },
+/// )
+/// ```
 Future<void> showTooltip(
   BuildContext context, {
   required WidgetBuilder builder,

@@ -2,6 +2,8 @@
 ///
 /// tool/generate_icons_class.py
 
+// ignore_for_file: public_member_api_docs
+
 class CardTypeIcons {
   static const amex = 'amex';
   static const dinersclub = 'dinersclub';

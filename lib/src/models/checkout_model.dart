@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
-import 'package:ioka/src/api/models/error.dart';
 
 /// Абстрактная модель для форм оплаты.
 ///

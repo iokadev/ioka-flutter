@@ -21,6 +21,7 @@ linter:
     parameter_assignments: true
     prefer_final_locals: true
     prefer_single_quotes: true
+    # public_member_api_docs: true
     sized_box_for_whitespace: true
     sort_child_properties_last: true
     sort_constructors_first: true
