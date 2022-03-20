@@ -142,18 +142,38 @@ ElevatedButton(
 
 [3. Отобразить сохраненные карты в своем интерфейсе](#3-отобразить-сохраненные-карты-в-своем-интерфейсе)
 
-
-[4. Вызвать метод своего бэкенда для создания заказа](#4-вызвать-метод-своего-бэкенда-для-создания-заказа)
-
-[5. Вызвать метод оплаты в SDK](#5-вызвать-метод-оплаты-в-sdk)
-- [5.1. Метод оплаты сохраненной картой](#51-метод-оплаты-сохраненной-картой)
-- [5.2. Метод оплаты новой картой](#52-метод-оплаты-новой-картой)
+[4. Вызвать метод оплаты в SDK](#4-вызвать-метод-оплаты-в-sdk)
+- [4.1. Метод оплаты сохраненной картой](#41-метод-оплаты-сохраненной-картой)
+- [4.2. Метод оплаты новой картой](#42-метод-оплаты-новой-картой)
 
 
 ### 1. Отобразить экран оформления заказа
 
 Помимо информации о заказе, этот экран должен предоставить пользователю
 возможность выбрать карту для оплаты.
+
+Перед показом этого экрана мы должны заранее создать заказ на сервере и 
+сохранить `customer_access_token` и `order_access_token` в переменных. Например:
+
+```dart
+RaisedButton(
+  onPressed: () async {
+    final tokens = await MyBackend.createOrder();
+
+    // Здесь [tokens] это объект с токенами, но это может быть напр. Map
+    final customerAccessToken = tokens.customerAccessToken;
+    final orderAccessToken = tokens.orderAccessToken;
+
+    // Заранее создаём заказ и передаём токены в экран оформления
+    await showCheckoutView(
+      context: context,
+      customerAccessToken: customerAccessToken,
+      orderAccessToken: orderAccessToken,
+    );
+  },
+  child: Text('Оформить заказ')
+),
+```
 
 На картинке ниже [пример](/demo/lib/pages/checkout_page.dart) работы формы в 
 демо-приложении SDK:
@@ -162,9 +182,8 @@ ElevatedButton(
 
 ### 2. Получить сохраненные карты пользователя
 
-Для получения сохраеннных карт пользователя нужно сначала получить 
-`customer_access_token` с вашего сервера. Затем, можно вызывать метод 
-`Ioka.instance.getSavedCards()`, передав в него этот токен:
+Для получения сохраеннных карт пользователя  можно вызывать метод 
+`Ioka.instance.getSavedCards()`, передав в него `customer_access_token`:
 
 ```dart
 // Список сохраненных карт
@@ -179,12 +198,10 @@ void initState() {
 }
 
 Future<void> _loadCards() {
-  // Получаем customer_access_token с нашего сервера
-  final customerAccessToken = await MyBackend.getCustomerAccessToken();
-  
-  // Получаем список сохраненных карт и сохраняем в переменной
+  // Получаем список сохраненных карт и сохраняем в переменной.
+  // customerAccessToken был передан в шаге (1).
   savedCards = await Ioka.instance.getSavedCards(
-    customerAccessToken: customerAccessToken,
+    customerAccessToken: widget.customerAccessToken,
   );
 
   // Обновляем интерфейс
@@ -214,22 +231,7 @@ return CardTypeIcon(
 
 <br clear="right">
 
-### 4. Вызвать метод своего бэкенда для создания заказа
-
-При нажатии на кнопку оформления заказа необходимо сначала создать заказ на 
-сервере и получить `order_access_token`.
-
-```dart
-ElevatedButton(
-  onPressed: () async {
-    // Создаём заказ при нажатии на кнопку и сохраняем order_access_token
-    final orderAccessToken = await MyBackend.createOrder();
-  },
-  child: const Text('Оформить'),
-);
-```
-
-### 5. Вызвать метод оплаты в SDK
+### 4. Вызвать метод оплаты в SDK
 
 Если пользователь выбрал сохраненную карту, то необходимо использовать метод
 `Ioka.instance.startCheckoutWithSavedCardFlow()`, передав в него `context`,
@@ -239,7 +241,7 @@ ElevatedButton(
 `Ioka.instance.startCheckoutFlow()`, передав в него `context`, 
 `orderAccessToken` и опционально `customerAccessToken`.
 
-### 5.1. Метод оплаты сохраненной картой
+### 4.1. Метод оплаты сохраненной картой
 
 При нажатии на кнопку оформления заказа, после создания заказа на сервере
 можно вызывать оплату:
@@ -250,13 +252,10 @@ final savedCard = ...;
 
 ElevatedButton(
   onPressed: () async {
-    // Создаём заказ при нажатии на кнопку и сохраняем order_access_token
-    final orderAccessToken = await MyBackend.createOrder();
-
     // Начинаем оплату
     await Ioka.instance.startCheckoutWithSavedCardFlow(
       context: context,
-      orderAccessToken: orderAccessToken,
+      orderAccessToken: widget.orderAccessToken,
       savedCard: savedCard,
     );
   },
@@ -264,7 +263,7 @@ ElevatedButton(
 );
 ```
 
-### 5.2. Метод оплаты новой картой
+### 4.2. Метод оплаты новой картой
 
 Этот метод такой же, как и в 
 [оплата заказа без использования функционала сохраненных карт](#3-вызвать-метод-оплаты-в-sdk).

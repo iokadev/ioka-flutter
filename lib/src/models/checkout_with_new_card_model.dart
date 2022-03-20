@@ -7,15 +7,15 @@ class CheckoutWithNewCardModel extends CheckoutModel {
   CheckoutWithNewCardModel({
     required String orderAccessToken,
     required OrderOut order,
-    this.customerAccessToken,
-  }) : super(order: order, orderAccessToken: orderAccessToken);
-
-  final String? customerAccessToken;
+    bool? canSaveCard,
+  })  : _canSaveCard = canSaveCard,
+        super(order: order, orderAccessToken: orderAccessToken);
 
   final cardInputDataNotifier = ValueNotifier<CardInputData?>(null);
   CardInputData? get cardInputData => cardInputDataNotifier.value;
 
-  bool get canSaveCard => customerAccessToken != null;
+  final bool? _canSaveCard;
+  bool get canSaveCard => _canSaveCard ?? order.customerId != null;
 
   void onChanged(CardInputData data) {
     cardInputDataNotifier.value = data;
@@ -28,7 +28,6 @@ class CheckoutWithNewCardModel extends CheckoutModel {
   Future<ExtendedPayment> createPayment() async {
     return Ioka.api.createNewCardPayment(
       orderAccessToken: orderAccessToken,
-      customerAccessToken: customerAccessToken,
       pan: cardInputData!.cardNumber,
       expiryDate: cardInputData!.expiryDate,
       cvc: cardInputData!.cvc,

@@ -231,9 +231,9 @@ class Ioka {
   ///
   /// - [orderAccessToken] - токен доступа к заказу. Необходим для получения
   ///   информации о заказе и оплаты.
-  ///
-  /// - (опционально) [customerAccessToken] - токен доступа к пользователю. Если
-  ///   задан, то при оплате можно будет привязать карту к пользователю.
+  /// 
+  /// - (опционально) [canSaveCard] - можно ли сохранять карту пользователя.
+  ///   Если `null`, то карту можно сохранить если `order.customerId != null`.
   ///
   /// - (опционально) [theme] - тема для отображения окна оплаты. Если не
   ///   задана, используется логика получения темы из [_resolveTheme].
@@ -257,7 +257,7 @@ class Ioka {
   Future<generated.ExtendedPayment?> startCheckoutFlow({
     required BuildContext context,
     required String orderAccessToken,
-    String? customerAccessToken,
+    bool? canSaveCard,
     IokaTheme? theme,
     Brightness? brightness,
     Platform? platform,
@@ -280,8 +280,8 @@ class Ioka {
       (context, platform) => ChangeNotifierProvider(
         create: (_) => CheckoutWithNewCardModel(
           orderAccessToken: orderAccessToken,
-          customerAccessToken: customerAccessToken,
           order: order,
+          canSaveCard: canSaveCard,
         ),
         builder: (context, _) => const CupertinoCheckoutWithNewCardView(),
       ),

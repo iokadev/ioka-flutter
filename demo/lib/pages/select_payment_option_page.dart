@@ -1,4 +1,3 @@
-import 'package:demo/api/api.dart';
 import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/profile_page.dart';
 import 'package:demo/widgets/saved_cards_list.dart';
@@ -22,7 +21,6 @@ class SelectPaymentOptionPage extends StatefulWidget {
 }
 
 class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
-  String? _customerAccessToken;
   List<SavedCard>? _cards;
 
   dynamic paymentOption;

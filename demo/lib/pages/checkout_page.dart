@@ -181,20 +181,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: CupertinoProgressButton(
                   onPressed: _paymentOption != null
                       ? () async {
+                          // ignore: prefer_typing_uninitialized_variables
+                          var result;
+
                           if (_paymentOption == 'newCard') {
-                            await Ioka.instance.startCheckoutFlow(
+                            result = await Ioka.instance.startCheckoutFlow(
                               context: context,
                               orderAccessToken: widget.tokens.orderAccessToken,
-                              customerAccessToken:
-                                  widget.tokens.customerAccessToken,
                             );
                           } else if (_paymentOption is SavedCard) {
-                            await Ioka.instance.startCheckoutWithSavedCardFlow(
+                            result = await Ioka.instance
+                                .startCheckoutWithSavedCardFlow(
                               context: context,
                               orderAccessToken: widget.tokens.orderAccessToken,
                               savedCard: _paymentOption,
                             );
                           }
+
+                          if (result != null) Navigator.pop(context);
                         }
                       : null,
                   color: theme.colorScheme.primary,

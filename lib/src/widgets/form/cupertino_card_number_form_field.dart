@@ -39,6 +39,7 @@ class CupertinoCardNumberFormField extends StatelessWidget {
         },
         formState: state,
         enabled: isEnabled,
+        secure: true,
         suffix: Row(
           children: [
             CardEmitterWidget(cardEmitter: cardEmitter),
