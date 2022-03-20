@@ -1,10 +1,11 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ioka/src/models/confirmation_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../test_utils.dart';
 
 class MockWebViewController extends Mock implements WebViewController {
   @override
