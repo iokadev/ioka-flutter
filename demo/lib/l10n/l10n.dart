@@ -33,12 +33,12 @@ class DemoLocalizations {
       'sampleItemName': 'Набор керамики',
       'sampleLocation': 'улица Абая, 328',
       'sampleTime': '14 февраля, 15:00',
-      'cartPageCheckoutAction': 'Перейти к оформлению',
+      'cartPageCheckoutAction': 'Оформить',
       'checkoutPageTitle': 'Оформление заказа',
       'checkoutPageSelectPaymentMethodHint': 'Выберите способ оплаты',
       'cashPaymentMethod': 'Наличными курьеру',
       'cardPaymentMethod': 'Банковской картой',
-      'checkoutPageCheckoutAction': 'Оформить',
+      'checkoutPageCheckoutAction': 'Оплатить',
       'deleteCardDialogLabel': (v) =>
           'Вы уверены, что хотите удалить карту $v?',
       'deleteCardDialogDeleteAction': 'Удалить',
@@ -61,7 +61,7 @@ class DemoLocalizations {
       'checkoutPageSelectPaymentMethodHint': 'Select a payment method',
       'cashPaymentMethod': 'Cash',
       'cardPaymentMethod': 'Credit card',
-      'checkoutPageCheckoutAction': 'Checkout',
+      'checkoutPageCheckoutAction': 'Pay',
       'deleteCardDialogLabel': (v) =>
           'Are you sure that you want to delete your card $v?',
       'deleteCardDialogDeleteAction': 'Delete',

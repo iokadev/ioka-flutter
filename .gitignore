@@ -49,3 +49,6 @@ app.*.map.json
 
 # fvm
 .fvm/flutter_sdk
+
+# temp files
+apiswagger_dart_code_generator_temp.dart

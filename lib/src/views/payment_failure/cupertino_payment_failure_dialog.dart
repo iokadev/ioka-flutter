@@ -38,11 +38,13 @@ class _CupertinoPaymentFailureDialogBody extends StatelessWidget {
         Text(
           context.l10n.paymentFailureDialogTitle,
           style: context.typography.title,
+          textAlign: TextAlign.center,
         ),
         if (reason != null) ...[
           const SizedBox(height: 8.0),
           Text(
             reason!,
+            textAlign: TextAlign.center,
             style: context.typography.caption.copyWith(
               color: context.colors.grey,
             ),

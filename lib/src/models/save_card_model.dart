@@ -40,7 +40,10 @@ class SaveCardModel extends ChangeNotifier {
         );
 
         if (newCard == null) {
-          Navigator.pop(context);
+          // Разблокируем форму для пользователя.
+          isInteractableNotifier.value = true;
+          notifyListeners();
+
           return false;
         }
 
@@ -60,7 +63,7 @@ class SaveCardModel extends ChangeNotifier {
     } catch (e) {
       await _onFailure(
         context,
-        reason: (e as dynamic).message,
+        reason: formatError(context, e),
       );
     }
 

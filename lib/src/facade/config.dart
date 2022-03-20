@@ -56,23 +56,8 @@ class IokaInternalConfiguration extends IokaConfiguration {
     }
   }
 
-  /// URL редиректа в случае оплаты заказа с 3D Secure.
+  /// URL редиректа в случае 3D Secure.
   String get paymentConfirmationRedirectUrl {
-    switch (mode) {
-      case IokaApiMode.staging:
-        return 'https://stage-checkout.ioka.kz/orders/';
-      case IokaApiMode.production:
-        return 'https://payments.ioka.kz/orders/';
-    }
-  }
-
-  /// URL редиректа в случае привязки карты с 3D Secure.
-  String get bindingConfirmationRedirectUrl {
-    switch (mode) {
-      case IokaApiMode.staging:
-        return 'https://stage-checkout.ioka.kz/customers/';
-      case IokaApiMode.production:
-        return 'https://payments.ioka.kz/customers/';
-    }
+    return 'https://ioka.kz';
   }
 }

@@ -67,7 +67,8 @@ abstract class CheckoutModel extends ChangeNotifier {
       payment = await createPayment();
 
       // По надобности, показываем форму 3D Secure.
-      if (payment.status == PaymentStatus.pending && payment.action != null) {
+      if (payment.status == PaymentStatus.requiresAction &&
+          payment.action != null) {
         // Получаем новый объект платежа.
         final newPayment = await onPaymentConfirmation(
           context,
@@ -78,9 +79,9 @@ abstract class CheckoutModel extends ChangeNotifier {
         // Если новый объект платежа `null` - т.е. пользователь отменил платеж,
         // то прерываем операцию.
         if (newPayment == null) {
-          if (shouldPopRoute) {
-            Navigator.pop(context);
-          }
+          // Разблокируем форму для пользователя.
+          isInteractableNotifier.value = true;
+          notifyListeners();
 
           return null;
         }
@@ -106,7 +107,7 @@ abstract class CheckoutModel extends ChangeNotifier {
       // Ошибка оплаты - показываем пользователю окно ошибки.
       retry = await onFailure(
         context,
-        reason: (e is IokaError) ? e.message : e.toString(),
+        reason: formatError(context, e),
       );
 
       payment = null;

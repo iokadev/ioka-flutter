@@ -20,22 +20,28 @@ class CupertinoConfirmationView extends StatelessWidget {
       child: Stack(
         children: [
           WebView(
-            initialUrl: model.url,
+            initialUrl: model.urlWithRedirect,
             onWebViewCreated: model.onControllerInitialized,
-            onPageFinished: (v) => model.onPageFinished(context, v),
+            navigationDelegate: (v) => model.navigationDelegate(context, v),
             javascriptMode: JavascriptMode.unrestricted,
           ),
-          Center(
-            child: ValueListenableBuilder(
-              valueListenable: model.isLoadingNotifier,
-              builder: (context, bool isLoading, _) {
-                if (isLoading) {
-                  return const CupertinoActivityIndicator();
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
+          ValueListenableBuilder(
+            valueListenable: model.isLoadingNotifier,
+            builder: (context, bool isLoading, _) {
+              return IgnorePointer(
+                ignoring: !isLoading,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeInOut,
+                  opacity: isLoading ? 1.0 : 0.0,
+                  child: Container(
+                    color: context.colors.background,
+                    alignment: Alignment.center,
+                    child: const CupertinoActivityIndicator(),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -178,8 +178,8 @@ const $PaymentToolTypeMap = {
 enum PaymentStatus {
   @JsonValue('swaggerGeneratedUnknown')
   swaggerGeneratedUnknown,
-  @JsonValue('PENDING')
-  pending,
+  @JsonValue('REQUIRES_ACTION')
+  requiresAction,
   @JsonValue('APPROVED')
   approved,
   @JsonValue('CAPTURED')
@@ -191,7 +191,7 @@ enum PaymentStatus {
 }
 
 const $PaymentStatusMap = {
-  PaymentStatus.pending: 'PENDING',
+  PaymentStatus.requiresAction: 'REQUIRES_ACTION',
   PaymentStatus.approved: 'APPROVED',
   PaymentStatus.captured: 'CAPTURED',
   PaymentStatus.cancelled: 'CANCELLED',

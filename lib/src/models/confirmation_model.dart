@@ -20,6 +20,9 @@ abstract class ConfirmationModel<T> extends ChangeNotifier {
   /// Ссылка, на которую происходит редирект в случае подтверждения платежа.
   final String redirectUrl;
 
+  /// Ссылка на страницу подтверждения 3D Secure с параметром [redirectUrl].
+  String get urlWithRedirect => '$url?return_url=$redirectUrl';
+
   /// Уведомляет слушателей об изменении состояния загрузки страницы.
   final isLoadingNotifier = ValueNotifier<bool>(true);
   bool get isLoading => isLoadingNotifier.value;
@@ -29,35 +32,30 @@ abstract class ConfirmationModel<T> extends ChangeNotifier {
 
   /// Вызывается при инициализации нативного [WebView].
   ///
-  /// Сохраняет переданный контроллер в модели.
+  /// Сохраняет переданный контроллер в моделе.
   void onControllerInitialized(WebViewController controller) {
     assert(_controller == null);
     _controller = controller;
+
+    // Уведомляем о том, что закончилась загрузка.
+    isLoadingNotifier.value = false;
   }
 
-  Timer? _debounceTimer;
-
-  /// Вызывается при окончании загрузки страницы.
+  /// Делегат для случаев навигации в WebView.
   ///
   /// В случае, если URL страницы начинается с [redirectUrl], вызывает
-  /// функцию [onRedirect] и возвращает `true`.
-  /// 
-  /// Возвращает `false` в противном случае.
-  bool onPageFinished(BuildContext context, String url) {
-    // Уведомляем о том, что загрузка страницы завершилась.
-    isLoadingNotifier.value = false;
-
-    if (url.startsWith(redirectUrl)) {
-      _debounceTimer?.cancel();
-      _debounceTimer = Timer(
-        const Duration(seconds: 3),
-        () => onRedirect(context),
-      );
-
-      return true;
+  /// функцию [onRedirect].
+  ///
+  /// Всегда возвращает [NavigationDecision.navigate].
+  FutureOr<NavigationDecision> navigationDelegate(
+    BuildContext context,
+    NavigationRequest request,
+  ) {
+    if (request.url.startsWith(redirectUrl)) {
+      onRedirect(context);
     }
-    
-    return false;
+
+    return NavigationDecision.navigate;
   }
 
   /// Вызывается при редиректе на [redirectUrl].

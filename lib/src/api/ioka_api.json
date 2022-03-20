@@ -6361,7 +6361,7 @@
       "PaymentStatus": {
         "title": "PaymentStatus",
         "enum": [
-          "PENDING",
+          "REQUIRES_ACTION",
           "APPROVED",
           "CAPTURED",
           "CANCELLED",
@@ -6890,6 +6890,9 @@
       "CardIn": {
         "title": "CardIn",
         "type": "object",
+        "required": [
+          "token"
+        ],
         "properties": {
           "token": {
             "description": "Токен платежного средства, предоставленного плательщиком",

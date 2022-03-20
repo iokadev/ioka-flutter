@@ -32,7 +32,7 @@ Future<g.ExtendedPayment> _createDeclinedPaymentFn() async =>
 
 Future<g.ExtendedPayment> _create3dsPaymentFn() async =>
     _defaultPayment.copyWith(
-      status: PaymentStatus.pending,
+      status: PaymentStatus.requiresAction,
       action: g.TDSAction(url: 'https://example.com'),
     );
 

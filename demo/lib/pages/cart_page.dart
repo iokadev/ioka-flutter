@@ -1,8 +1,10 @@
+import 'package:demo/api/api.dart';
 import 'package:demo/l10n/l10n.dart';
 import 'package:demo/pages/checkout_page.dart';
 import 'package:demo/widgets/amount_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ioka/ioka.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -54,20 +56,26 @@ class _CartPageState extends State<CartPage> {
             child: SizedBox(
               width: double.infinity,
               height: 56.0,
-              child: ElevatedButton(
-                onPressed: () {
+              child: CupertinoProgressButton(
+                color: theme.colorScheme.primary,
+                disabledColor: theme.disabledColor,
+                borderRadius: BorderRadius.circular(12.0),
+                onPressed: () async {
+                  final amount = (1000.0 * _amountNotifier.value).round();
+
+                  final tokens = await DemoApi.instance.checkout(
+                    amount: amount * 100,
+                  );
+
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => CheckoutPage(
-                        amount: (1000.0 * _amountNotifier.value).round(),
+                        amount: amount,
+                        tokens: tokens,
                       ),
                     ),
                   );
                 },
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                ),
                 child: Text(l10n.cartPageCheckoutAction),
               ),
             ),
@@ -101,7 +109,7 @@ class _ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = MaterialLocalizations.of(context);
-    
+
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(

@@ -9,9 +9,11 @@ class CheckoutPage extends StatefulWidget {
   const CheckoutPage({
     Key? key,
     required this.amount,
+    required this.tokens,
   }) : super(key: key);
 
   final int amount;
+  final AccessTokens tokens;
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -63,6 +65,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         final result = await Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => SelectPaymentOptionPage(
+              customerAccessToken: widget.tokens.customerAccessToken,
               paymentOption: _paymentOption,
             ),
           ),
@@ -178,22 +181,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: CupertinoProgressButton(
                   onPressed: _paymentOption != null
                       ? () async {
-                          final _amount = widget.amount * 100;
-
-                          final tokens = await DemoApi.instance.checkout(
-                            amount: _amount,
-                          );
-
                           if (_paymentOption == 'newCard') {
                             await Ioka.instance.startCheckoutFlow(
                               context: context,
-                              orderAccessToken: tokens.orderAccessToken,
-                              customerAccessToken: tokens.customerAccessToken,
+                              orderAccessToken: widget.tokens.orderAccessToken,
+                              customerAccessToken:
+                                  widget.tokens.customerAccessToken,
                             );
                           } else if (_paymentOption is SavedCard) {
                             await Ioka.instance.startCheckoutWithSavedCardFlow(
                               context: context,
-                              orderAccessToken: tokens.orderAccessToken,
+                              orderAccessToken: widget.tokens.orderAccessToken,
                               savedCard: _paymentOption,
                             );
                           }

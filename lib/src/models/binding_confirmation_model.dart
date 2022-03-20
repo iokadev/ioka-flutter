@@ -13,7 +13,7 @@ class BindingConfirmationModel extends ConfirmationModel<ExtendedCard> {
   }) : super(
           url: url,
           redirectUrl:
-              Ioka.instance.configuration.bindingConfirmationRedirectUrl,
+              Ioka.instance.configuration.paymentConfirmationRedirectUrl,
         );
 
   final String cardId;

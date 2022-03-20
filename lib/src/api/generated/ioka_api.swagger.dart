@@ -1543,9 +1543,9 @@ class Error {
 
   factory Error.fromJson(Map<String, dynamic> json) => _$ErrorFromJson(json);
 
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$ErrorFromJson;
   static const toJsonFactory = _$ErrorToJson;
@@ -1587,9 +1587,9 @@ class ValidationError {
   factory ValidationError.fromJson(Map<String, dynamic> json) =>
       _$ValidationErrorFromJson(json);
 
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$ValidationErrorFromJson;
   static const toJsonFactory = _$ValidationErrorToJson;
@@ -1638,21 +1638,21 @@ class CardPayer {
   factory CardPayer.fromJson(Map<String, dynamic> json) =>
       _$CardPayerFromJson(json);
 
-  @JsonKey(name: 'pan')
+  @JsonKey(name: 'pan', includeIfNull: false)
   final String? pan;
-  @JsonKey(name: 'exp')
+  @JsonKey(name: 'exp', includeIfNull: false)
   final String? exp;
-  @JsonKey(name: 'cvc')
+  @JsonKey(name: 'cvc', includeIfNull: false)
   final String? cvc;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
-  @JsonKey(name: 'save', defaultValue: false)
+  @JsonKey(name: 'save', includeIfNull: false, defaultValue: false)
   final bool? save;
-  @JsonKey(name: 'email')
+  @JsonKey(name: 'email', includeIfNull: false)
   final String? email;
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
   static const fromJsonFactory = _$CardPayerFromJson;
   static const toJsonFactory = _$CardPayerToJson;
@@ -1728,9 +1728,9 @@ class Contacts {
   factory Contacts.fromJson(Map<String, dynamic> json) =>
       _$ContactsFromJson(json);
 
-  @JsonKey(name: 'email')
+  @JsonKey(name: 'email', includeIfNull: false)
   final String? email;
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
   static const fromJsonFactory = _$ContactsFromJson;
   static const toJsonFactory = _$ContactsToJson;
@@ -1782,32 +1782,33 @@ class OrderEventOut {
   factory OrderEventOut.fromJson(Map<String, dynamic> json) =>
       _$OrderEventOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
       name: 'name',
+      includeIfNull: false,
       toJson: eventNameEnumToJson,
       fromJson: eventNameEnumFromJson)
   final enums.EventNameEnum? name;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'order_id')
+  @JsonKey(name: 'order_id', includeIfNull: false)
   final String? orderId;
-  @JsonKey(name: 'payment_id')
+  @JsonKey(name: 'payment_id', includeIfNull: false)
   final String? paymentId;
-  @JsonKey(name: 'refund_id')
+  @JsonKey(name: 'refund_id', includeIfNull: false)
   final String? refundId;
-  @JsonKey(name: 'md')
+  @JsonKey(name: 'md', includeIfNull: false)
   final String? md;
-  @JsonKey(name: 'pa_req')
+  @JsonKey(name: 'pa_req', includeIfNull: false)
   final String? paReq;
-  @JsonKey(name: 'acs_url')
+  @JsonKey(name: 'acs_url', includeIfNull: false)
   final String? acsUrl;
-  @JsonKey(name: 'term_url')
+  @JsonKey(name: 'term_url', includeIfNull: false)
   final String? termUrl;
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$OrderEventOutFromJson;
   static const toJsonFactory = _$OrderEventOutToJson;
@@ -1917,30 +1918,31 @@ class CustomerEventOut {
   factory CustomerEventOut.fromJson(Map<String, dynamic> json) =>
       _$CustomerEventOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
       name: 'name',
+      includeIfNull: false,
       toJson: customerEventNameEnumToJson,
       fromJson: customerEventNameEnumFromJson)
   final enums.CustomerEventNameEnum? name;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'md')
+  @JsonKey(name: 'md', includeIfNull: false)
   final String? md;
-  @JsonKey(name: 'pa_req')
+  @JsonKey(name: 'pa_req', includeIfNull: false)
   final String? paReq;
-  @JsonKey(name: 'acs_url')
+  @JsonKey(name: 'acs_url', includeIfNull: false)
   final String? acsUrl;
-  @JsonKey(name: 'term_url')
+  @JsonKey(name: 'term_url', includeIfNull: false)
   final String? termUrl;
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$CustomerEventOutFromJson;
   static const toJsonFactory = _$CustomerEventOutToJson;
@@ -2046,39 +2048,41 @@ class OrderIn {
   factory OrderIn.fromJson(Map<String, dynamic> json) =>
       _$OrderInFromJson(json);
 
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
   @JsonKey(
       name: 'currency',
+      includeIfNull: false,
       toJson: currencyEnumToJson,
       fromJson: currencyEnumFromJson)
   final enums.CurrencyEnum? currency;
   @JsonKey(
       name: 'capture_method',
+      includeIfNull: false,
       toJson: captureMethodToJson,
       fromJson: captureMethodFromJson)
   final enums.CaptureMethod? captureMethod;
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extra_info')
+  @JsonKey(name: 'extra_info', includeIfNull: false)
   final Object? extraInfo;
-  @JsonKey(name: 'attempts')
+  @JsonKey(name: 'attempts', includeIfNull: false)
   final int? attempts;
-  @JsonKey(name: 'due_date')
+  @JsonKey(name: 'due_date', includeIfNull: false)
   final String? dueDate;
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'back_url')
+  @JsonKey(name: 'back_url', includeIfNull: false)
   final String? backUrl;
-  @JsonKey(name: 'success_url')
+  @JsonKey(name: 'success_url', includeIfNull: false)
   final String? successUrl;
-  @JsonKey(name: 'failure_url')
+  @JsonKey(name: 'failure_url', includeIfNull: false)
   final String? failureUrl;
-  @JsonKey(name: 'template')
+  @JsonKey(name: 'template', includeIfNull: false)
   final String? template;
   static const fromJsonFactory = _$OrderInFromJson;
   static const toJsonFactory = _$OrderInToJson;
@@ -2212,48 +2216,53 @@ class OrderOut {
   factory OrderOut.fromJson(Map<String, dynamic> json) =>
       _$OrderOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
-      name: 'status', toJson: orderStatusToJson, fromJson: orderStatusFromJson)
+      name: 'status',
+      includeIfNull: false,
+      toJson: orderStatusToJson,
+      fromJson: orderStatusFromJson)
   final enums.OrderStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
   @JsonKey(
       name: 'currency',
+      includeIfNull: false,
       toJson: currencyEnumToJson,
       fromJson: currencyEnumFromJson)
   final enums.CurrencyEnum? currency;
   @JsonKey(
       name: 'capture_method',
+      includeIfNull: false,
       toJson: captureMethodToJson,
       fromJson: captureMethodFromJson)
   final enums.CaptureMethod? captureMethod;
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extra_info')
+  @JsonKey(name: 'extra_info', includeIfNull: false)
   final Object? extraInfo;
-  @JsonKey(name: 'attempts')
+  @JsonKey(name: 'attempts', includeIfNull: false)
   final int? attempts;
-  @JsonKey(name: 'due_date')
+  @JsonKey(name: 'due_date', includeIfNull: false)
   final String? dueDate;
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'back_url')
+  @JsonKey(name: 'back_url', includeIfNull: false)
   final String? backUrl;
-  @JsonKey(name: 'success_url')
+  @JsonKey(name: 'success_url', includeIfNull: false)
   final String? successUrl;
-  @JsonKey(name: 'failure_url')
+  @JsonKey(name: 'failure_url', includeIfNull: false)
   final String? failureUrl;
-  @JsonKey(name: 'template')
+  @JsonKey(name: 'template', includeIfNull: false)
   final String? template;
-  @JsonKey(name: 'checkout_url')
+  @JsonKey(name: 'checkout_url', includeIfNull: false)
   final String? checkoutUrl;
   static const fromJsonFactory = _$OrderOutFromJson;
   static const toJsonFactory = _$OrderOutToJson;
@@ -2393,9 +2402,9 @@ class CustomerAndAccessToken {
   factory CustomerAndAccessToken.fromJson(Map<String, dynamic> json) =>
       _$CustomerAndAccessTokenFromJson(json);
 
-  @JsonKey(name: 'customer')
+  @JsonKey(name: 'customer', includeIfNull: false)
   final ExtendedCustomer? customer;
-  @JsonKey(name: 'customer_access_token')
+  @JsonKey(name: 'customer_access_token', includeIfNull: false)
   final String? customerAccessToken;
   static const fromJsonFactory = _$CustomerAndAccessTokenFromJson;
   static const toJsonFactory = _$CustomerAndAccessTokenToJson;
@@ -2442,9 +2451,9 @@ class OrderAndAccessToken {
   factory OrderAndAccessToken.fromJson(Map<String, dynamic> json) =>
       _$OrderAndAccessTokenFromJson(json);
 
-  @JsonKey(name: 'order')
+  @JsonKey(name: 'order', includeIfNull: false)
   final OrderOut? order;
-  @JsonKey(name: 'order_access_token')
+  @JsonKey(name: 'order_access_token', includeIfNull: false)
   final String? orderAccessToken;
   static const fromJsonFactory = _$OrderAndAccessTokenFromJson;
   static const toJsonFactory = _$OrderAndAccessTokenToJson;
@@ -2489,9 +2498,9 @@ class PaginatedOrderOut {
   factory PaginatedOrderOut.fromJson(Map<String, dynamic> json) =>
       _$PaginatedOrderOutFromJson(json);
 
-  @JsonKey(name: 'count')
+  @JsonKey(name: 'count', includeIfNull: false)
   final int? count;
-  @JsonKey(name: 'data', defaultValue: <OrderOut>[])
+  @JsonKey(name: 'data', includeIfNull: false, defaultValue: <OrderOut>[])
   final List<OrderOut>? data;
   static const fromJsonFactory = _$PaginatedOrderOutFromJson;
   static const toJsonFactory = _$PaginatedOrderOutToJson;
@@ -2534,9 +2543,9 @@ class PaginatedPaymentOut {
   factory PaginatedPaymentOut.fromJson(Map<String, dynamic> json) =>
       _$PaginatedPaymentOutFromJson(json);
 
-  @JsonKey(name: 'count')
+  @JsonKey(name: 'count', includeIfNull: false)
   final int? count;
-  @JsonKey(name: 'data', defaultValue: <PaymentOut>[])
+  @JsonKey(name: 'data', includeIfNull: false, defaultValue: <PaymentOut>[])
   final List<PaymentOut>? data;
   static const fromJsonFactory = _$PaginatedPaymentOutFromJson;
   static const toJsonFactory = _$PaginatedPaymentOutToJson;
@@ -2579,9 +2588,9 @@ class PaginatedRefundOut {
   factory PaginatedRefundOut.fromJson(Map<String, dynamic> json) =>
       _$PaginatedRefundOutFromJson(json);
 
-  @JsonKey(name: 'count')
+  @JsonKey(name: 'count', includeIfNull: false)
   final int? count;
-  @JsonKey(name: 'data', defaultValue: <RefundOut>[])
+  @JsonKey(name: 'data', includeIfNull: false, defaultValue: <RefundOut>[])
   final List<RefundOut>? data;
   static const fromJsonFactory = _$PaginatedRefundOutFromJson;
   static const toJsonFactory = _$PaginatedRefundOutToJson;
@@ -2631,23 +2640,23 @@ class PayerOut {
   factory PayerOut.fromJson(Map<String, dynamic> json) =>
       _$PayerOutFromJson(json);
 
-  @JsonKey(name: 'pan_masked')
+  @JsonKey(name: 'pan_masked', includeIfNull: false)
   final String? panMasked;
-  @JsonKey(name: 'expiry_date')
+  @JsonKey(name: 'expiry_date', includeIfNull: false)
   final String? expiryDate;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
-  @JsonKey(name: 'payment_system')
+  @JsonKey(name: 'payment_system', includeIfNull: false)
   final String? paymentSystem;
-  @JsonKey(name: 'emitter')
+  @JsonKey(name: 'emitter', includeIfNull: false)
   final String? emitter;
-  @JsonKey(name: 'email')
+  @JsonKey(name: 'email', includeIfNull: false)
   final String? email;
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
   static const fromJsonFactory = _$PayerOutFromJson;
   static const toJsonFactory = _$PayerOutToJson;
@@ -2732,7 +2741,7 @@ class PaymentCancel {
   factory PaymentCancel.fromJson(Map<String, dynamic> json) =>
       _$PaymentCancelFromJson(json);
 
-  @JsonKey(name: 'reason')
+  @JsonKey(name: 'reason', includeIfNull: false)
   final String? reason;
   static const fromJsonFactory = _$PaymentCancelFromJson;
   static const toJsonFactory = _$PaymentCancelToJson;
@@ -2770,9 +2779,9 @@ class PaymentCapture {
   factory PaymentCapture.fromJson(Map<String, dynamic> json) =>
       _$PaymentCaptureFromJson(json);
 
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'reason')
+  @JsonKey(name: 'reason', includeIfNull: false)
   final String? reason;
   static const fromJsonFactory = _$PaymentCaptureFromJson;
   static const toJsonFactory = _$PaymentCaptureToJson;
@@ -2815,9 +2824,9 @@ class PaymentError {
   factory PaymentError.fromJson(Map<String, dynamic> json) =>
       _$PaymentErrorFromJson(json);
 
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'message')
+  @JsonKey(name: 'message', includeIfNull: false)
   final String? message;
   static const fromJsonFactory = _$PaymentErrorFromJson;
   static const toJsonFactory = _$PaymentErrorToJson;
@@ -2862,13 +2871,13 @@ class PaymentIn {
   factory PaymentIn.fromJson(Map<String, dynamic> json) =>
       _$PaymentInFromJson(json);
 
-  @JsonKey(name: 'payment_method')
+  @JsonKey(name: 'payment_method', includeIfNull: false)
   final PaymentMethod? paymentMethod;
-  @JsonKey(name: 'customer_card')
+  @JsonKey(name: 'customer_card', includeIfNull: false)
   final CustomerCard? customerCard;
-  @JsonKey(name: 'card')
+  @JsonKey(name: 'card', includeIfNull: false)
   final Card? card;
-  @JsonKey(name: 'contacts')
+  @JsonKey(name: 'contacts', includeIfNull: false)
   final Contacts? contacts;
   static const fromJsonFactory = _$PaymentInFromJson;
   static const toJsonFactory = _$PaymentInToJson;
@@ -2927,9 +2936,9 @@ class PaymentMethod {
   factory PaymentMethod.fromJson(Map<String, dynamic> json) =>
       _$PaymentMethodFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
-  @JsonKey(name: 'save_card', defaultValue: false)
+  @JsonKey(name: 'save_card', includeIfNull: false, defaultValue: false)
   final bool? saveCard;
   static const fromJsonFactory = _$PaymentMethodFromJson;
   static const toJsonFactory = _$PaymentMethodToJson;
@@ -2975,15 +2984,15 @@ class Card {
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
 
-  @JsonKey(name: 'pan_masked')
+  @JsonKey(name: 'pan_masked', includeIfNull: false)
   final String? panMasked;
-  @JsonKey(name: 'expiry_date')
+  @JsonKey(name: 'expiry_date', includeIfNull: false)
   final String? expiryDate;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
-  @JsonKey(name: 'payment_system')
+  @JsonKey(name: 'payment_system', includeIfNull: false)
   final String? paymentSystem;
-  @JsonKey(name: 'emitter')
+  @JsonKey(name: 'emitter', includeIfNull: false)
   final String? emitter;
   static const fromJsonFactory = _$CardFromJson;
   static const toJsonFactory = _$CardToJson;
@@ -3046,9 +3055,9 @@ class Client {
 
   factory Client.fromJson(Map<String, dynamic> json) => _$ClientFromJson(json);
 
-  @JsonKey(name: 'ip')
+  @JsonKey(name: 'ip', includeIfNull: false)
   final String? ip;
-  @JsonKey(name: 'fingerprint')
+  @JsonKey(name: 'fingerprint', includeIfNull: false)
   final String? fingerprint;
   static const fromJsonFactory = _$ClientFromJson;
   static const toJsonFactory = _$ClientToJson;
@@ -3093,11 +3102,11 @@ class ApplePayIn {
   factory ApplePayIn.fromJson(Map<String, dynamic> json) =>
       _$ApplePayInFromJson(json);
 
-  @JsonKey(name: 'url')
+  @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
-  @JsonKey(name: 'platform')
+  @JsonKey(name: 'platform', includeIfNull: false)
   final String? platform;
-  @JsonKey(name: 'domain_name')
+  @JsonKey(name: 'domain_name', includeIfNull: false)
   final String? domainName;
   static const fromJsonFactory = _$ApplePayInFromJson;
   static const toJsonFactory = _$ApplePayInToJson;
@@ -3155,25 +3164,25 @@ class ApplePayOut {
   factory ApplePayOut.fromJson(Map<String, dynamic> json) =>
       _$ApplePayOutFromJson(json);
 
-  @JsonKey(name: 'epochTimestamp')
+  @JsonKey(name: 'epochTimestamp', includeIfNull: false)
   final int? epochTimestamp;
-  @JsonKey(name: 'expiresAt')
+  @JsonKey(name: 'expiresAt', includeIfNull: false)
   final int? expiresAt;
-  @JsonKey(name: 'merchantSessionIdentifier')
+  @JsonKey(name: 'merchantSessionIdentifier', includeIfNull: false)
   final String? merchantSessionIdentifier;
-  @JsonKey(name: 'nonce')
+  @JsonKey(name: 'nonce', includeIfNull: false)
   final String? nonce;
-  @JsonKey(name: 'merchantIdentifier')
+  @JsonKey(name: 'merchantIdentifier', includeIfNull: false)
   final String? merchantIdentifier;
-  @JsonKey(name: 'domainName')
+  @JsonKey(name: 'domainName', includeIfNull: false)
   final String? domainName;
-  @JsonKey(name: 'displayName')
+  @JsonKey(name: 'displayName', includeIfNull: false)
   final String? displayName;
-  @JsonKey(name: 'signature')
+  @JsonKey(name: 'signature', includeIfNull: false)
   final String? signature;
-  @JsonKey(name: 'operationalAnalyticsIdentifier')
+  @JsonKey(name: 'operationalAnalyticsIdentifier', includeIfNull: false)
   final String? operationalAnalyticsIdentifier;
-  @JsonKey(name: 'retries')
+  @JsonKey(name: 'retries', includeIfNull: false)
   final int? retries;
   static const fromJsonFactory = _$ApplePayOutFromJson;
   static const toJsonFactory = _$ApplePayOutToJson;
@@ -3273,9 +3282,9 @@ class PaymentMethodIn {
   factory PaymentMethodIn.fromJson(Map<String, dynamic> json) =>
       _$PaymentMethodInFromJson(json);
 
-  @JsonKey(name: 'payment_tool')
+  @JsonKey(name: 'payment_tool', includeIfNull: false)
   final PaymentTool? paymentTool;
-  @JsonKey(name: 'client')
+  @JsonKey(name: 'client', includeIfNull: false)
   final Client? $client;
   static const fromJsonFactory = _$PaymentMethodInFromJson;
   static const toJsonFactory = _$PaymentMethodInToJson;
@@ -3322,13 +3331,13 @@ class PaymentMethodOut {
   factory PaymentMethodOut.fromJson(Map<String, dynamic> json) =>
       _$PaymentMethodOutFromJson(json);
 
-  @JsonKey(name: 'card')
+  @JsonKey(name: 'card', includeIfNull: false)
   final Card? card;
-  @JsonKey(name: 'session')
+  @JsonKey(name: 'session', includeIfNull: false)
   final String? session;
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
-  @JsonKey(name: 'expires_at')
+  @JsonKey(name: 'expires_at', includeIfNull: false)
   final String? expiresAt;
   static const fromJsonFactory = _$PaymentMethodOutFromJson;
   static const toJsonFactory = _$PaymentMethodOutToJson;
@@ -3390,20 +3399,21 @@ class PaymentTool {
 
   @JsonKey(
       name: 'type',
+      includeIfNull: false,
       toJson: paymentToolTypeToJson,
       fromJson: paymentToolTypeFromJson)
   final enums.PaymentToolType? type;
-  @JsonKey(name: 'pan')
+  @JsonKey(name: 'pan', includeIfNull: false)
   final String? pan;
-  @JsonKey(name: 'expiry_date')
+  @JsonKey(name: 'expiry_date', includeIfNull: false)
   final String? expiryDate;
-  @JsonKey(name: 'cvc')
+  @JsonKey(name: 'cvc', includeIfNull: false)
   final String? cvc;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
-  @JsonKey(name: 'apple_pay')
+  @JsonKey(name: 'apple_pay', includeIfNull: false)
   final ApplePayData? applePay;
-  @JsonKey(name: 'google_pay')
+  @JsonKey(name: 'google_pay', includeIfNull: false)
   final GooglePayData? googlePay;
   static const fromJsonFactory = _$PaymentToolFromJson;
   static const toJsonFactory = _$PaymentToolToJson;
@@ -3478,11 +3488,11 @@ class ApplePayData {
   factory ApplePayData.fromJson(Map<String, dynamic> json) =>
       _$ApplePayDataFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
-  @JsonKey(name: 'card_network')
+  @JsonKey(name: 'card_network', includeIfNull: false)
   final String? cardNetwork;
-  @JsonKey(name: 'cardType')
+  @JsonKey(name: 'cardType', includeIfNull: false)
   final dynamic cardType;
   static const fromJsonFactory = _$ApplePayDataFromJson;
   static const toJsonFactory = _$ApplePayDataToJson;
@@ -3534,11 +3544,11 @@ class GooglePayData {
   factory GooglePayData.fromJson(Map<String, dynamic> json) =>
       _$GooglePayDataFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
-  @JsonKey(name: 'card_network')
+  @JsonKey(name: 'card_network', includeIfNull: false)
   final String? cardNetwork;
-  @JsonKey(name: 'card_details')
+  @JsonKey(name: 'card_details', includeIfNull: false)
   final String? cardDetails;
   static const fromJsonFactory = _$GooglePayDataFromJson;
   static const toJsonFactory = _$GooglePayDataToJson;
@@ -3589,9 +3599,9 @@ class CustomerCard {
   factory CustomerCard.fromJson(Map<String, dynamic> json) =>
       _$CustomerCardFromJson(json);
 
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'cvc')
+  @JsonKey(name: 'cvc', includeIfNull: false)
   final String? cvc;
   static const fromJsonFactory = _$CustomerCardFromJson;
   static const toJsonFactory = _$CustomerCardToJson;
@@ -3640,26 +3650,27 @@ class PaymentOut {
   factory PaymentOut.fromJson(Map<String, dynamic> json) =>
       _$PaymentOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: paymentStatusToJson,
       fromJson: paymentStatusFromJson)
   final enums.PaymentStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'approved_amount')
+  @JsonKey(name: 'approved_amount', includeIfNull: false)
   final int? approvedAmount;
-  @JsonKey(name: 'captured_amount')
+  @JsonKey(name: 'captured_amount', includeIfNull: false)
   final int? capturedAmount;
-  @JsonKey(name: 'refunded_amount')
+  @JsonKey(name: 'refunded_amount', includeIfNull: false)
   final int? refundedAmount;
-  @JsonKey(name: 'processing_fee')
+  @JsonKey(name: 'processing_fee', includeIfNull: false)
   final double? processingFee;
-  @JsonKey(name: 'payer')
+  @JsonKey(name: 'payer', includeIfNull: false)
   final PayerOut? payer;
-  @JsonKey(name: 'error')
+  @JsonKey(name: 'error', includeIfNull: false)
   final PaymentError? error;
   static const fromJsonFactory = _$PaymentOutFromJson;
   static const toJsonFactory = _$PaymentOutToJson;
@@ -3745,9 +3756,9 @@ class RefundIn {
   factory RefundIn.fromJson(Map<String, dynamic> json) =>
       _$RefundInFromJson(json);
 
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'reason')
+  @JsonKey(name: 'reason', includeIfNull: false)
   final String? reason;
   static const fromJsonFactory = _$RefundInFromJson;
   static const toJsonFactory = _$RefundInToJson;
@@ -3793,18 +3804,19 @@ class RefundOut {
   factory RefundOut.fromJson(Map<String, dynamic> json) =>
       _$RefundOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: refundStatusToJson,
       fromJson: refundStatusFromJson)
   final enums.RefundStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'reason')
+  @JsonKey(name: 'reason', includeIfNull: false)
   final String? reason;
   static const fromJsonFactory = _$RefundOutFromJson;
   static const toJsonFactory = _$RefundOutToJson;
@@ -3870,15 +3882,17 @@ class ScheduleOut {
 
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: scheduleStatusEnumToJson,
       fromJson: scheduleStatusEnumFromJson)
   final enums.ScheduleStatusEnum? status;
-  @JsonKey(name: 'next_pay')
+  @JsonKey(name: 'next_pay', includeIfNull: false)
   final String? nextPay;
-  @JsonKey(name: 'step')
+  @JsonKey(name: 'step', includeIfNull: false)
   final int? step;
   @JsonKey(
       name: 'unit',
+      includeIfNull: false,
       toJson: scheduleUnitEnumToJson,
       fromJson: scheduleUnitEnumFromJson)
   final enums.ScheduleUnitEnum? unit;
@@ -3947,30 +3961,33 @@ class ExtendedCard {
   factory ExtendedCard.fromJson(Map<String, dynamic> json) =>
       _$ExtendedCardFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
   @JsonKey(
-      name: 'status', toJson: cardStatusToJson, fromJson: cardStatusFromJson)
+      name: 'status',
+      includeIfNull: false,
+      toJson: cardStatusToJson,
+      fromJson: cardStatusFromJson)
   final enums.CardStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'pan_masked')
+  @JsonKey(name: 'pan_masked', includeIfNull: false)
   final String? panMasked;
-  @JsonKey(name: 'expiry_date')
+  @JsonKey(name: 'expiry_date', includeIfNull: false)
   final String? expiryDate;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
-  @JsonKey(name: 'payment_system')
+  @JsonKey(name: 'payment_system', includeIfNull: false)
   final String? paymentSystem;
-  @JsonKey(name: 'emitter')
+  @JsonKey(name: 'emitter', includeIfNull: false)
   final String? emitter;
-  @JsonKey(name: 'cvc_required')
+  @JsonKey(name: 'cvc_required', includeIfNull: false)
   final bool? cvcRequired;
-  @JsonKey(name: 'error')
+  @JsonKey(name: 'error', includeIfNull: false)
   final PaymentError? error;
-  @JsonKey(name: 'action')
+  @JsonKey(name: 'action', includeIfNull: false)
   final TDSAction? action;
   static const fromJsonFactory = _$ExtendedCardFromJson;
   static const toJsonFactory = _$ExtendedCardToJson;
@@ -4079,24 +4096,25 @@ class ExtendedCustomer {
   factory ExtendedCustomer.fromJson(Map<String, dynamic> json) =>
       _$ExtendedCustomerFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: customerStatusToJson,
       fromJson: customerStatusFromJson)
   final enums.CustomerStatus? status;
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'email')
+  @JsonKey(name: 'email', includeIfNull: false)
   final String? email;
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
-  @JsonKey(name: 'checkout_url')
+  @JsonKey(name: 'checkout_url', includeIfNull: false)
   final String? checkoutUrl;
-  @JsonKey(name: 'access_token')
+  @JsonKey(name: 'access_token', includeIfNull: false)
   final String? accessToken;
   static const fromJsonFactory = _$ExtendedCustomerFromJson;
   static const toJsonFactory = _$ExtendedCustomerToJson;
@@ -4178,13 +4196,13 @@ class BindingCard {
   factory BindingCard.fromJson(Map<String, dynamic> json) =>
       _$BindingCardFromJson(json);
 
-  @JsonKey(name: 'pan')
+  @JsonKey(name: 'pan', includeIfNull: false)
   final String? pan;
-  @JsonKey(name: 'exp')
+  @JsonKey(name: 'exp', includeIfNull: false)
   final String? exp;
-  @JsonKey(name: 'cvc')
+  @JsonKey(name: 'cvc', includeIfNull: false)
   final String? cvc;
-  @JsonKey(name: 'holder')
+  @JsonKey(name: 'holder', includeIfNull: false)
   final String? holder;
   static const fromJsonFactory = _$BindingCardFromJson;
   static const toJsonFactory = _$BindingCardToJson;
@@ -4244,24 +4262,25 @@ class SubscriptionIn {
   factory SubscriptionIn.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionInFromJson(json);
 
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'currency')
+  @JsonKey(name: 'currency', includeIfNull: false)
   final String? currency;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extraInfo')
+  @JsonKey(name: 'extraInfo', includeIfNull: false)
   final dynamic extraInfo;
-  @JsonKey(name: 'next_pay')
+  @JsonKey(name: 'next_pay', includeIfNull: false)
   final String? nextPay;
-  @JsonKey(name: 'step')
+  @JsonKey(name: 'step', includeIfNull: false)
   final int? step;
   @JsonKey(
       name: 'unit',
+      includeIfNull: false,
       toJson: scheduleUnitEnumToJson,
       fromJson: scheduleUnitEnumFromJson)
   final enums.ScheduleUnitEnum? unit;
@@ -4355,21 +4374,21 @@ class SubscriptionOut {
   factory SubscriptionOut.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionOutFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'currency')
+  @JsonKey(name: 'currency', includeIfNull: false)
   final String? currency;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extraInfo')
+  @JsonKey(name: 'extraInfo', includeIfNull: false)
   final dynamic extraInfo;
-  @JsonKey(name: 'payer')
+  @JsonKey(name: 'payer', includeIfNull: false)
   final PayerOut? payer;
-  @JsonKey(name: 'schedule')
+  @JsonKey(name: 'schedule', includeIfNull: false)
   final ScheduleOut? schedule;
   static const fromJsonFactory = _$SubscriptionOutFromJson;
   static const toJsonFactory = _$SubscriptionOutToJson;
@@ -4451,6 +4470,7 @@ class SubscriptionStatusIn {
 
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: scheduleStatusEnumToJson,
       fromJson: scheduleStatusEnumFromJson)
   final enums.ScheduleStatusEnum? status;
@@ -4497,24 +4517,25 @@ class SubscriptionUpdate {
   factory SubscriptionUpdate.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionUpdateFromJson(json);
 
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'currency')
+  @JsonKey(name: 'currency', includeIfNull: false)
   final String? currency;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extraInfo')
+  @JsonKey(name: 'extraInfo', includeIfNull: false)
   final dynamic extraInfo;
-  @JsonKey(name: 'next_pay')
+  @JsonKey(name: 'next_pay', includeIfNull: false)
   final String? nextPay;
-  @JsonKey(name: 'step')
+  @JsonKey(name: 'step', includeIfNull: false)
   final int? step;
   @JsonKey(
       name: 'unit',
+      includeIfNull: false,
       toJson: scheduleUnitEnumToJson,
       fromJson: scheduleUnitEnumFromJson)
   final enums.ScheduleUnitEnum? unit;
@@ -4602,10 +4623,11 @@ class WebhookIn {
   factory WebhookIn.fromJson(Map<String, dynamic> json) =>
       _$WebhookInFromJson(json);
 
-  @JsonKey(name: 'url')
+  @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   @JsonKey(
       name: 'events',
+      includeIfNull: false,
       toJson: webhookEventNameEnumListToJson,
       fromJson: webhookEventNameEnumListFromJson)
   final List<enums.WebhookEventNameEnum>? events;
@@ -4653,20 +4675,21 @@ class WebhookOut {
   factory WebhookOut.fromJson(Map<String, dynamic> json) =>
       _$WebhookOutFromJson(json);
 
-  @JsonKey(name: 'url')
+  @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   @JsonKey(
       name: 'events',
+      includeIfNull: false,
       toJson: webhookEventNameEnumListToJson,
       fromJson: webhookEventNameEnumListFromJson)
   final List<enums.WebhookEventNameEnum>? events;
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'active')
+  @JsonKey(name: 'active', includeIfNull: false)
   final bool? active;
-  @JsonKey(name: 'key')
+  @JsonKey(name: 'key', includeIfNull: false)
   final String? key;
   static const fromJsonFactory = _$WebhookOutFromJson;
   static const toJsonFactory = _$WebhookOutToJson;
@@ -4733,10 +4756,11 @@ class WebhookPatch {
   factory WebhookPatch.fromJson(Map<String, dynamic> json) =>
       _$WebhookPatchFromJson(json);
 
-  @JsonKey(name: 'url')
+  @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   @JsonKey(
       name: 'events',
+      includeIfNull: false,
       toJson: webhookEventNameEnumListToJson,
       fromJson: webhookEventNameEnumListFromJson)
   final List<enums.WebhookEventNameEnum>? events;
@@ -4779,7 +4803,7 @@ class CardIn {
 
   factory CardIn.fromJson(Map<String, dynamic> json) => _$CardInFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
   static const fromJsonFactory = _$CardInFromJson;
   static const toJsonFactory = _$CardInToJson;
@@ -4818,11 +4842,11 @@ class CustomerIn {
   factory CustomerIn.fromJson(Map<String, dynamic> json) =>
       _$CustomerInFromJson(json);
 
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'email')
+  @JsonKey(name: 'email', includeIfNull: false)
   final String? email;
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
   static const fromJsonFactory = _$CustomerInFromJson;
   static const toJsonFactory = _$CustomerInToJson;
@@ -4874,12 +4898,13 @@ class WebhookEvent {
 
   @JsonKey(
       name: 'event',
+      includeIfNull: false,
       toJson: webhookEventNameEnumToJson,
       fromJson: webhookEventNameEnumFromJson)
   final enums.WebhookEventNameEnum? event;
-  @JsonKey(name: 'order')
+  @JsonKey(name: 'order', includeIfNull: false)
   final WebhookOrder? order;
-  @JsonKey(name: 'payment')
+  @JsonKey(name: 'payment', includeIfNull: false)
   final ExtendedPayment? payment;
   static const fromJsonFactory = _$WebhookEventFromJson;
   static const toJsonFactory = _$WebhookEventToJson;
@@ -4939,34 +4964,39 @@ class WebhookOrder {
   factory WebhookOrder.fromJson(Map<String, dynamic> json) =>
       _$WebhookOrderFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'shop_id')
+  @JsonKey(name: 'shop_id', includeIfNull: false)
   final String? shopId;
   @JsonKey(
-      name: 'status', toJson: orderStatusToJson, fromJson: orderStatusFromJson)
+      name: 'status',
+      includeIfNull: false,
+      toJson: orderStatusToJson,
+      fromJson: orderStatusFromJson)
   final enums.OrderStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
   @JsonKey(
       name: 'currency',
+      includeIfNull: false,
       toJson: currencyEnumToJson,
       fromJson: currencyEnumFromJson)
   final enums.CurrencyEnum? currency;
   @JsonKey(
       name: 'capture_method',
+      includeIfNull: false,
       toJson: captureMethodToJson,
       fromJson: captureMethodFromJson)
   final enums.CaptureMethod? captureMethod;
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'description')
+  @JsonKey(name: 'description', includeIfNull: false)
   final String? description;
-  @JsonKey(name: 'extra_info')
+  @JsonKey(name: 'extra_info', includeIfNull: false)
   final Object? extraInfo;
-  @JsonKey(name: 'due_date')
+  @JsonKey(name: 'due_date', includeIfNull: false)
   final String? dueDate;
   static const fromJsonFactory = _$WebhookOrderFromJson;
   static const toJsonFactory = _$WebhookOrderToJson;
@@ -5073,32 +5103,33 @@ class ExtendedPayment {
   factory ExtendedPayment.fromJson(Map<String, dynamic> json) =>
       _$ExtendedPaymentFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'order_id')
+  @JsonKey(name: 'order_id', includeIfNull: false)
   final String? orderId;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: paymentStatusToJson,
       fromJson: paymentStatusFromJson)
   final enums.PaymentStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
-  @JsonKey(name: 'approved_amount')
+  @JsonKey(name: 'approved_amount', includeIfNull: false)
   final int? approvedAmount;
-  @JsonKey(name: 'captured_amount')
+  @JsonKey(name: 'captured_amount', includeIfNull: false)
   final int? capturedAmount;
-  @JsonKey(name: 'refunded_amount')
+  @JsonKey(name: 'refunded_amount', includeIfNull: false)
   final int? refundedAmount;
-  @JsonKey(name: 'processing_fee')
+  @JsonKey(name: 'processing_fee', includeIfNull: false)
   final double? processingFee;
-  @JsonKey(name: 'payer')
+  @JsonKey(name: 'payer', includeIfNull: false)
   final PayerOut? payer;
-  @JsonKey(name: 'error')
+  @JsonKey(name: 'error', includeIfNull: false)
   final PaymentError? error;
-  @JsonKey(name: 'acquirer')
+  @JsonKey(name: 'acquirer', includeIfNull: false)
   final Acquirer? acquirer;
-  @JsonKey(name: 'action')
+  @JsonKey(name: 'action', includeIfNull: false)
   final TDSAction? action;
   static const fromJsonFactory = _$ExtendedPaymentFromJson;
   static const toJsonFactory = _$ExtendedPaymentToJson;
@@ -5206,22 +5237,23 @@ class ExtendedRefund {
   factory ExtendedRefund.fromJson(Map<String, dynamic> json) =>
       _$ExtendedRefundFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
-  @JsonKey(name: 'payment_id')
+  @JsonKey(name: 'payment_id', includeIfNull: false)
   final String? paymentId;
-  @JsonKey(name: 'order_id')
+  @JsonKey(name: 'order_id', includeIfNull: false)
   final String? orderId;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: refundStatusToJson,
       fromJson: refundStatusFromJson)
   final enums.RefundStatus? status;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final DateTime? createdAt;
-  @JsonKey(name: 'error')
+  @JsonKey(name: 'error', includeIfNull: false)
   final PaymentError? error;
-  @JsonKey(name: 'acquirer')
+  @JsonKey(name: 'acquirer', includeIfNull: false)
   final Acquirer? acquirer;
   static const fromJsonFactory = _$ExtendedRefundFromJson;
   static const toJsonFactory = _$ExtendedRefundToJson;
@@ -5296,9 +5328,9 @@ class Acquirer {
   factory Acquirer.fromJson(Map<String, dynamic> json) =>
       _$AcquirerFromJson(json);
 
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name', includeIfNull: false)
   final String? name;
-  @JsonKey(name: 'reference')
+  @JsonKey(name: 'reference', includeIfNull: false)
   final String? reference;
   static const fromJsonFactory = _$AcquirerFromJson;
   static const toJsonFactory = _$AcquirerToJson;
@@ -5341,7 +5373,7 @@ class TDSAction {
   factory TDSAction.fromJson(Map<String, dynamic> json) =>
       _$TDSActionFromJson(json);
 
-  @JsonKey(name: 'url')
+  @JsonKey(name: 'url', includeIfNull: false)
   final String? url;
   static const fromJsonFactory = _$TDSActionFromJson;
   static const toJsonFactory = _$TDSActionToJson;
@@ -5380,6 +5412,7 @@ class BrandOut {
 
   @JsonKey(
       name: 'brand',
+      includeIfNull: false,
       toJson: myPaymentCardBrandToJson,
       fromJson: myPaymentCardBrandFromJson)
   final enums.MyPaymentCardBrand? brand;
@@ -5422,15 +5455,15 @@ class BinInfo {
   factory BinInfo.fromJson(Map<String, dynamic> json) =>
       _$BinInfoFromJson(json);
 
-  @JsonKey(name: 'code')
+  @JsonKey(name: 'code', includeIfNull: false)
   final String? code;
-  @JsonKey(name: 'brand')
+  @JsonKey(name: 'brand', includeIfNull: false)
   final String? brand;
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'type', includeIfNull: false)
   final String? type;
-  @JsonKey(name: 'emitter_code')
+  @JsonKey(name: 'emitter_code', includeIfNull: false)
   final String? emitterCode;
-  @JsonKey(name: 'emitter_name')
+  @JsonKey(name: 'emitter_name', includeIfNull: false)
   final String? emitterName;
   static const fromJsonFactory = _$BinInfoFromJson;
   static const toJsonFactory = _$BinInfoToJson;
@@ -5494,14 +5527,15 @@ class SessionCard {
   factory SessionCard.fromJson(Map<String, dynamic> json) =>
       _$SessionCardFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
   @JsonKey(
       name: 'status',
+      includeIfNull: false,
       toJson: masterpassCardStatusToJson,
       fromJson: masterpassCardStatusFromJson)
   final enums.MasterpassCardStatus? status;
-  @JsonKey(name: 'card')
+  @JsonKey(name: 'card', includeIfNull: false)
   final Card? card;
   static const fromJsonFactory = _$SessionCardFromJson;
   static const toJsonFactory = _$SessionCardToJson;
@@ -5552,14 +5586,15 @@ class SessionIn {
   factory SessionIn.fromJson(Map<String, dynamic> json) =>
       _$SessionInFromJson(json);
 
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
-  @JsonKey(name: 'fingerprint')
+  @JsonKey(name: 'fingerprint', includeIfNull: false)
   final String? fingerprint;
-  @JsonKey(name: 'phone_check_date')
+  @JsonKey(name: 'phone_check_date', includeIfNull: false)
   final String? phoneCheckDate;
   @JsonKey(
       name: 'channel',
+      includeIfNull: false,
       toJson: masterpassChannelTypeToJson,
       fromJson: masterpassChannelTypeFromJson)
   final enums.MasterpassChannelType? channel;
@@ -5621,13 +5656,13 @@ class SessionOut {
   factory SessionOut.fromJson(Map<String, dynamic> json) =>
       _$SessionOutFromJson(json);
 
-  @JsonKey(name: 'session')
+  @JsonKey(name: 'session', includeIfNull: false)
   final String? session;
-  @JsonKey(name: 'is_otp_required')
+  @JsonKey(name: 'is_otp_required', includeIfNull: false)
   final bool? isOtpRequired;
-  @JsonKey(name: 'is_otp_required_date')
+  @JsonKey(name: 'is_otp_required_date', includeIfNull: false)
   final Object? isOtpRequiredDate;
-  @JsonKey(name: 'cards', defaultValue: <SessionCard>[])
+  @JsonKey(name: 'cards', includeIfNull: false, defaultValue: <SessionCard>[])
   final List<SessionCard>? cards;
   static const fromJsonFactory = _$SessionOutFromJson;
   static const toJsonFactory = _$SessionOutToJson;
@@ -5686,9 +5721,9 @@ class MasterpassCardIn {
   factory MasterpassCardIn.fromJson(Map<String, dynamic> json) =>
       _$MasterpassCardInFromJson(json);
 
-  @JsonKey(name: 'customer_id')
+  @JsonKey(name: 'customer_id', includeIfNull: false)
   final String? customerId;
-  @JsonKey(name: 'card_id')
+  @JsonKey(name: 'card_id', includeIfNull: false)
   final String? cardId;
   static const fromJsonFactory = _$MasterpassCardInFromJson;
   static const toJsonFactory = _$MasterpassCardInToJson;
@@ -5735,19 +5770,21 @@ class MasterpassCardOut {
   factory MasterpassCardOut.fromJson(Map<String, dynamic> json) =>
       _$MasterpassCardOutFromJson(json);
 
-  @JsonKey(name: 'token')
+  @JsonKey(name: 'token', includeIfNull: false)
   final String? token;
   @JsonKey(
       name: 'recommendation',
+      includeIfNull: false,
       toJson: masterpassCardRequiredToJson,
       fromJson: masterpassCardRequiredFromJson)
   final enums.MasterpassCardRequired? recommendation;
   @JsonKey(
       name: 'required',
+      includeIfNull: false,
       toJson: masterpassCardRequiredToJson,
       fromJson: masterpassCardRequiredFromJson)
   final enums.MasterpassCardRequired? required;
-  @JsonKey(name: 'card')
+  @JsonKey(name: 'card', includeIfNull: false)
   final Card? card;
   static const fromJsonFactory = _$MasterpassCardOutFromJson;
   static const toJsonFactory = _$MasterpassCardOutToJson;
@@ -5805,9 +5842,9 @@ class ChangePhoneIn {
   factory ChangePhoneIn.fromJson(Map<String, dynamic> json) =>
       _$ChangePhoneInFromJson(json);
 
-  @JsonKey(name: 'old_phone')
+  @JsonKey(name: 'old_phone', includeIfNull: false)
   final String? oldPhone;
-  @JsonKey(name: 'new_phone')
+  @JsonKey(name: 'new_phone', includeIfNull: false)
   final String? newPhone;
   static const fromJsonFactory = _$ChangePhoneInFromJson;
   static const toJsonFactory = _$ChangePhoneInToJson;
@@ -5852,7 +5889,7 @@ class ChangePhoneOut {
   factory ChangePhoneOut.fromJson(Map<String, dynamic> json) =>
       _$ChangePhoneOutFromJson(json);
 
-  @JsonKey(name: 'phone')
+  @JsonKey(name: 'phone', includeIfNull: false)
   final String? phone;
   static const fromJsonFactory = _$ChangePhoneOutFromJson;
   static const toJsonFactory = _$ChangePhoneOutToJson;
@@ -5890,10 +5927,11 @@ class MasterpassPostbackIn {
   factory MasterpassPostbackIn.fromJson(Map<String, dynamic> json) =>
       _$MasterpassPostbackInFromJson(json);
 
-  @JsonKey(name: 'order_id')
+  @JsonKey(name: 'order_id', includeIfNull: false)
   final String? orderId;
   @JsonKey(
       name: 'channel',
+      includeIfNull: false,
       toJson: masterpassChannelTypeToJson,
       fromJson: masterpassChannelTypeFromJson)
   final enums.MasterpassChannelType? channel;
@@ -5942,13 +5980,13 @@ class MasterpassPostbackOut {
   factory MasterpassPostbackOut.fromJson(Map<String, dynamic> json) =>
       _$MasterpassPostbackOutFromJson(json);
 
-  @JsonKey(name: 'order_id')
+  @JsonKey(name: 'order_id', includeIfNull: false)
   final String? orderId;
-  @JsonKey(name: 'external_id')
+  @JsonKey(name: 'external_id', includeIfNull: false)
   final String? externalId;
-  @JsonKey(name: 'amount')
+  @JsonKey(name: 'amount', includeIfNull: false)
   final int? amount;
-  @JsonKey(name: 'currency')
+  @JsonKey(name: 'currency', includeIfNull: false)
   final String? currency;
   static const fromJsonFactory = _$MasterpassPostbackOutFromJson;
   static const toJsonFactory = _$MasterpassPostbackOutToJson;

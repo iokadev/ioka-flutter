@@ -5,3 +5,4 @@ targets:
         options:
           input_folder: lib/src/api
           output_folder: lib/src/api/generated
+          include_if_null: false

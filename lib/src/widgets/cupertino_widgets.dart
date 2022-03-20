@@ -24,6 +24,7 @@ export './utils/lerp_implicit_animation_widget.dart';
 export './utils/multi_value_listenable_builder.dart';
 export './utils/slide_in_animation_widget.dart';
 export '../l10n/l10n.dart';
+export '../utils/error.dart';
 export '../views/checkout_with_new_card/cupertino_checkout_with_new_card_view.dart';
 export '../views/checkout_with_saved_card/cupertino_checkout_with_saved_card_view.dart';
 export '../views/payment_confirmation/cupertino_payment_confirmation_view.dart';

@@ -10,9 +10,11 @@ class SelectPaymentOptionPage extends StatefulWidget {
   const SelectPaymentOptionPage({
     Key? key,
     required this.paymentOption,
+    required this.customerAccessToken,
   }) : super(key: key);
 
   final dynamic paymentOption;
+  final String customerAccessToken;
 
   @override
   State<SelectPaymentOptionPage> createState() =>
@@ -35,9 +37,8 @@ class _SelectPaymentOptionPageState extends State<SelectPaymentOptionPage> {
 
   Future<void> _loadSavedCards() async {
     try {
-      _customerAccessToken = await DemoApi.instance.getProfile();
       _cards = await Ioka.instance.getSavedCards(
-        customerAccessToken: _customerAccessToken!,
+        customerAccessToken: widget.customerAccessToken,
       );
     } catch (e) {
       // TODO: Show error
