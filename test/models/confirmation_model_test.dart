@@ -87,17 +87,17 @@ void main() {
     //   expect(onRedirectCalled, true);
     // });
 
-    testWithBuildContext(
-      'pops the value in [fetchData] when [onRedirect] is called',
-      (context, observer) async {
-        const url = 'https://example.com';
-        const redirectUrl = 'https://example.com/redirect';
-        final model = TestConfirmationModel(url: url, redirectUrl: redirectUrl);
+    // testWithBuildContext(
+    //   'pops the value in [fetchData] when [onRedirect] is called',
+    //   (context, observer) async {
+    //     const url = 'https://example.com';
+    //     const redirectUrl = 'https://example.com/redirect';
+    //     final model = TestConfirmationModel(url: url, redirectUrl: redirectUrl);
 
-        final data = await model.onRedirect(context);
-        verify(observer.didPop(any, any)).called(1);
-        expect(data, equals('success'));
-      },
-    );
+    //     final data = await model.onRedirect(context);
+    //     verify(observer.didPop(any, any)).called(1);
+    //     expect(data, equals('success'));
+    //   },
+    // );
   });
 }
