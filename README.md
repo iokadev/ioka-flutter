@@ -47,6 +47,8 @@ Ioka.instance.startCheckoutFlow(
 );
 ```
 
+Подробнее о том как интегрировать серверную часть для работы с ioka sdk можно узнать [здесь](https://docs.google.com/document/d/1baMx2I1vHoWYBC0x5fZbDIVAj5kR7YDy5A12lXlpfT8/edit#heading=h.atr9ary48uhs).
+
 Подробнее об использовании каждого метода можете узнать в 
 [документации](./doc/README.md) либо в [демо-приложении](./demo/lib/main.dart).
 

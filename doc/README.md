@@ -4,8 +4,8 @@
 
 - [Форма оплаты](./how-tos/checkout.md)
 - [Привязка карт](./how-tos/save-and-delete-cards.md)
-- [Локализация](./localization.md)
-- [Кастомизация](./customize.md)
+- [Локализация](./how-tos/localization.md)
+- [Кастомизация](./how-tos/customize.md)
 
 ### Документация элементов SDK
 
