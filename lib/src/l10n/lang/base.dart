@@ -40,6 +40,8 @@ abstract class IokaLocalization {
   String get cardExpiryDateInputHint;
   String get cardExpiryDateInputError;
 
+  String get errorUnknown;
+
   String formatMoneyAmount(int amount, {String currency = '₸'}) {
     final whole = amount ~/ 100;
     final fraction = amount % 100;

@@ -62,7 +62,7 @@ class EnIokaLocalization extends IokaLocalization {
 
   @override
   String paymentSuccessViewOrderNumberLabel(String orderNumber) =>
-      'Order №$orderNumber';
+      'Order #$orderNumber';
 
   @override
   String get saveCardViewSaveAction => 'Save';
@@ -72,4 +72,7 @@ class EnIokaLocalization extends IokaLocalization {
 
   @override
   String get transactionsSecureLabel => 'All transactions are secure';
+
+  @override
+  String get errorUnknown => 'An unknown error occurred. Please, try again.';
 }

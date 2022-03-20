@@ -31,7 +31,7 @@ class SaveCardModel extends ChangeNotifier {
         cvc: cardInputData!.cvc,
       );
 
-      if (card.status == CardStatus.pending && card.action != null) {
+      if (card.status == CardStatus.requiresAction && card.action != null) {
         final newCard = await IokaNavigation.showBindingConfirmationView(
           context,
           cardId: card.id!,
@@ -55,9 +55,16 @@ class SaveCardModel extends ChangeNotifier {
 
         return true;
       } else {
+        var reason = card.error?.message;
+
+        // Статус карты не может быть [pending].
+        if (card.status == CardStatus.pending) {
+          reason = context.l10n.errorUnknown;
+        }
+
         await _onFailure(
           context,
-          reason: card.error?.message,
+          reason: reason,
         );
       }
     } catch (e) {
