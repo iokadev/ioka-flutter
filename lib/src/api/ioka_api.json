@@ -6362,6 +6362,7 @@
         "title": "PaymentStatus",
         "enum": [
           "REQUIRES_ACTION",
+          "PENDING",
           "APPROVED",
           "CAPTURED",
           "CANCELLED",
@@ -6904,6 +6905,7 @@
       "CardStatus": {
         "title": "CardStatus",
         "enum": [
+          "REQUIRES_ACTION",
           "PENDING",
           "APPROVED",
           "DECLINED"

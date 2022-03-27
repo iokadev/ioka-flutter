@@ -180,6 +180,8 @@ enum PaymentStatus {
   swaggerGeneratedUnknown,
   @JsonValue('REQUIRES_ACTION')
   requiresAction,
+  @JsonValue('PENDING')
+  pending,
   @JsonValue('APPROVED')
   approved,
   @JsonValue('CAPTURED')
@@ -192,6 +194,7 @@ enum PaymentStatus {
 
 const $PaymentStatusMap = {
   PaymentStatus.requiresAction: 'REQUIRES_ACTION',
+  PaymentStatus.pending: 'PENDING',
   PaymentStatus.approved: 'APPROVED',
   PaymentStatus.captured: 'CAPTURED',
   PaymentStatus.cancelled: 'CANCELLED',
@@ -252,6 +255,8 @@ const $ScheduleUnitEnumMap = {
 enum CardStatus {
   @JsonValue('swaggerGeneratedUnknown')
   swaggerGeneratedUnknown,
+  @JsonValue('REQUIRES_ACTION')
+  requiresAction,
   @JsonValue('PENDING')
   pending,
   @JsonValue('APPROVED')
@@ -261,6 +266,7 @@ enum CardStatus {
 }
 
 const $CardStatusMap = {
+  CardStatus.requiresAction: 'REQUIRES_ACTION',
   CardStatus.pending: 'PENDING',
   CardStatus.approved: 'APPROVED',
   CardStatus.declined: 'DECLINED'
