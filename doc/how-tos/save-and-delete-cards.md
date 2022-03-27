@@ -11,13 +11,12 @@ SDK предоставляет возможность добавлять и уд
 
 ## Получение списка сохраненных карт
 
-Чтобы получить список сохраненных карт, необходимо сначала получить 
-`customer_access_token` с сервера. Затем, можно вызвать метод `getSavedCard()` с
-SDK:
+Чтобы получить список сохраненных карт, необходимо вызвать метод `getSavedCard()` 
+с SDK, передав туда `customer_access_token`:
 
 ```dart
-// Получаем токен с сервера
-final customerAccessToken = await MyBackend.getCustomerAccessToken();
+// Получаем токен заранее до этого или с сервера
+final customerAccessToken = ...;
 
 // Получаем список сохраненных карт
 final savedCards = await Ioka.instance.getSavedCards(
@@ -33,8 +32,8 @@ final savedCards = await Ioka.instance.getSavedCards(
 Помимо токена, необходимо передать `context`.
 
 ```dart
-// Получаем токен с сервера
-final customerAccessToken = await MyBackend.getCustomerAccessToken();
+// Получаем токен заранее до этого или с сервера
+final customerAccessToken = ...;
 
 // Показываем форму сохранения карты
 await Ioka.instance.startSaveNewCardFlow(
@@ -46,8 +45,8 @@ await Ioka.instance.startSaveNewCardFlow(
 Функция возвращает либо объект типа `SavedCard`, либо `null`:
 
 ```dart
-// Получаем токен с сервера
-final customerAccessToken = await MyBackend.getCustomerAccessToken();
+// Получаем токен заранее до этого или с сервера
+final customerAccessToken = ...;
 
 // Показываем форму сохранения карты и сохраняем результат
 final result = await Ioka.instance.startSaveNewCardFlow(
