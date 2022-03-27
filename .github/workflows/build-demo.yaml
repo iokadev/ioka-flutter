@@ -1,0 +1,39 @@
+name: Build demo app
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Parse fvm config
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      
+      - name: Install packages
+        run: flutter pub get
+      
+      - name: Install packages in ./demo
+        run: cd demo && flutter pub get
+      
+      - name: Build APK
+        run: cd demo && flutter build apk
+    
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: ioka-demo
+          path: demo/build/app/outputs/apk/release/app-release.apk
