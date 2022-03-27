@@ -43,7 +43,7 @@ abstract class CheckoutModel extends ChangeNotifier {
   ///
   /// Логика:
   /// - Создаём платеж через [createPayment].
-  /// - В случае, если статус [PaymentStatus.pending] и есть [action] -
+  /// - В случае, если статус [PaymentStatus.requiresAction] и есть [action] -
   ///   показываем форму 3D Secure, и получаем новый статус платежа.
   /// - Если статус [PaymentStatus.captured] или [PaymentStatus.approved] -
   ///   показываем страницу успеха оплаты.
@@ -95,10 +95,17 @@ abstract class CheckoutModel extends ChangeNotifier {
         // Успешная операция - показываем пользователю окно успеха
         await onSuccess(context);
       } else {
+        var reason = payment.error?.message;
+
+        // Статус платежа не может быть [pending].
+        if (payment.status == PaymentStatus.pending) {
+          reason = context.l10n.errorUnknown;
+        }
+
         // Ошибка оплаты - показываем пользователю окно ошибки.
         retry = await onFailure(
           context,
-          reason: payment.error?.message,
+          reason: reason,
         );
 
         payment = null;

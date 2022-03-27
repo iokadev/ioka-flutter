@@ -72,4 +72,7 @@ class RuIokaLocalization extends IokaLocalization {
 
   @override
   String get transactionsSecureLabel => 'Все транзакции защищены';
+
+  @override
+  String get errorUnknown => 'Произошла неизвестная ошибка. Попробуйте снова.';
 }

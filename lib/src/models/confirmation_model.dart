@@ -65,10 +65,6 @@ abstract class ConfirmationModel<T> extends ChangeNotifier {
   Future<T> onRedirect(BuildContext context) async {
     isLoadingNotifier.value = true;
 
-    // Временно - задерживаем проверку на 3 секунды чтобы избежать race
-    // condition
-    await Future.delayed(const Duration(seconds: 3));
-
     final data = await fetchData(context);
 
     isLoadingNotifier.value = false;
