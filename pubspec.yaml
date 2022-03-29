@@ -26,6 +26,7 @@ dependencies:
   functional_listener: ^2.1.0
   get_it: ^7.2.0
   json_annotation: ^4.4.0
+  pay: ^1.0.8
   provider: ^6.0.2
   webview_flutter: ^3.0.0
 

@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart' as generated;
 import 'package:ioka/src/api/utils/access_token_helpers.dart';
+import 'package:ioka/src/facade/platform_pay_config.dart';
+import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
 /// Главный класс Ioka SDK. Работает как "фасад" - т.е. мерчант-приложение
@@ -30,10 +34,24 @@ class Ioka {
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
+    ApplePayConfiguration? applePayConfiguration,
+    GooglePayConfiguration? googlePayConfiguration,
   })  : _api = api,
         _theme = theme,
         _darkTheme = darkTheme,
-        _platform = platform;
+        _platform = platform,
+        _applePayConfiguration = applePayConfiguration,
+        _googlePayConfiguration = googlePayConfiguration,
+        _platformPay = Pay([
+          if (applePayConfiguration != null)
+            PaymentConfiguration.fromJsonString(
+              applePayConfiguration.toJsonString(),
+            ),
+          if (googlePayConfiguration != null)
+            PaymentConfiguration.fromJsonString(
+              googlePayConfiguration.toJsonString(),
+            )
+        ]);
 
   /// Инициализирует SDK.
   ///
@@ -173,6 +191,18 @@ class Ioka {
   /// [BuildContext].
   final Platform? _platform;
 
+  /// Конфигурация для Apple Pay. Подробнее написано в классе
+  /// [PlatformPayConfiguration].
+  final ApplePayConfiguration? _applePayConfiguration;
+
+  /// Конфигурация для Google Pay. Подробнее написано в классе
+  /// [PlatformPayConfiguration].
+  final GooglePayConfiguration? _googlePayConfiguration;
+
+  /// Конфигурация для платформной оплаты. Инициализируется с параметрами из
+  /// [_applePayConfiguration] и [_googlePayConfiguration].
+  final Pay _platformPay;
+
   /// Метод для получения темы, которая будет использоваться в SDK.
   ///
   /// Необходим [context] для получения яркости.
@@ -231,7 +261,7 @@ class Ioka {
   ///
   /// - [orderAccessToken] - токен доступа к заказу. Необходим для получения
   ///   информации о заказе и оплаты.
-  /// 
+  ///
   /// - (опционально) [canSaveCard] - можно ли сохранять карту пользователя.
   ///   Если `null`, то карту можно сохранить если `order.customerId != null`.
   ///
@@ -488,5 +518,23 @@ class Ioka {
       cardId: cardId,
       customerAccessToken: customerAccessToken,
     );
+  }
+
+  /// Возвращает [true], если пользователь может оплатить заказ с помощью
+  /// Google Pay.
+  ///
+  /// Чтобы настроить Google Pay, необходимо передать конфигурацию в
+  /// [Ioka.setup()].
+  Future<bool> isGooglePayAvailable() {
+    return _platformPay.userCanPay(PayProvider.google_pay);
+  }
+
+  /// Возвращает [true], если пользователь может оплатить заказ с помощью
+  /// Apple Pay.
+  ///
+  /// Чтобы настроить Apple Pay, необходимо передать конфигурацию в
+  /// [Ioka.setup()].
+  Future<bool> isApplePayAvailable() {
+    return _platformPay.userCanPay(PayProvider.apple_pay);
   }
 }
