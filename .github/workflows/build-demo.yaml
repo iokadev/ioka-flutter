@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+  build-demo:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,9 +28,6 @@ jobs:
       
       - name: Install packages in ./demo
         run: cd demo && flutter pub get
-
-      - name: Populate .env file
-        run: cd demo && # TODO
       
       - name: Build APK
         run: cd demo && flutter build apk
