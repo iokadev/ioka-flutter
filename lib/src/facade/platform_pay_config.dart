@@ -52,7 +52,7 @@ class ApplePayConfiguration extends PlatformPayConfiguration {
             'discover',
             'amex',
             'visa',
-            'mastercard',
+            'masterCard',
             'mir',
             'unionpay',
           ],
