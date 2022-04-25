@@ -15,6 +15,16 @@ Future<void> main() async {
 
   Ioka.setup(
     apiKey: dotenv.env['PUBLIC_API_KEY'] ?? '',
+    applePayConfiguration: ApplePayConfiguration(
+      merchantName: 'Ioka',
+      merchantIdentifier: 'merchant.kz.ioka',
+      countryCode: 'kz',
+    ),
+    googlePayConfiguration: GooglePayConfiguration(
+      merchantName: 'Ioka',
+      merchantIdentifier: 'merchant.kz.ioka',
+      countryCode: 'kz',
+    ),
   );
 
   DemoApi.setup(

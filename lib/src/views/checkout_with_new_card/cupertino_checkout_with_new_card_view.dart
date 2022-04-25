@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:functional_listener/functional_listener.dart';
 import 'package:ioka/ioka.dart';
+import 'package:ioka/src/widgets/common/divider_with_text.dart';
+import 'package:ioka/src/widgets/platform_pay/platform_pay_button.dart';
+import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
 class CupertinoCheckoutWithNewCardView extends StatelessWidget {
@@ -24,10 +27,30 @@ class CupertinoCheckoutWithNewCardView extends StatelessWidget {
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
-                  child: CardInputForm(
-                    onChanged: model.onChanged,
-                    isEnabled: model.isInteractable,
-                    canSaveCard: model.canSaveCard,
+                  child: Column(
+                    children: [
+                      IokaPlatformPayButton(
+                        order: model.order,
+                        radius: context.themeExtras.borderRadius,
+                        trailingBuilder: (_) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: DividerWithText(
+                            dividerColor: context.colors.fill3,
+                            child: Text(
+                              'Или оплатите картой',
+                              style: context.typography.caption.copyWith(
+                                color: context.colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      CardInputForm(
+                        onChanged: model.onChanged,
+                        isEnabled: model.isInteractable,
+                        canSaveCard: model.canSaveCard,
+                      ),
+                    ],
                   ),
                 ),
               ),

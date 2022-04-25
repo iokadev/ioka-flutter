@@ -1,4 +1,4 @@
-package com.example.demo
+package kz.ioka.demo
 
 import io.flutter.embedding.android.FlutterActivity
 

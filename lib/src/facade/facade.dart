@@ -70,6 +70,12 @@ class Ioka {
   /// - (опционально) [platform]: платформа (Material / Cupertino). В случае
   ///   если `platform == null`, определяется автоматически.
   ///
+  /// - (опционально) [applePayConfiguration]: конфигурация для Apple Pay.
+  ///   Подробнее можно прочитать в [ApplePayConfiguration].
+  ///
+  /// - (опционально) [googlePayConfiguration]: конфигурация для Google Pay.
+  ///   Подробнее можно прочитать в [GooglePayConfiguration].
+  ///
   /// Чтобы узнать подробнее о кастомизации темы, смотрите [IokaTheme].
   ///
   /// Если [configuration.automaticallyGenerateTheme] равен `true` и
@@ -81,6 +87,8 @@ class Ioka {
     IokaTheme? theme,
     IokaTheme? darkTheme,
     Platform? platform,
+    ApplePayConfiguration? applePayConfiguration,
+    GooglePayConfiguration? googlePayConfiguration,
   }) {
     assert(!GetIt.I.isRegistered<Ioka>());
 
@@ -108,6 +116,10 @@ class Ioka {
         theme: theme,
         darkTheme: darkTheme,
         platform: platform,
+        applePayConfiguration: applePayConfiguration,
+        googlePayConfiguration: googlePayConfiguration?.copyWith(
+          environment: apiMode == IokaApiMode.staging ? 'TEST' : 'PRODUCTION',
+        ),
       ),
     );
   }
@@ -201,6 +213,8 @@ class Ioka {
 
   /// Конфигурация для платформной оплаты. Инициализируется с параметрами из
   /// [_applePayConfiguration] и [_googlePayConfiguration].
+  Pay get platformPay => _platformPay;
+
   final Pay _platformPay;
 
   /// Метод для получения темы, которая будет использоваться в SDK.
@@ -526,6 +540,8 @@ class Ioka {
   /// Чтобы настроить Google Pay, необходимо передать конфигурацию в
   /// [Ioka.setup()].
   Future<bool> isGooglePayAvailable() {
+    if (_googlePayConfiguration == null) return Future.value(false);
+
     return _platformPay.userCanPay(PayProvider.google_pay);
   }
 
@@ -535,6 +551,50 @@ class Ioka {
   /// Чтобы настроить Apple Pay, необходимо передать конфигурацию в
   /// [Ioka.setup()].
   Future<bool> isApplePayAvailable() {
+    if (_applePayConfiguration == null) return Future.value(false);
+
     return _platformPay.userCanPay(PayProvider.apple_pay);
+  }
+
+  /// Возвращает список [PayProvider], которые поддерживаются на текущей
+  /// платформе с текущими конфигурациями [ApplePayConfiguration] и
+  /// [GooglePayConfiguration].
+  Future<List<PayProvider>> getAvailablePayProviders() async {
+    final _providers = [
+      if (_applePayConfiguration != null) PayProvider.apple_pay,
+      if (_googlePayConfiguration != null) PayProvider.google_pay,
+    ];
+
+    final futures = _providers.map(
+      (provider) =>
+          _platformPay.userCanPay(provider).then((v) => v ? provider : null),
+    );
+
+    final values = await Future.wait(futures);
+    return values.whereType<PayProvider>().toList();
+  }
+
+  /// Создаёт объект для платформной оплаты для заданного [order].
+  ///
+  /// Подставляет значение `countryCode`.
+  Pay createPayProviderForOrder({
+    required PayProvider provider,
+    required generated.OrderOut order,
+  }) {
+    Map<String, dynamic> _configurationJson;
+
+    if (provider == PayProvider.apple_pay) {
+      assert(_applePayConfiguration != null);
+      _configurationJson = _applePayConfiguration!.toJsonForOrder(order);
+    } else if (provider == PayProvider.google_pay) {
+      assert(_googlePayConfiguration != null);
+      _configurationJson = _googlePayConfiguration!.toJsonForOrder(order);
+    } else {
+      throw Exception('Invalid provider $provider.');
+    }
+
+    return Pay([
+      PaymentConfiguration.fromJsonString(jsonEncode(_configurationJson)),
+    ]);
   }
 }
