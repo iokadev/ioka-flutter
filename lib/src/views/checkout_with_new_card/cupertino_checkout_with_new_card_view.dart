@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:functional_listener/functional_listener.dart';
 import 'package:ioka/ioka.dart';
 import 'package:ioka/src/widgets/common/divider_with_text.dart';
 import 'package:ioka/src/widgets/platform_pay/platform_pay_button.dart';
@@ -86,14 +85,16 @@ class _CupertinoCheckoutViewActions extends StatelessWidget {
           width: double.infinity,
           height: 56.0,
           child: ValueListenableBuilder(
-            valueListenable:
-                model.cardInputDataNotifier.map((v) => v != null && v.isValid),
-            builder: (context, bool isValid, __) => IokaCupertinoProgressButton(
-              onPressed: isValid ? () => model.submit(context) : null,
-              child: Text(
-                context.l10n.checkoutWithNewCardViewPayAction(model.amount),
-              ),
-            ),
+            valueListenable: model.cardInputDataNotifier,
+            builder: (context, CardInputData? cardData, __) {
+              final isValid = cardData?.isValid ?? false;
+              return IokaCupertinoProgressButton(
+                onPressed: isValid ? () => model.submit(context) : null,
+                child: Text(
+                  context.l10n.checkoutWithNewCardViewPayAction(model.amount),
+                ),
+              );
+            },
           ),
         ),
         AnimatedCrossFade(
