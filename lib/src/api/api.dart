@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 import 'package:ioka/src/api/generated/ioka_api.swagger.dart';
 import 'package:ioka/src/api/utils/request_interceptor.dart';
+import 'package:ioka/src/utils/utils.dart';
+import 'package:pay/pay.dart';
 
 import './generated/client_index.dart' as g;
 import 'models/error.dart';
@@ -203,4 +205,53 @@ class IokaApi {
       ),
     );
   }
+
+  Future<ExtendedPayment> createToolPayment({
+    required String orderAccessToken,
+    required ToolTypeEnum type,
+    required Map<String, dynamic> data,
+  }) {
+    final orderId = idFromAccessToken(orderAccessToken);
+
+    final url = '/v2/orders/$orderId/payments/tool';
+
+    final _token = jsonDecode(data['token']);
+
+    final request = Request(
+      'POST',
+      url,
+      generatedApi.client.baseUrl,
+      body: {
+        'tool_type': $ToolTypeEnumMap[type],
+        if (type == ToolTypeEnum.applePay)
+          'apple_pay': {
+            'paymentData': _token,
+            'paymentMethod': data['paymentMethod'],
+            'transactionIdentifier':
+                _token['header']['transactionId'].toString().toUpperCase(),
+          }
+        else
+          // TODO: Google Pay support
+          'google_pay': {'paymentData': data},
+      },
+    );
+
+    return _makeRequest(
+      () => generatedApi.client.send<ExtendedPayment, ExtendedPayment>(request),
+      orderAccessToken: orderAccessToken,
+    );
+  }
+
+  Future<ExtendedPayment> createPlatformPayPayment({
+    required String orderAccessToken,
+    required PayProvider provider,
+    required Map<String, dynamic> data,
+  }) =>
+      createToolPayment(
+        orderAccessToken: orderAccessToken,
+        type: provider == PayProvider.apple_pay
+            ? ToolTypeEnum.applePay
+            : ToolTypeEnum.googlePay,
+        data: data,
+      );
 }

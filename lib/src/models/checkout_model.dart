@@ -41,6 +41,10 @@ abstract class CheckoutModel extends ChangeNotifier {
   /// функции. Это необходимо для того, чтобы закрыть форму оплаты после
   /// завершения операции.
   ///
+  /// Если [customCreatePayment] не [null], то оно будет использоваться
+  /// вместо [createPayment] для проведения оплаты. Например, это необходимо
+  /// для оплаты с Apple Pay или Google Pay.
+  ///
   /// Логика:
   /// - Создаём платеж через [createPayment].
   /// - В случае, если статус [PaymentStatus.requiresAction] и есть [action] -
@@ -52,9 +56,8 @@ abstract class CheckoutModel extends ChangeNotifier {
   Future<ExtendedPayment?> submit(
     BuildContext context, {
     bool shouldPopRoute = true,
+    Future<ExtendedPayment> Function()? customCreatePayment,
   }) async {
-    assert(isValid);
-
     // Блокируем форму для пользователя.
     isInteractableNotifier.value = false;
     notifyListeners();
@@ -64,7 +67,7 @@ abstract class CheckoutModel extends ChangeNotifier {
 
     try {
       // Создаём платеж на сервере.
-      payment = await createPayment();
+      payment = await (customCreatePayment ?? createPayment)();
 
       // По надобности, показываем форму 3D Secure.
       if (payment.status == PaymentStatus.requiresAction &&

@@ -76,6 +76,33 @@ Map<String, dynamic> _$CardPayerToJson(CardPayer instance) {
   return val;
 }
 
+ToolPayer _$ToolPayerFromJson(Map<String, dynamic> json) => ToolPayer(
+      toolType: toolTypeEnumFromJson(json['tool_type']),
+      applePay: json['apple_pay'] == null
+          ? null
+          : ToolPayer$ApplePay.fromJson(
+              json['apple_pay'] as Map<String, dynamic>),
+      googlePay: json['google_pay'] == null
+          ? null
+          : ToolPayer$GooglePay.fromJson(
+              json['google_pay'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ToolPayerToJson(ToolPayer instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('tool_type', toolTypeEnumToJson(instance.toolType));
+  writeNotNull('apple_pay', instance.applePay?.toJson());
+  writeNotNull('google_pay', instance.googlePay?.toJson());
+  return val;
+}
+
 Contacts _$ContactsFromJson(Map<String, dynamic> json) => Contacts(
       email: json['email'] as String?,
       phone: json['phone'] as String?,
@@ -173,6 +200,23 @@ Map<String, dynamic> _$CustomerEventOutToJson(CustomerEventOut instance) {
   return val;
 }
 
+OrderUpdate _$OrderUpdateFromJson(Map<String, dynamic> json) => OrderUpdate(
+      amount: json['amount'] as int?,
+    );
+
+Map<String, dynamic> _$OrderUpdateToJson(OrderUpdate instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('amount', instance.amount);
+  return val;
+}
+
 OrderIn _$OrderInFromJson(Map<String, dynamic> json) => OrderIn(
       amount: json['amount'] as int?,
       currency: currencyEnumFromJson(json['currency']),
@@ -218,6 +262,7 @@ Map<String, dynamic> _$OrderInToJson(OrderIn instance) {
 
 OrderOut _$OrderOutFromJson(Map<String, dynamic> json) => OrderOut(
       id: json['id'] as String?,
+      shopId: json['shop_id'] as String?,
       status: orderStatusFromJson(json['status']),
       createdAt: json['created_at'] as String?,
       amount: json['amount'] as int?,
@@ -247,6 +292,7 @@ Map<String, dynamic> _$OrderOutToJson(OrderOut instance) {
   }
 
   writeNotNull('id', instance.id);
+  writeNotNull('shop_id', instance.shopId);
   writeNotNull('status', orderStatusToJson(instance.status));
   writeNotNull('created_at', instance.createdAt);
   writeNotNull('amount', instance.amount);
@@ -774,6 +820,8 @@ Map<String, dynamic> _$CustomerCardToJson(CustomerCard instance) {
 
 PaymentOut _$PaymentOutFromJson(Map<String, dynamic> json) => PaymentOut(
       id: json['id'] as String?,
+      shopId: json['shop_id'] as String?,
+      orderId: json['order_id'] as String?,
       status: paymentStatusFromJson(json['status']),
       createdAt: json['created_at'] as String?,
       approvedAmount: json['approved_amount'] as int?,
@@ -786,6 +834,9 @@ PaymentOut _$PaymentOutFromJson(Map<String, dynamic> json) => PaymentOut(
       error: json['error'] == null
           ? null
           : PaymentError.fromJson(json['error'] as Map<String, dynamic>),
+      acquirer: json['acquirer'] == null
+          ? null
+          : Acquirer.fromJson(json['acquirer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PaymentOutToJson(PaymentOut instance) {
@@ -798,6 +849,8 @@ Map<String, dynamic> _$PaymentOutToJson(PaymentOut instance) {
   }
 
   writeNotNull('id', instance.id);
+  writeNotNull('shop_id', instance.shopId);
+  writeNotNull('order_id', instance.orderId);
   writeNotNull('status', paymentStatusToJson(instance.status));
   writeNotNull('created_at', instance.createdAt);
   writeNotNull('approved_amount', instance.approvedAmount);
@@ -806,6 +859,7 @@ Map<String, dynamic> _$PaymentOutToJson(PaymentOut instance) {
   writeNotNull('processing_fee', instance.processingFee);
   writeNotNull('payer', instance.payer?.toJson());
   writeNotNull('error', instance.error?.toJson());
+  writeNotNull('acquirer', instance.acquirer?.toJson());
   return val;
 }
 
@@ -1629,5 +1683,69 @@ Map<String, dynamic> _$MasterpassPostbackOutToJson(
   writeNotNull('external_id', instance.externalId);
   writeNotNull('amount', instance.amount);
   writeNotNull('currency', instance.currency);
+  return val;
+}
+
+ToolPayer$ApplePay _$ToolPayer$ApplePayFromJson(Map<String, dynamic> json) =>
+    ToolPayer$ApplePay(
+      token: json['token'] as String?,
+      cardNetwork: json['card_network'] as String?,
+      cardType: json['card_type'] as String?,
+      amount: json['amount'],
+      currency: currencyEnumFromJson(json['currency']),
+      holder: json['holder'],
+      email: json['email'],
+      phone: json['phone'],
+    );
+
+Map<String, dynamic> _$ToolPayer$ApplePayToJson(ToolPayer$ApplePay instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('token', instance.token);
+  writeNotNull('card_network', instance.cardNetwork);
+  writeNotNull('card_type', instance.cardType);
+  writeNotNull('amount', instance.amount);
+  writeNotNull('currency', currencyEnumToJson(instance.currency));
+  writeNotNull('holder', instance.holder);
+  writeNotNull('email', instance.email);
+  writeNotNull('phone', instance.phone);
+  return val;
+}
+
+ToolPayer$GooglePay _$ToolPayer$GooglePayFromJson(Map<String, dynamic> json) =>
+    ToolPayer$GooglePay(
+      token: json['token'] as String?,
+      cardNetwork: json['card_network'] as String?,
+      cardDetatils: json['card_detatils'] as String?,
+      amount: json['amount'],
+      currency: currencyEnumFromJson(json['currency']),
+      holder: json['holder'],
+      email: json['email'],
+      phone: json['phone'],
+    );
+
+Map<String, dynamic> _$ToolPayer$GooglePayToJson(ToolPayer$GooglePay instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('token', instance.token);
+  writeNotNull('card_network', instance.cardNetwork);
+  writeNotNull('card_detatils', instance.cardDetatils);
+  writeNotNull('amount', instance.amount);
+  writeNotNull('currency', currencyEnumToJson(instance.currency));
+  writeNotNull('holder', instance.holder);
+  writeNotNull('email', instance.email);
+  writeNotNull('phone', instance.phone);
   return val;
 }

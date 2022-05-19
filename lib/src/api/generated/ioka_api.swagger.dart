@@ -164,6 +164,22 @@ abstract class IokaApi extends ChopperService {
   Future<chopper.Response<OrderOut>> _v2OrdersOrderIdGet(
       {@Path('order_id') required String? orderId});
 
+  ///UpdateOrderByID
+  ///@param order_id
+  Future<chopper.Response<OrderOut>> v2OrdersOrderIdPatch(
+      {required String? orderId, required OrderUpdate? body}) {
+    generatedMapping.putIfAbsent(OrderOut, () => OrderOut.fromJsonFactory);
+
+    return _v2OrdersOrderIdPatch(orderId: orderId, body: body);
+  }
+
+  ///UpdateOrderByID
+  ///@param order_id
+  @Patch(path: '/v2/orders/{order_id}')
+  Future<chopper.Response<OrderOut>> _v2OrdersOrderIdPatch(
+      {@Path('order_id') required String? orderId,
+      @Body() required OrderUpdate? body});
+
   ///CaptureOrder
   ///@param order_id
   Future<chopper.Response<ExtendedPayment>> v2OrdersOrderIdCapturePost(
@@ -394,6 +410,23 @@ abstract class IokaApi extends ChopperService {
   Future<chopper.Response<ExtendedPayment>> _v2OrdersOrderIdPaymentsCardPost(
       {@Path('order_id') required String? orderId,
       @Body() required CardPayer? body});
+
+  ///CreateToolPayment
+  ///@param order_id Идентификатор заказа
+  Future<chopper.Response<ExtendedPayment>> v2OrdersOrderIdPaymentsToolPost(
+      {required String? orderId, required ToolPayer? body}) {
+    generatedMapping.putIfAbsent(
+        ExtendedPayment, () => ExtendedPayment.fromJsonFactory);
+
+    return _v2OrdersOrderIdPaymentsToolPost(orderId: orderId, body: body);
+  }
+
+  ///CreateToolPayment
+  ///@param order_id Идентификатор заказа
+  @Post(path: '/v2/orders/{order_id}/payments/tool')
+  Future<chopper.Response<ExtendedPayment>> _v2OrdersOrderIdPaymentsToolPost(
+      {@Path('order_id') required String? orderId,
+      @Body() required ToolPayer? body});
 
   ///GetPaymentByID
   ///@param order_id
@@ -1037,6 +1070,7 @@ abstract class IokaApi extends ChopperService {
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param extra_info
   Future<chopper.Response<PaginatedOrderOut>> v2SearchOrdersGet(
       {int? page,
       int? limit,
@@ -1049,7 +1083,8 @@ abstract class IokaApi extends ChopperService {
       enums.AmountCategory? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? extraInfo}) {
     generatedMapping.putIfAbsent(
         PaginatedOrderOut, () => PaginatedOrderOut.fromJsonFactory);
 
@@ -1065,7 +1100,8 @@ abstract class IokaApi extends ChopperService {
         amountCategory: enums.$AmountCategoryMap[amountCategory],
         fixedAmount: fixedAmount,
         minAmount: minAmount,
-        maxAmount: maxAmount);
+        maxAmount: maxAmount,
+        extraInfo: extraInfo);
   }
 
   ///SearchOrders
@@ -1081,6 +1117,7 @@ abstract class IokaApi extends ChopperService {
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param extra_info
   @Get(path: '/v2/search/orders')
   Future<chopper.Response<PaginatedOrderOut>> _v2SearchOrdersGet(
       {@Query('page') int? page,
@@ -1094,7 +1131,8 @@ abstract class IokaApi extends ChopperService {
       @Query('amount_category') String? amountCategory,
       @Query('fixed_amount') int? fixedAmount,
       @Query('min_amount') int? minAmount,
-      @Query('max_amount') int? maxAmount});
+      @Query('max_amount') int? maxAmount,
+      @Query('extra_info') String? extraInfo});
 
   ///SearchPayments
   ///@param page
@@ -1103,6 +1141,7 @@ abstract class IokaApi extends ChopperService {
   ///@param from_dt
   ///@param date_category
   ///@param order_id
+  ///@param payment_id
   ///@param external_id
   ///@param pan_first6
   ///@param pan_last4
@@ -1115,6 +1154,8 @@ abstract class IokaApi extends ChopperService {
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param reference
+  ///@param extra_info
   Future<chopper.Response<PaginatedPaymentOut>> v2SearchPaymentsGet(
       {int? page,
       int? limit,
@@ -1122,6 +1163,7 @@ abstract class IokaApi extends ChopperService {
       String? fromDt,
       enums.DateCategory? dateCategory,
       String? orderId,
+      String? paymentId,
       String? externalId,
       String? panFirst6,
       String? panLast4,
@@ -1133,7 +1175,9 @@ abstract class IokaApi extends ChopperService {
       enums.AmountCategory? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? reference,
+      String? extraInfo}) {
     generatedMapping.putIfAbsent(
         PaginatedPaymentOut, () => PaginatedPaymentOut.fromJsonFactory);
 
@@ -1144,6 +1188,7 @@ abstract class IokaApi extends ChopperService {
         fromDt: fromDt,
         dateCategory: enums.$DateCategoryMap[dateCategory],
         orderId: orderId,
+        paymentId: paymentId,
         externalId: externalId,
         panFirst6: panFirst6,
         panLast4: panLast4,
@@ -1155,7 +1200,9 @@ abstract class IokaApi extends ChopperService {
         amountCategory: enums.$AmountCategoryMap[amountCategory],
         fixedAmount: fixedAmount,
         minAmount: minAmount,
-        maxAmount: maxAmount);
+        maxAmount: maxAmount,
+        reference: reference,
+        extraInfo: extraInfo);
   }
 
   ///SearchPayments
@@ -1165,6 +1212,7 @@ abstract class IokaApi extends ChopperService {
   ///@param from_dt
   ///@param date_category
   ///@param order_id
+  ///@param payment_id
   ///@param external_id
   ///@param pan_first6
   ///@param pan_last4
@@ -1177,6 +1225,8 @@ abstract class IokaApi extends ChopperService {
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param reference
+  ///@param extra_info
   @Get(path: '/v2/search/payments')
   Future<chopper.Response<PaginatedPaymentOut>> _v2SearchPaymentsGet(
       {@Query('page') int? page,
@@ -1185,6 +1235,7 @@ abstract class IokaApi extends ChopperService {
       @Query('from_dt') String? fromDt,
       @Query('date_category') String? dateCategory,
       @Query('order_id') String? orderId,
+      @Query('payment_id') String? paymentId,
       @Query('external_id') String? externalId,
       @Query('pan_first6') String? panFirst6,
       @Query('pan_last4') String? panLast4,
@@ -1196,7 +1247,9 @@ abstract class IokaApi extends ChopperService {
       @Query('amount_category') String? amountCategory,
       @Query('fixed_amount') int? fixedAmount,
       @Query('min_amount') int? minAmount,
-      @Query('max_amount') int? maxAmount});
+      @Query('max_amount') int? maxAmount,
+      @Query('reference') String? reference,
+      @Query('extra_info') String? extraInfo});
 
   ///SearchRefunds
   ///@param page
@@ -1205,11 +1258,13 @@ abstract class IokaApi extends ChopperService {
   ///@param from_dt
   ///@param date_category
   ///@param order_id
+  ///@param payment_id
   ///@param refund_status
   ///@param amount_category
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param extra_info
   Future<chopper.Response<PaginatedRefundOut>> v2SearchRefundsGet(
       {int? page,
       int? limit,
@@ -1217,11 +1272,13 @@ abstract class IokaApi extends ChopperService {
       String? fromDt,
       enums.DateCategory? dateCategory,
       String? orderId,
+      String? paymentId,
       enums.RefundStatus? refundStatus,
       enums.AmountCategory? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? extraInfo}) {
     generatedMapping.putIfAbsent(
         PaginatedRefundOut, () => PaginatedRefundOut.fromJsonFactory);
 
@@ -1232,11 +1289,13 @@ abstract class IokaApi extends ChopperService {
         fromDt: fromDt,
         dateCategory: enums.$DateCategoryMap[dateCategory],
         orderId: orderId,
+        paymentId: paymentId,
         refundStatus: enums.$RefundStatusMap[refundStatus],
         amountCategory: enums.$AmountCategoryMap[amountCategory],
         fixedAmount: fixedAmount,
         minAmount: minAmount,
-        maxAmount: maxAmount);
+        maxAmount: maxAmount,
+        extraInfo: extraInfo);
   }
 
   ///SearchRefunds
@@ -1246,11 +1305,13 @@ abstract class IokaApi extends ChopperService {
   ///@param from_dt
   ///@param date_category
   ///@param order_id
+  ///@param payment_id
   ///@param refund_status
   ///@param amount_category
   ///@param fixed_amount
   ///@param min_amount
   ///@param max_amount
+  ///@param extra_info
   @Get(path: '/v2/search/refunds')
   Future<chopper.Response<PaginatedRefundOut>> _v2SearchRefundsGet(
       {@Query('page') int? page,
@@ -1259,11 +1320,13 @@ abstract class IokaApi extends ChopperService {
       @Query('from_dt') String? fromDt,
       @Query('date_category') String? dateCategory,
       @Query('order_id') String? orderId,
+      @Query('payment_id') String? paymentId,
       @Query('refund_status') String? refundStatus,
       @Query('amount_category') String? amountCategory,
       @Query('fixed_amount') int? fixedAmount,
       @Query('min_amount') int? minAmount,
-      @Query('max_amount') int? maxAmount});
+      @Query('max_amount') int? maxAmount,
+      @Query('extra_info') String? extraInfo});
 
   ///ExportOrders
   ///@param to_dt
@@ -1719,6 +1782,69 @@ extension $CardPayerExtension on CardPayer {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ToolPayer {
+  ToolPayer({
+    this.toolType,
+    this.applePay,
+    this.googlePay,
+  });
+
+  factory ToolPayer.fromJson(Map<String, dynamic> json) =>
+      _$ToolPayerFromJson(json);
+
+  @JsonKey(
+      name: 'tool_type',
+      includeIfNull: false,
+      toJson: toolTypeEnumToJson,
+      fromJson: toolTypeEnumFromJson)
+  final enums.ToolTypeEnum? toolType;
+  @JsonKey(name: 'apple_pay', includeIfNull: false)
+  final ToolPayer$ApplePay? applePay;
+  @JsonKey(name: 'google_pay', includeIfNull: false)
+  final ToolPayer$GooglePay? googlePay;
+  static const fromJsonFactory = _$ToolPayerFromJson;
+  static const toJsonFactory = _$ToolPayerToJson;
+  Map<String, dynamic> toJson() => _$ToolPayerToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ToolPayer &&
+            (identical(other.toolType, toolType) ||
+                const DeepCollectionEquality()
+                    .equals(other.toolType, toolType)) &&
+            (identical(other.applePay, applePay) ||
+                const DeepCollectionEquality()
+                    .equals(other.applePay, applePay)) &&
+            (identical(other.googlePay, googlePay) ||
+                const DeepCollectionEquality()
+                    .equals(other.googlePay, googlePay)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(toolType) ^
+      const DeepCollectionEquality().hash(applePay) ^
+      const DeepCollectionEquality().hash(googlePay) ^
+      runtimeType.hashCode;
+}
+
+extension $ToolPayerExtension on ToolPayer {
+  ToolPayer copyWith(
+      {enums.ToolTypeEnum? toolType,
+      ToolPayer$ApplePay? applePay,
+      ToolPayer$GooglePay? googlePay}) {
+    return ToolPayer(
+        toolType: toolType ?? this.toolType,
+        applePay: applePay ?? this.applePay,
+        googlePay: googlePay ?? this.googlePay);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class Contacts {
   Contacts({
     this.email,
@@ -2027,6 +2153,43 @@ extension $CustomerEventOutExtension on CustomerEventOut {
 }
 
 @JsonSerializable(explicitToJson: true)
+class OrderUpdate {
+  OrderUpdate({
+    this.amount,
+  });
+
+  factory OrderUpdate.fromJson(Map<String, dynamic> json) =>
+      _$OrderUpdateFromJson(json);
+
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final int? amount;
+  static const fromJsonFactory = _$OrderUpdateFromJson;
+  static const toJsonFactory = _$OrderUpdateToJson;
+  Map<String, dynamic> toJson() => _$OrderUpdateToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is OrderUpdate &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(amount) ^ runtimeType.hashCode;
+}
+
+extension $OrderUpdateExtension on OrderUpdate {
+  OrderUpdate copyWith({int? amount}) {
+    return OrderUpdate(amount: amount ?? this.amount);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class OrderIn {
   OrderIn({
     this.amount,
@@ -2194,6 +2357,7 @@ extension $OrderInExtension on OrderIn {
 class OrderOut {
   OrderOut({
     this.id,
+    this.shopId,
     this.status,
     this.createdAt,
     this.amount,
@@ -2218,6 +2382,8 @@ class OrderOut {
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
+  @JsonKey(name: 'shop_id', includeIfNull: false)
+  final String? shopId;
   @JsonKey(
       name: 'status',
       includeIfNull: false,
@@ -2277,6 +2443,8 @@ class OrderOut {
         (other is OrderOut &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.shopId, shopId) ||
+                const DeepCollectionEquality().equals(other.shopId, shopId)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.createdAt, createdAt) ||
@@ -2330,6 +2498,7 @@ class OrderOut {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(shopId) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(amount) ^
@@ -2353,6 +2522,7 @@ class OrderOut {
 extension $OrderOutExtension on OrderOut {
   OrderOut copyWith(
       {String? id,
+      String? shopId,
       enums.OrderStatus? status,
       String? createdAt,
       int? amount,
@@ -2372,6 +2542,7 @@ extension $OrderOutExtension on OrderOut {
       String? checkoutUrl}) {
     return OrderOut(
         id: id ?? this.id,
+        shopId: shopId ?? this.shopId,
         status: status ?? this.status,
         createdAt: createdAt ?? this.createdAt,
         amount: amount ?? this.amount,
@@ -3637,6 +3808,8 @@ extension $CustomerCardExtension on CustomerCard {
 class PaymentOut {
   PaymentOut({
     this.id,
+    this.shopId,
+    this.orderId,
     this.status,
     this.createdAt,
     this.approvedAmount,
@@ -3645,6 +3818,7 @@ class PaymentOut {
     this.processingFee,
     this.payer,
     this.error,
+    this.acquirer,
   });
 
   factory PaymentOut.fromJson(Map<String, dynamic> json) =>
@@ -3652,6 +3826,10 @@ class PaymentOut {
 
   @JsonKey(name: 'id', includeIfNull: false)
   final String? id;
+  @JsonKey(name: 'shop_id', includeIfNull: false)
+  final String? shopId;
+  @JsonKey(name: 'order_id', includeIfNull: false)
+  final String? orderId;
   @JsonKey(
       name: 'status',
       includeIfNull: false,
@@ -3672,6 +3850,8 @@ class PaymentOut {
   final PayerOut? payer;
   @JsonKey(name: 'error', includeIfNull: false)
   final PaymentError? error;
+  @JsonKey(name: 'acquirer', includeIfNull: false)
+  final Acquirer? acquirer;
   static const fromJsonFactory = _$PaymentOutFromJson;
   static const toJsonFactory = _$PaymentOutToJson;
   Map<String, dynamic> toJson() => _$PaymentOutToJson(this);
@@ -3685,6 +3865,11 @@ class PaymentOut {
         (other is PaymentOut &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.shopId, shopId) ||
+                const DeepCollectionEquality().equals(other.shopId, shopId)) &&
+            (identical(other.orderId, orderId) ||
+                const DeepCollectionEquality()
+                    .equals(other.orderId, orderId)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.createdAt, createdAt) ||
@@ -3705,12 +3890,17 @@ class PaymentOut {
             (identical(other.payer, payer) ||
                 const DeepCollectionEquality().equals(other.payer, payer)) &&
             (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
+                const DeepCollectionEquality().equals(other.error, error)) &&
+            (identical(other.acquirer, acquirer) ||
+                const DeepCollectionEquality()
+                    .equals(other.acquirer, acquirer)));
   }
 
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(shopId) ^
+      const DeepCollectionEquality().hash(orderId) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(approvedAmount) ^
@@ -3719,12 +3909,15 @@ class PaymentOut {
       const DeepCollectionEquality().hash(processingFee) ^
       const DeepCollectionEquality().hash(payer) ^
       const DeepCollectionEquality().hash(error) ^
+      const DeepCollectionEquality().hash(acquirer) ^
       runtimeType.hashCode;
 }
 
 extension $PaymentOutExtension on PaymentOut {
   PaymentOut copyWith(
       {String? id,
+      String? shopId,
+      String? orderId,
       enums.PaymentStatus? status,
       String? createdAt,
       int? approvedAmount,
@@ -3732,9 +3925,12 @@ extension $PaymentOutExtension on PaymentOut {
       int? refundedAmount,
       double? processingFee,
       PayerOut? payer,
-      PaymentError? error}) {
+      PaymentError? error,
+      Acquirer? acquirer}) {
     return PaymentOut(
         id: id ?? this.id,
+        shopId: shopId ?? this.shopId,
+        orderId: orderId ?? this.orderId,
         status: status ?? this.status,
         createdAt: createdAt ?? this.createdAt,
         approvedAmount: approvedAmount ?? this.approvedAmount,
@@ -3742,7 +3938,8 @@ extension $PaymentOutExtension on PaymentOut {
         refundedAmount: refundedAmount ?? this.refundedAmount,
         processingFee: processingFee ?? this.processingFee,
         payer: payer ?? this.payer,
-        error: error ?? this.error);
+        error: error ?? this.error,
+        acquirer: acquirer ?? this.acquirer);
   }
 }
 
@@ -6032,6 +6229,212 @@ extension $MasterpassPostbackOutExtension on MasterpassPostbackOut {
   }
 }
 
+@JsonSerializable(explicitToJson: true)
+class ToolPayer$ApplePay {
+  ToolPayer$ApplePay({
+    this.token,
+    this.cardNetwork,
+    this.cardType,
+    this.amount,
+    this.currency,
+    this.holder,
+    this.email,
+    this.phone,
+  });
+
+  factory ToolPayer$ApplePay.fromJson(Map<String, dynamic> json) =>
+      _$ToolPayer$ApplePayFromJson(json);
+
+  @JsonKey(name: 'token', includeIfNull: false)
+  final String? token;
+  @JsonKey(name: 'card_network', includeIfNull: false)
+  final String? cardNetwork;
+  @JsonKey(name: 'card_type', includeIfNull: false)
+  final String? cardType;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final dynamic amount;
+  @JsonKey(
+      name: 'currency',
+      includeIfNull: false,
+      toJson: currencyEnumToJson,
+      fromJson: currencyEnumFromJson)
+  final enums.CurrencyEnum? currency;
+  @JsonKey(name: 'holder', includeIfNull: false)
+  final dynamic holder;
+  @JsonKey(name: 'email', includeIfNull: false)
+  final dynamic email;
+  @JsonKey(name: 'phone', includeIfNull: false)
+  final dynamic phone;
+  static const fromJsonFactory = _$ToolPayer$ApplePayFromJson;
+  static const toJsonFactory = _$ToolPayer$ApplePayToJson;
+  Map<String, dynamic> toJson() => _$ToolPayer$ApplePayToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ToolPayer$ApplePay &&
+            (identical(other.token, token) ||
+                const DeepCollectionEquality().equals(other.token, token)) &&
+            (identical(other.cardNetwork, cardNetwork) ||
+                const DeepCollectionEquality()
+                    .equals(other.cardNetwork, cardNetwork)) &&
+            (identical(other.cardType, cardType) ||
+                const DeepCollectionEquality()
+                    .equals(other.cardType, cardType)) &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)) &&
+            (identical(other.currency, currency) ||
+                const DeepCollectionEquality()
+                    .equals(other.currency, currency)) &&
+            (identical(other.holder, holder) ||
+                const DeepCollectionEquality().equals(other.holder, holder)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.phone, phone) ||
+                const DeepCollectionEquality().equals(other.phone, phone)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(token) ^
+      const DeepCollectionEquality().hash(cardNetwork) ^
+      const DeepCollectionEquality().hash(cardType) ^
+      const DeepCollectionEquality().hash(amount) ^
+      const DeepCollectionEquality().hash(currency) ^
+      const DeepCollectionEquality().hash(holder) ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(phone) ^
+      runtimeType.hashCode;
+}
+
+extension $ToolPayer$ApplePayExtension on ToolPayer$ApplePay {
+  ToolPayer$ApplePay copyWith(
+      {String? token,
+      String? cardNetwork,
+      String? cardType,
+      dynamic? amount,
+      enums.CurrencyEnum? currency,
+      dynamic? holder,
+      dynamic? email,
+      dynamic? phone}) {
+    return ToolPayer$ApplePay(
+        token: token ?? this.token,
+        cardNetwork: cardNetwork ?? this.cardNetwork,
+        cardType: cardType ?? this.cardType,
+        amount: amount ?? this.amount,
+        currency: currency ?? this.currency,
+        holder: holder ?? this.holder,
+        email: email ?? this.email,
+        phone: phone ?? this.phone);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ToolPayer$GooglePay {
+  ToolPayer$GooglePay({
+    this.token,
+    this.cardNetwork,
+    this.cardDetatils,
+    this.amount,
+    this.currency,
+    this.holder,
+    this.email,
+    this.phone,
+  });
+
+  factory ToolPayer$GooglePay.fromJson(Map<String, dynamic> json) =>
+      _$ToolPayer$GooglePayFromJson(json);
+
+  @JsonKey(name: 'token', includeIfNull: false)
+  final String? token;
+  @JsonKey(name: 'card_network', includeIfNull: false)
+  final String? cardNetwork;
+  @JsonKey(name: 'card_detatils', includeIfNull: false)
+  final String? cardDetatils;
+  @JsonKey(name: 'amount', includeIfNull: false)
+  final dynamic amount;
+  @JsonKey(
+      name: 'currency',
+      includeIfNull: false,
+      toJson: currencyEnumToJson,
+      fromJson: currencyEnumFromJson)
+  final enums.CurrencyEnum? currency;
+  @JsonKey(name: 'holder', includeIfNull: false)
+  final dynamic holder;
+  @JsonKey(name: 'email', includeIfNull: false)
+  final dynamic email;
+  @JsonKey(name: 'phone', includeIfNull: false)
+  final dynamic phone;
+  static const fromJsonFactory = _$ToolPayer$GooglePayFromJson;
+  static const toJsonFactory = _$ToolPayer$GooglePayToJson;
+  Map<String, dynamic> toJson() => _$ToolPayer$GooglePayToJson(this);
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ToolPayer$GooglePay &&
+            (identical(other.token, token) ||
+                const DeepCollectionEquality().equals(other.token, token)) &&
+            (identical(other.cardNetwork, cardNetwork) ||
+                const DeepCollectionEquality()
+                    .equals(other.cardNetwork, cardNetwork)) &&
+            (identical(other.cardDetatils, cardDetatils) ||
+                const DeepCollectionEquality()
+                    .equals(other.cardDetatils, cardDetatils)) &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)) &&
+            (identical(other.currency, currency) ||
+                const DeepCollectionEquality()
+                    .equals(other.currency, currency)) &&
+            (identical(other.holder, holder) ||
+                const DeepCollectionEquality().equals(other.holder, holder)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.phone, phone) ||
+                const DeepCollectionEquality().equals(other.phone, phone)));
+  }
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(token) ^
+      const DeepCollectionEquality().hash(cardNetwork) ^
+      const DeepCollectionEquality().hash(cardDetatils) ^
+      const DeepCollectionEquality().hash(amount) ^
+      const DeepCollectionEquality().hash(currency) ^
+      const DeepCollectionEquality().hash(holder) ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(phone) ^
+      runtimeType.hashCode;
+}
+
+extension $ToolPayer$GooglePayExtension on ToolPayer$GooglePay {
+  ToolPayer$GooglePay copyWith(
+      {String? token,
+      String? cardNetwork,
+      String? cardDetatils,
+      dynamic? amount,
+      enums.CurrencyEnum? currency,
+      dynamic? holder,
+      dynamic? email,
+      dynamic? phone}) {
+    return ToolPayer$GooglePay(
+        token: token ?? this.token,
+        cardNetwork: cardNetwork ?? this.cardNetwork,
+        cardDetatils: cardDetatils ?? this.cardDetatils,
+        amount: amount ?? this.amount,
+        currency: currency ?? this.currency,
+        holder: holder ?? this.holder,
+        email: email ?? this.email,
+        phone: phone ?? this.phone);
+  }
+}
+
 String? captureMethodToJson(enums.CaptureMethod? captureMethod) {
   return enums.$CaptureMethodMap[captureMethod];
 }
@@ -6117,6 +6520,49 @@ List<enums.CurrencyEnum> currencyEnumListFromJson(List? currencyEnum) {
   }
 
   return currencyEnum.map((e) => currencyEnumFromJson(e.toString())).toList();
+}
+
+String? toolTypeEnumToJson(enums.ToolTypeEnum? toolTypeEnum) {
+  return enums.$ToolTypeEnumMap[toolTypeEnum];
+}
+
+enums.ToolTypeEnum toolTypeEnumFromJson(Object? toolTypeEnum) {
+  if (toolTypeEnum is int) {
+    return enums.$ToolTypeEnumMap.entries
+        .firstWhere(
+            (element) => element.value.toLowerCase() == toolTypeEnum.toString(),
+            orElse: () =>
+                const MapEntry(enums.ToolTypeEnum.swaggerGeneratedUnknown, ''))
+        .key;
+  }
+
+  if (toolTypeEnum is String) {
+    return enums.$ToolTypeEnumMap.entries
+        .firstWhere(
+            (element) =>
+                element.value.toLowerCase() == toolTypeEnum.toLowerCase(),
+            orElse: () =>
+                const MapEntry(enums.ToolTypeEnum.swaggerGeneratedUnknown, ''))
+        .key;
+  }
+
+  return enums.ToolTypeEnum.swaggerGeneratedUnknown;
+}
+
+List<String> toolTypeEnumListToJson(List<enums.ToolTypeEnum>? toolTypeEnum) {
+  if (toolTypeEnum == null) {
+    return [];
+  }
+
+  return toolTypeEnum.map((e) => enums.$ToolTypeEnumMap[e]!).toList();
+}
+
+List<enums.ToolTypeEnum> toolTypeEnumListFromJson(List? toolTypeEnum) {
+  if (toolTypeEnum == null) {
+    return [];
+  }
+
+  return toolTypeEnum.map((e) => toolTypeEnumFromJson(e.toString())).toList();
 }
 
 String? webhookEventNameEnumToJson(

@@ -593,8 +593,56 @@ class Ioka {
       throw Exception('Invalid provider $provider.');
     }
 
+    print(_configurationJson);
+
     return Pay([
       PaymentConfiguration.fromJsonString(jsonEncode(_configurationJson)),
     ]);
+  }
+
+  Future<generated.ExtendedPayment> startPlatformPaymentFlow({
+    required PayProvider provider,
+    required String orderAccessToken,
+    List<PaymentItem>? paymentItems,
+    generated.OrderOut? order,
+  }) async {
+    try {
+      final generated.OrderOut _order =
+          order ?? await api.getOrderById(orderAccessToken: orderAccessToken);
+
+      final pay = Ioka.instance.createPayProviderForOrder(
+        provider: provider,
+        order: _order,
+      );
+
+      final amount = (_order.amount! / 100).toStringAsFixed(2);
+
+      final result = await pay.showPaymentSelector(
+        provider: provider,
+        paymentItems: [
+          if (paymentItems != null)
+            ...paymentItems
+          else
+            PaymentItem(
+              amount: amount,
+              type: PaymentItemType.total,
+              status: PaymentItemStatus.final_price,
+              label: 'total',
+            ),
+        ],
+      );
+
+      print(result);
+
+      return api.createPlatformPayPayment(
+        orderAccessToken: orderAccessToken,
+        provider: provider,
+        data: result,
+      );
+    } catch (e) {
+      print(e);
+
+      rethrow;
+    }
   }
 }

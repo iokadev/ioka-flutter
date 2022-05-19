@@ -10,8 +10,8 @@ import 'package:ioka/ioka.dart';
 /// ```
 ///
 /// В случае неверного токена генерируется исключение типа FormatException.
-String idFromAccessToken(String customerAccessToken) {
-  final parts = customerAccessToken.split('_secret_');
+String idFromAccessToken(String accessToken) {
+  final parts = accessToken.split('_secret_');
 
   if (parts.length != 2) {
     throw const FormatException('Invalid access token format');

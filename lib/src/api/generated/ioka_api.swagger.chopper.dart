@@ -84,6 +84,15 @@ class $IokaApi extends IokaApi {
   }
 
   @override
+  Future<Response<OrderOut>> _v2OrdersOrderIdPatch(
+      {required String? orderId, required OrderUpdate? body}) {
+    final $url = '/v2/orders/${orderId}';
+    final $body = body;
+    final $request = Request('PATCH', $url, client.baseUrl, body: $body);
+    return client.send<OrderOut, OrderOut>($request);
+  }
+
+  @override
   Future<Response<ExtendedPayment>> _v2OrdersOrderIdCapturePost(
       {required String? orderId, required PaymentCapture? body}) {
     final $url = '/v2/orders/${orderId}/capture';
@@ -192,6 +201,15 @@ class $IokaApi extends IokaApi {
   Future<Response<ExtendedPayment>> _v2OrdersOrderIdPaymentsCardPost(
       {required String? orderId, required CardPayer? body}) {
     final $url = '/v2/orders/${orderId}/payments/card';
+    final $body = body;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<ExtendedPayment, ExtendedPayment>($request);
+  }
+
+  @override
+  Future<Response<ExtendedPayment>> _v2OrdersOrderIdPaymentsToolPost(
+      {required String? orderId, required ToolPayer? body}) {
+    final $url = '/v2/orders/${orderId}/payments/tool';
     final $body = body;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<ExtendedPayment, ExtendedPayment>($request);
@@ -519,7 +537,8 @@ class $IokaApi extends IokaApi {
       String? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? extraInfo}) {
     final $url = '/v2/search/orders';
     final $params = <String, dynamic>{
       'page': page,
@@ -533,7 +552,8 @@ class $IokaApi extends IokaApi {
       'amount_category': amountCategory,
       'fixed_amount': fixedAmount,
       'min_amount': minAmount,
-      'max_amount': maxAmount
+      'max_amount': maxAmount,
+      'extra_info': extraInfo
     };
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<PaginatedOrderOut, PaginatedOrderOut>($request);
@@ -547,6 +567,7 @@ class $IokaApi extends IokaApi {
       String? fromDt,
       String? dateCategory,
       String? orderId,
+      String? paymentId,
       String? externalId,
       String? panFirst6,
       String? panLast4,
@@ -558,7 +579,9 @@ class $IokaApi extends IokaApi {
       String? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? reference,
+      String? extraInfo}) {
     final $url = '/v2/search/payments';
     final $params = <String, dynamic>{
       'page': page,
@@ -567,6 +590,7 @@ class $IokaApi extends IokaApi {
       'from_dt': fromDt,
       'date_category': dateCategory,
       'order_id': orderId,
+      'payment_id': paymentId,
       'external_id': externalId,
       'pan_first6': panFirst6,
       'pan_last4': panLast4,
@@ -578,7 +602,9 @@ class $IokaApi extends IokaApi {
       'amount_category': amountCategory,
       'fixed_amount': fixedAmount,
       'min_amount': minAmount,
-      'max_amount': maxAmount
+      'max_amount': maxAmount,
+      'reference': reference,
+      'extra_info': extraInfo
     };
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<PaginatedPaymentOut, PaginatedPaymentOut>($request);
@@ -592,11 +618,13 @@ class $IokaApi extends IokaApi {
       String? fromDt,
       String? dateCategory,
       String? orderId,
+      String? paymentId,
       String? refundStatus,
       String? amountCategory,
       int? fixedAmount,
       int? minAmount,
-      int? maxAmount}) {
+      int? maxAmount,
+      String? extraInfo}) {
     final $url = '/v2/search/refunds';
     final $params = <String, dynamic>{
       'page': page,
@@ -605,11 +633,13 @@ class $IokaApi extends IokaApi {
       'from_dt': fromDt,
       'date_category': dateCategory,
       'order_id': orderId,
+      'payment_id': paymentId,
       'refund_status': refundStatus,
       'amount_category': amountCategory,
       'fixed_amount': fixedAmount,
       'min_amount': minAmount,
-      'max_amount': maxAmount
+      'max_amount': maxAmount,
+      'extra_info': extraInfo
     };
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
     return client.send<PaginatedRefundOut, PaginatedRefundOut>($request);

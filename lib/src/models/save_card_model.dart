@@ -31,7 +31,7 @@ class SaveCardModel extends ChangeNotifier {
         cvc: cardInputData!.cvc,
       );
 
-      if (card.status == CardStatus.requiresAction && card.action != null) {
+      if (card.status == CardStatus.pending && card.action != null) {
         final newCard = await IokaNavigation.showBindingConfirmationView(
           context,
           cardId: card.id!,

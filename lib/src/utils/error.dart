@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
+import 'package:ioka/ioka.dart';
 
 /// Форматирует ошибку [e].
 ///
@@ -11,5 +12,9 @@ String formatError(BuildContext context, Object e) {
     return 'Ошибка подключения. Проверьте, пожалуйста, соединение с Интернетом.';
   }
 
-  return (e as dynamic).message ?? e.toString();
+  if (e is IokaError) {
+    return e.message;
+  }
+
+  return e.toString();
 }

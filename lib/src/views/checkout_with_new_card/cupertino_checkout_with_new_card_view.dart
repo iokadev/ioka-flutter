@@ -31,6 +31,17 @@ class CupertinoCheckoutWithNewCardView extends StatelessWidget {
                       IokaPlatformPayButton(
                         order: model.order,
                         radius: context.themeExtras.borderRadius,
+                        onPressed: (provider) {
+                          model.submit(
+                            context,
+                            customCreatePayment: () =>
+                                Ioka.instance.startPlatformPaymentFlow(
+                              provider: provider,
+                              orderAccessToken: model.orderAccessToken,
+                              order: model.order,
+                            ),
+                          );
+                        },
                         trailingBuilder: (_) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24.0),
                           child: DividerWithText(
@@ -90,6 +101,7 @@ class _CupertinoCheckoutViewActions extends StatelessWidget {
               final isValid = cardData?.isValid ?? false;
               return IokaCupertinoProgressButton(
                 onPressed: isValid ? () => model.submit(context) : null,
+                isLoading: !model.isInteractable,
                 child: Text(
                   context.l10n.checkoutWithNewCardViewPayAction(model.amount),
                 ),

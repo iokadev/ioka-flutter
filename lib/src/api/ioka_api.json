@@ -434,6 +434,92 @@
             }
           }
         }
+      },
+      "patch": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "UpdateOrderByID",
+        "description": "Обновление заказа по ID.",
+        "operationId": "UpdateOrderByID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "description": "Идентификатор заказа",
+              "type": "string"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные заказа",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации данных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Заказ не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/v2/orders/{order_id}/capture": {
@@ -1292,6 +1378,101 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Ошибка авторизации",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Доступ запрещен",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Заказ не найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/orders/{order_id}/payments/tool": {
+      "post": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "CreateToolPayment",
+        "description": "Создание нового платежа с использованием специальных методов(Apple Pay, Google Pay) по указанному заказу. Данный метод используется внутренней формой сбора карточных данных (Checkout UI). При наличии сертификата PCI DSS Level 3, магазины также могут использовать этот метод.",
+        "operationId": "CreateToolPayment",
+        "parameters": [
+          {
+            "description": "Идентификатор заказа",
+            "required": true,
+            "schema": {
+              "title": "order_id",
+              "type": "string",
+              "description": "Идентификатор заказа"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToolPayer"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Платеж создан",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtendedPayment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации данных",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Ошибка проведения платежа, истекло время ожидания",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -3884,6 +4065,15 @@
             },
             "name": "max_amount",
             "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "description": "Дополнительная информация по заказу",
+              "type": "string"
+            },
+            "name": "extra_info",
+            "in": "query"
           }
         ],
         "responses": {
@@ -4015,6 +4205,16 @@
           {
             "required": false,
             "schema": {
+              "description": "Идентификатор платежа",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "payment_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
               "description": "Внешний идентификатор заказа",
               "minLength": 1,
               "type": "string"
@@ -4122,6 +4322,24 @@
               "type": "integer"
             },
             "name": "max_amount",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "description": "Уникальный идентификатор платежа на стороне банка",
+              "type": "string"
+            },
+            "name": "reference",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "description": "Дополнительная информация по заказу",
+              "type": "string"
+            },
+            "name": "extra_info",
             "in": "query"
           }
         ],
@@ -4254,6 +4472,16 @@
           {
             "required": false,
             "schema": {
+              "description": "Идентификатор платежа",
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": "payment_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
               "$ref": "#/components/schemas/RefundStatus"
             },
             "name": "refund_status",
@@ -4295,6 +4523,15 @@
               "type": "integer"
             },
             "name": "max_amount",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "description": "Дополнительная информация по заказу",
+              "type": "string"
+            },
+            "name": "extra_info",
             "in": "query"
           }
         ],
@@ -4801,7 +5038,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/v2/masterpass/sessions/{session_id}/cards": {
@@ -4868,7 +5110,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -4943,7 +5190,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/v2/masterpass/sessions/{session_id}/cards/{token}": {
@@ -5015,7 +5267,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -5078,7 +5335,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/v2/masterpass/sessions/{session_id}/cards/{token}/postback": {
@@ -5164,7 +5426,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/v2/masterpass/phones": {
@@ -5226,7 +5493,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "API Key": []
+          }
+        ]
       }
     },
     "/healthz": {
@@ -5389,6 +5661,95 @@
           }
         }
       },
+      "ToolPayer": {
+        "title": "ToolPayer",
+        "type": "object",
+        "properties": {
+          "tool_type": {
+            "$ref": "#/components/schemas/ToolTypeEnum"
+          },
+          "apple_pay": {
+            "title": "ApplePay",
+            "description": "Данные для оплаты через ApplePay.\n Поля внутри стандартно выдаются сервисом Apple Wallet при запросе на оплату.",
+            "required": [
+              "token",
+              "card_network",
+              "card_type",
+              "amount"
+            ],
+            "type": "object",
+            "properties": {
+              "token": {
+                "description": "Подтвержденный токен от Apple Wallet в формате base64",
+                "type": "string"
+              },
+              "card_network": {
+                "description": "Сеть выпустившая карту которая привязана в сервисе Apple Wallet карты",
+                "type": "string"
+              },
+              "card_type": {
+                "description": "Тип привязанной в сервисе Apple Wallet карты",
+                "type": "string"
+              },
+              "amount": {
+                "description": "Сумма платежа при инициализации токена"
+              },
+              "currency": {
+                "$ref": "#/components/schemas/CurrencyEnum"
+              },
+              "holder": {
+                "description": "Имя владельца карты"
+              },
+              "email": {
+                "description": "Email плательщика"
+              },
+              "phone": {
+                "description": "Номер телефона плательщика"
+              }
+            }
+          },
+          "google_pay": {
+            "title": "GooglePay",
+            "description": "Данные для оплаты через GooglePay.\n Поля внутри стандартно выдаются сервисом Google Pay при запросе на оплату.",
+            "required": [
+              "token",
+              "card_network",
+              "card_details",
+              "amount"
+            ],
+            "type": "object",
+            "properties": {
+              "token": {
+                "description": "Подтвержденный токен от Google Pay в формате base64",
+                "type": "string"
+              },
+              "card_network": {
+                "description": "Сеть выпустившая карту которая привязана в сервисе Google Pay",
+                "type": "string"
+              },
+              "card_detatils": {
+                "description": "Последние 4 цифры карты в Google Pay",
+                "type": "string"
+              },
+              "amount": {
+                "description": "Сумма платежа при инициализации токена"
+              },
+              "currency": {
+                "$ref": "#/components/schemas/CurrencyEnum"
+              },
+              "holder": {
+                "description": "Имя владельца карты"
+              },
+              "email": {
+                "description": "Email плательщика"
+              },
+              "phone": {
+                "description": "Номер телефона плательщика"
+              }
+            }
+          }
+        }
+      },
       "Contacts": {
         "title": "Contacts",
         "type": "object",
@@ -5415,6 +5776,15 @@
         ],
         "type": "string",
         "description": "Доступные валюты для проведения платежа"
+      },
+      "ToolTypeEnum": {
+        "title": "ToolTypeEnum",
+        "enum": [
+          "APPLE_PAY",
+          "GOOGLE_PAY"
+        ],
+        "type": "string",
+        "description": "Доступные типы методов оплаты для проведения платежа"
       },
       "WebhookEventNameEnum": {
         "title": "webhook-event",
@@ -5496,7 +5866,7 @@
             "type": "string"
           },
           "code": {
-            "description": "[Код ошибки](#tag/errors)",
+            "description": "[Код ошибки](#section/Oshibki-platezha)",
             "type": "string"
           },
           "message": {
@@ -5573,6 +5943,20 @@
           }
         }
       },
+      "OrderUpdate": {
+        "title": "OrderUpdate",
+        "required": [
+          "amount"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "description": "Стоимость предлагаемых товаров или услуг в минорных денежных единицах. Например, для создания заказа на сумму 500 тенге, необходимо ввести 50000 (1 тенге = 100 тиын)",
+            "minimum": 100,
+            "type": "integer"
+          }
+        }
+      },
       "OrderIn": {
         "title": "OrderIn",
         "required": [
@@ -5582,7 +5966,7 @@
         "properties": {
           "amount": {
             "description": "Стоимость предлагаемых товаров или услуг в минорных денежных единицах. Например, для создания заказа на сумму 500 тенге, необходимо ввести 50000 (1 тенге = 100 тиын)",
-            "minimum": 1.0,
+            "minimum": 100,
             "type": "integer"
           },
           "currency": {
@@ -5656,6 +6040,7 @@
         "title": "OrderOut",
         "required": [
           "id",
+          "shop_id",
           "status",
           "created_at",
           "amount",
@@ -5667,6 +6052,10 @@
         "properties": {
           "id": {
             "description": "Идентификатор заказа",
+            "type": "string"
+          },
+          "shop_id": {
+            "description": "Идентификатор магазина",
             "type": "string"
           },
           "status": {
@@ -5980,7 +6369,7 @@
         "type": "object",
         "properties": {
           "code": {
-            "description": "[Код ошибки](#tag/errors)",
+            "description": "[Код ошибки](#section/Oshibki-platezha)",
             "type": "string"
           },
           "message": {
@@ -6313,6 +6702,7 @@
         "title": "PaymentOut",
         "required": [
           "id",
+          "order_id",
           "status",
           "created_at",
           "approved_amount",
@@ -6325,6 +6715,14 @@
         "properties": {
           "id": {
             "description": "Идентификатор платежа",
+            "type": "string"
+          },
+          "shop_id": {
+            "description": "Идентификатор магазина",
+            "type": "string"
+          },
+          "order_id": {
+            "description": "Идентификатор заказа",
             "type": "string"
           },
           "status": {
@@ -6355,14 +6753,17 @@
           },
           "error": {
             "$ref": "#/components/schemas/PaymentError"
+          },
+          "acquirer": {
+            "$ref": "#/components/schemas/Acquirer"
           }
         }
       },
       "PaymentStatus": {
         "title": "PaymentStatus",
         "enum": [
-          "REQUIRES_ACTION",
           "PENDING",
+          "REQUIRES_ACTION",
           "APPROVED",
           "CAPTURED",
           "CANCELLED",
@@ -6905,7 +7306,6 @@
       "CardStatus": {
         "title": "CardStatus",
         "enum": [
-          "REQUIRES_ACTION",
           "PENDING",
           "APPROVED",
           "DECLINED"
@@ -7624,7 +8024,7 @@
     },
     {
       "name": "mp_card",
-      "x-displayName": "Платежный карты",
+      "x-displayName": "Платежные карты",
       "description": "Добавление и извлечение платежных карты из хранилища Masterpass."
     },
     {
@@ -7640,7 +8040,7 @@
     {
       "name": "errors",
       "x-displayName": "Коды ошибок",
-      "description": "## Ошибки бизнес-логики\nВсе ошибки бизнес-логики имеют следующий вид:\n\n  ```json\n  {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n  ```\n\nВ поле `code` содержится тип ошибки, а в `message` - дополнительная информация по произошедшей ошибке.\nНа данный момент существуют следующие коды ошибок:\n\n  | Код                                 | Описание                                                                        |\n  | ---                                 | --------                                                                        |\n  | **Unauthorized**                    | Не авторизован.                                                                 |\n  | **Forbidden**                       | Нет доступа.                                                                    |\n  | **InvalidRequest**                  | Прочие неверные данные запроса.                                                 |\n  | **BadGateway**                      | Ошибка соединения со сторонним сервисом.                                        |\n  | **OrderNotFound**                   | Заказ не найден. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа по несуществующему `order_id`.  |\n  | **OrderExists**                     | Заказ с указанным `external_id` уже существует.  Может возникнуть при попытке повторного [создания](#operation/CreateOrder) заказа.                                 |\n  | **OrderUnpaid**                     | Заказ не оплачен. Может возникнуть при попытке [создания](#operation/CreateRefund) возврата.                                                        |\n  | **OrderHasApprovedPayment**         | У данного заказа уже есть авторизованный платеж. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа.                                                           |\n  | **OrderHasNoApprovedPayment**       | У данного заказа нет авторизованного платежа. Может возникнуть при попытке [подтверждения](#operation/CaptureOrder) неавторизованного заказа.                                                           |\n  | **OrderHasNoAttemptsLeftError**     | Исчерпано количество попыток оплаты. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа.                                                           |\n  | **OrderExpired**                    | Заказ просрочен. Может возникнуть при попытке [оплаты](#operation/CreatePayment) заказа с истекшим сроком действия `due_date`.|\n  | **PaymentNotFound**                 | Платеж не найден. Может возникнуть при попытке [отмены](#operation/CancelPayment) несуществующего платежа.|\n  | **RefundNotFound**                  | Возврат не найден. Может возникнуть при [запросе](#operation/GetRefundByID) несуществующего возврата.|\n  | **PaymentStarted**                  | Для указанного заказа уже запущен процесс платежа. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа. Содержит дополнительное поле `payment_id` - идентификатор запущенного ранее платежа.                            |\n  | **ProcessingDeadlineReachedError**  | Истекло время ожидания обработки платежа. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа. Содержит дополнительное поле `payment_id` - идентификатор созданного платежа для дальнейшего запроса статуса [платежа](#operation/GetPaymentByID).                            |\n  | **PaymentCaptureAmountExceeded**    | Сумма списания больше авторизованной суммы. Может возникнуть при попытке [списания](#operation/CapturePayment) суммы, превышающей авторизованную.                                    | \n  | **PaymentRefundAmountExceededError**| Сумма возврата больше списанной суммы. Может возникнуть при попытке [создания](#operation/CreateRefund) возврата.                                    | \n  | **InvalidPaymentToken**             | Неверный платежный токен. Может возникнуть при попытке [создания](#operation/CreateCard) новой связки для плательщика.                                                  |\n  | **PaymentTokenNotFound**            | Платежный токен не найден. Может возникнуть при попытке [получения](#operation/GetPaymentMethod) платежных данных по неверному токену.|\n  | **CustomerNotFound**                | Плательщик не найден. Может возникнуть при попытке [создания](#operation/CreateCard) новой свзяки для несуществующего плательщика.|\n  | **CustomerExists**                  | Плательщик с таким `external_id` уже существует. Может возникнуть при попытке [создания](#operation/CreateCustomer) нового плательщика.                               |\n  | **CardNotFound**                    | Карта не найдена. Может возникнуть при попытке [получения](#operation/GetCardByID) данных сохраненной карты по неверному `card_id`.|\n  | **BindingStarted**                  | Для указанной карты уже запущен процесс привязки. Может возникнуть при попытке [создания](#operation/CreateCard) новой связки для плательщика.                      |\n  | **BindingNotFound**                 | Связка не найдена. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа по несуществующей связке.|\n  | **WebhookNotFound**                 | Webhook не найден. Может возникнуть при попытке [получения](#operation/GetWebhookByID) webhook по ID.                                                            |\n  | **BinNotFound**                     | Информация по БИНу не найдена. Может возникнуть при попытке [поиска](#operation/GetEmitterByBinCode) информацию по карте.|\n\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n  |  Код    |  Описание  |\n  | ------- | ---------- |\n  | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n  | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n  | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n\n"
+      "description": "Все ошибки платежа и бизнес-логики имеют следующий вид:\n\n  ```json\n  {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n  ```\n\nВ поле `code` содержится тип ошибки, а в `message` - дополнительная информация по произошедшей ошибке.\n\n\n## Ошибки платежа\n\nОшибки, передаваемые в платежную форму или в [webhook-ах](#tag/webhooks) в случае неуспешной оплаты (payment_status = DECLINED).\nНа данный момент существуют следующие ошибки платежа:\n\n  | Код                                 | Описание                                                                                                                                     |\n  |----------------------------------------------------------------------------------------------------------------------------------------------| --------                                                                        |\n  | **TRANSACTION_ERROR**               | Возникла ошибка при проведении оплаты. Обратитесь в магазин.                                                                                 |\n  | **DECLINED_BY_ISSUER**                       | Операция отклонена. Обратитесь в банк, выпустивший карту.                                                                                    |\n  | **NOT_ENOUGH_MONEY**                  | На карте недостаточно денег. Проверьте введенные данные, достаточность средств на карте, и повторите операцию.                               |\n  | **NO_CARD_RECORD**                    | Неверный номер карты. Обратитесь в банк, выпустивший карту.                                                                                  |\n  | **CARD_LIMITATIONS_EXCEEDED**     | Превышены ограничения по карте. Обратитесь в банк, выпустивший карту.                                                                        |\n  | **EXCEEDS_DAILY_SUM_WITHDRAWAL_LIMIT**                  | Предпринята попытка выполнить транзакцию на сумму, превышающую дневной лимит, заданный банком-эмитентом. Обратитесь в банк, выпустивший карту. |\n  | **DECLINED_BY_CLIENT**    | Блокировка по имени клиенту. Операция отклонена. Обратитесь в магазин.                                                                       |\n  | **DECLINED_BY_FRAUD**                  | Не смогли авторизовать транзакцию. Обратитесь в магазин.|\n  | **WRONG_REQUEST_PARAMS**  | Неверно указано значение одного из параметров.                                                                                               |\n  | **TRANSACTION_NOT_FOUND**            | Транзакция или прилегающиеся сущности не найдены.      |\n  | **INVALID_AMOUNT**             | Неверно указана сумма транзакции. Обратитесь в магазин.|\n  | **ACQUIRER_SYSTEM_ERROR**                   | Ошибка в системе банка-эквайера.                                                                                                             |\n  | **DATA_INPUT_TIMEOUT**| Не получен ответ от банка. Повторите операцию.                                                                                                                                             |\n  | **DECLINE_SINCE_UNABLE_TO_PROCESS**                     | Отказ сети банка-эквайера проводить транзакцию. Обратитесь в банк, выпустивший карту.                                                        |\n  | **BANK_CONNECTION_ERROR**                 | Ошибка соединения с банком-эквайером. Повторите транзакцию.                                                                                  |\n  | **DECLINED_BY_3DSEC**                    | Операция невозможна. Аутентификация держателя карты завершена неуспешно.                                                                     |\n  | **TDS_RULE_INVALID**       | Ошибка выполнения 3DS-правила. Обратитесь в магазин.                                                                                         |\n  | **PARES_STATUS_UNKNOWN**                      | Банк-эмитент не смог провести авторизацию 3DSecure-карты. Обратитесь в банк, выпустивший карту.                                              |\n  | **VERES_STATUS_UNKNOWN**                     | Банк-эмитент не смог определить, является ли карта 3dSecure. Обратитесь в банк, выпустивший карту.                                           |\n  | **DECLINED_BY_DS_TIMEOUT**                  | Directory server Visa или MasterCard либо недоступен, либо в ответ на запрос вовлеченности карты (VeReq) пришла ошибка связи. Обратитесь в банк, выпустивший карту. |\n  | **TRANSACTION_IN_WRONG_STATE**                  | Транзакция находится в неправильном состоянии.                                                                                               |\n\n\n## Ошибки бизнес-логики\n\nНа данный момент существуют следующие коды ошибок бизнес-логики:\n\n  | Код                                 | Описание                                                                        |\n  | ---                                 | --------                                                                        |\n  | **Unauthorized**                    | Не авторизован.                                                                 |\n  | **Forbidden**                       | Нет доступа.                                                                    |\n  | **InvalidRequest**                  | Прочие неверные данные запроса.                                                 |\n  | **BadGateway**                      | Ошибка соединения со сторонним сервисом.                                        |\n  | **OrderNotFound**                   | Заказ не найден. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа по несуществующему `order_id`.  |\n  | **OrderExists**                     | Заказ с указанным `external_id` уже существует.  Может возникнуть при попытке повторного [создания](#operation/CreateOrder) заказа.                                 |\n  | **OrderUnpaid**                     | Заказ не оплачен. Может возникнуть при попытке [создания](#operation/CreateRefund) возврата.                                                        |\n  | **OrderHasApprovedPayment**         | У данного заказа уже есть авторизованный платеж. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа.                                                           |\n  | **OrderHasNoApprovedPayment**       | У данного заказа нет авторизованного платежа. Может возникнуть при попытке [подтверждения](#operation/CaptureOrder) неавторизованного заказа.                                                           |\n  | **OrderHasNoAttemptsLeftError**     | Исчерпано количество попыток оплаты. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа.                                                           |\n  | **OrderExpired**                    | Заказ просрочен. Может возникнуть при попытке [оплаты](#operation/CreatePayment) заказа с истекшим сроком действия `due_date`.|\n  | **PaymentNotFound**                 | Платеж не найден. Может возникнуть при попытке [отмены](#operation/CancelPayment) несуществующего платежа.|\n  | **RefundNotFound**                  | Возврат не найден. Может возникнуть при [запросе](#operation/GetRefundByID) несуществующего возврата.|\n  | **PaymentStarted**                  | Для указанного заказа уже запущен процесс платежа. Может возникнуть при попытке повторного [создания](#operation/CreatePayment) платежа. Содержит дополнительное поле `payment_id` - идентификатор запущенного ранее платежа.                            |\n  | **ProcessingDeadlineReachedError**  | Истекло время ожидания обработки платежа. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа. Содержит дополнительное поле `payment_id` - идентификатор созданного платежа для дальнейшего запроса статуса [платежа](#operation/GetPaymentByID).                            |\n  | **PaymentCaptureAmountExceeded**    | Сумма списания больше авторизованной суммы. Может возникнуть при попытке [списания](#operation/CapturePayment) суммы, превышающей авторизованную.                                    | \n  | **PaymentRefundAmountExceededError**| Сумма возврата больше списанной суммы. Может возникнуть при попытке [создания](#operation/CreateRefund) возврата.                                    | \n  | **InvalidPaymentToken**             | Неверный платежный токен. Может возникнуть при попытке [создания](#operation/CreateCard) новой связки для плательщика.                                                  |\n  | **PaymentTokenNotFound**            | Платежный токен не найден. Может возникнуть при попытке [получения](#operation/GetPaymentMethod) платежных данных по неверному токену.|\n  | **CustomerNotFound**                | Плательщик не найден. Может возникнуть при попытке [создания](#operation/CreateCard) новой свзяки для несуществующего плательщика.|\n  | **CustomerExists**                  | Плательщик с таким `external_id` уже существует. Может возникнуть при попытке [создания](#operation/CreateCustomer) нового плательщика.                               |\n  | **CardNotFound**                    | Карта не найдена. Может возникнуть при попытке [получения](#operation/GetCardByID) данных сохраненной карты по неверному `card_id`.|\n  | **BindingStarted**                  | Для указанной карты уже запущен процесс привязки. Может возникнуть при попытке [создания](#operation/CreateCard) новой связки для плательщика.                      |\n  | **BindingNotFound**                 | Связка не найдена. Может возникнуть при попытке [создания](#operation/CreatePayment) платежа по несуществующей связке.|\n  | **WebhookNotFound**                 | Webhook не найден. Может возникнуть при попытке [получения](#operation/GetWebhookByID) webhook по ID.                                                            |\n  | **BinNotFound**                     | Информация по БИНу не найдена. Может возникнуть при попытке [поиска](#operation/GetEmitterByBinCode) информацию по карте.|\n\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n  |  Код    |  Описание  |\n  | ------- | ---------- |\n  | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n  | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n  | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n\n"
     },
     {
       "name": "test-cards",

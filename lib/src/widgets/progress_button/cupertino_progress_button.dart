@@ -7,9 +7,11 @@ class IokaCupertinoProgressButton extends StatelessWidget {
     Key? key,
     required this.child,
     required this.onPressed,
+    this.isLoading = false,
   }) : super(key: key);
 
   final Widget child;
+  final bool isLoading;
   final Future Function()? onPressed;
 
   @override
@@ -17,6 +19,7 @@ class IokaCupertinoProgressButton extends StatelessWidget {
     return CupertinoProgressButton(
       borderRadius: context.themeExtras.borderRadius,
       onPressed: onPressed,
+      isLoading: isLoading,
       color: context.colors.primary,
       disabledColor:
           onPressed != null ? context.colors.primary : context.colors.grey,
@@ -41,9 +44,11 @@ class CupertinoProgressButton extends StatefulWidget {
     this.borderRadius,
     this.successColor,
     this.successForegroundColor,
+    this.isLoading = false,
   }) : super(key: key);
 
   final Widget child;
+  final bool isLoading;
   final Future Function()? onPressed;
   final Color? color;
   final Color? disabledColor;
@@ -94,6 +99,15 @@ class _CupertinoProgressButtonState extends State<CupertinoProgressButton> {
       setState(() {
         _isInProgress = false;
       });
+    }
+  }
+
+  @override
+  void didUpdateWidget(CupertinoProgressButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    if (widget.isLoading != oldWidget.isLoading) {
+      _isInProgress = widget.isLoading;
     }
   }
 
