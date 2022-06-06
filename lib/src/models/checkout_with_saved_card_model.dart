@@ -30,15 +30,14 @@ class CheckoutWithSavedCardModel extends CheckoutModel {
     );
   }
 
-  @override
-  Future<void> onSuccess(BuildContext context) {
-    Navigator.pop(context);
-    return super.onSuccess(context);
-  }
+  // @override
+  // Future<void> onSuccess(BuildContext context) async {
+  //   await super.onSuccess(context);
+  // }
 
   @override
   Future<bool> onFailure(BuildContext context, {String? reason}) async {
-    Navigator.pop(context);
+    // Navigator.pop(context);
 
     await showCupertinoPaymentFailureDialog(
       context,
