@@ -11,17 +11,23 @@ class CardInputForm extends StatefulWidget {
     required this.onChanged,
     this.isEnabled = true,
     this.canSaveCard = false,
+    this.canScanCard = true,
   }) : super(key: key);
 
   final ValueChanged<CardInputData> onChanged;
   final bool isEnabled;
   final bool canSaveCard;
+  final bool canScanCard;
 
   @override
   State<CardInputForm> createState() => _CardInputFormState();
 }
 
 class _CardInputFormState extends State<CardInputForm> {
+  final _cardNumberFieldKey = GlobalKey<FormFieldState>();
+  final _cardExpiryDateFieldKey = GlobalKey<FormFieldState>();
+  final _cardCvcFieldKey = GlobalKey<FormFieldState>();
+
   final _cardNumberNotifier = ValueNotifier<String?>(null);
   final _cardExpiryDateNotifier = ValueNotifier<String?>(null);
   final _cardCvcNotifier = ValueNotifier<String?>(null);
@@ -88,6 +94,19 @@ class _CardInputFormState extends State<CardInputForm> {
     }
   }
 
+  void _onScanned(CardInputData data) {
+    _cardNumberNotifier.value = data.cardNumber;
+    _cardExpiryDateNotifier.value = data.expiryDate;
+
+    _onChanged();
+
+    // Notify widgets
+    _cardNumberFieldKey.currentState?.didChange(data.cardNumber);
+    _cardExpiryDateFieldKey.currentState?.didChange(
+      _cardExpiryDateNotifier.value,
+    );
+  }
+
   @override
   void dispose() {
     _cardNumberNotifier.dispose();
@@ -111,8 +130,10 @@ class _CardInputFormState extends State<CardInputForm> {
             _cardEmitterNotifier,
           ],
           builder: (context) => CupertinoCardNumberFormField(
+            fieldKey: _cardNumberFieldKey,
             isEnabled: widget.isEnabled,
             onChanged: (v) => _cardNumberNotifier.value = v,
+            onScanned: widget.canScanCard ? _onScanned : null,
             cardEmitter: _cardEmitterNotifier.value,
             cardType: _cardTypeNotifier.value,
             onValidated: () {
@@ -125,6 +146,7 @@ class _CardInputFormState extends State<CardInputForm> {
           children: [
             Expanded(
               child: CupertinoExpiryDateFormField(
+                fieldKey: _cardExpiryDateFieldKey,
                 isEnabled: widget.isEnabled,
                 onChanged: (v) => _cardExpiryDateNotifier.value = v,
                 onValidated: () {
@@ -137,6 +159,7 @@ class _CardInputFormState extends State<CardInputForm> {
               child: ValueListenableBuilder(
                 valueListenable: _cardTypeNotifier,
                 builder: (context, _, __) => CupertinoCvcFormField(
+                  fieldKey: _cardCvcFieldKey,
                   isEnabled: widget.isEnabled,
                   onChanged: (v) => _cardCvcNotifier.value = v,
                   cardType: _cardTypeNotifier.value,
@@ -185,6 +208,15 @@ class CardInputData {
     this.type,
     this.emitter,
   });
+
+  const CardInputData.scanner({
+    required this.cardNumber,
+    required this.expiryDate,
+  })  : cvc = '',
+        isSaved = false,
+        bin = null,
+        type = null,
+        emitter = null;
 
   final String cardNumber;
   final String expiryDate;
