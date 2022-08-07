@@ -13,8 +13,10 @@ class CupertinoCvcFormField extends StatelessWidget {
     this.onValidated,
     this.isEnabled = true,
     this.autofocus = false,
+    this.fieldKey,
   }) : super(key: key);
 
+  final GlobalKey<FormFieldState>? fieldKey;
   final ValueChanged<String> onChanged;
   final CreditCardType? cardType;
   final VoidCallback? onValidated;
@@ -32,6 +34,7 @@ class CupertinoCvcFormField extends StatelessWidget {
     final maxLength = cardType == CreditCardType.amex ? 4 : 3;
 
     return FormField<String>(
+      key: fieldKey,
       builder: (state) => IokaCupertinoTextField(
         hint: context.l10n.cardCvcInputHint,
         inputFormatters: CvcInputFormatter.formatters(maxLength),

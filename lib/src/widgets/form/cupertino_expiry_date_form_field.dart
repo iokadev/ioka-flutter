@@ -9,8 +9,10 @@ class CupertinoExpiryDateFormField extends StatelessWidget {
     required this.onChanged,
     this.onValidated,
     this.isEnabled = true,
+    this.fieldKey,
   }) : super(key: key);
 
+  final GlobalKey<FormFieldState>? fieldKey;
   final ValueChanged<String> onChanged;
   final VoidCallback? onValidated;
   final bool isEnabled;
@@ -21,6 +23,7 @@ class CupertinoExpiryDateFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<String>(
+      key: fieldKey,
       builder: (state) => IokaCupertinoTextField(
         hint: context.l10n.cardExpiryDateInputHint,
         inputFormatters: ExpiryDateInputFormatter.formatters,

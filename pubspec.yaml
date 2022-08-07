@@ -19,6 +19,7 @@ dependencies:
 
   chopper: ^4.0.1
   collection: ^1.15.0
+  credit_card_scanner: ^1.0.4
   credit_card_type_detector: ^2.0.0
   credit_card_validator: ^2.0.1
   flutter_svg: ^1.0.3
