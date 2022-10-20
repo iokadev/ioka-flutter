@@ -38,7 +38,7 @@ class TestConfirmationModel extends ConfirmationModel<String> {
   Future<String> fetchData(BuildContext context) async => 'success';
 
   @override
-  Future<String> onRedirect(BuildContext context) {
+  Future<String?> onRedirect(BuildContext context) {
     if (onRedirectCalled != null) onRedirectCalled!();
 
     return super.onRedirect(context);

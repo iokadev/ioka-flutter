@@ -58,11 +58,21 @@ abstract class ConfirmationModel<T> extends ChangeNotifier {
     return NavigationDecision.navigate;
   }
 
+  /// Значение становится `true` если был вызван `onRedirect`.
+  ///
+  /// Блокирует вызов `onRedirect` больше одного раза.
+  bool _didRedirect = false;
+
   /// Вызывается при редиректе на [redirectUrl].
   ///
   /// При получении редиректа вызывается метод [fetchData], и затем
   /// возвращаются данные через [Navigator.pop].
-  Future<T> onRedirect(BuildContext context) async {
+  Future<T?> onRedirect(BuildContext context) async {
+    if (_didRedirect) return null;
+
+    // Блокируем повторный вызов функции
+    _didRedirect = true;
+
     isLoadingNotifier.value = true;
 
     final data = await fetchData(context);
